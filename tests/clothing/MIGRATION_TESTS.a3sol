@@ -74,25 +74,30 @@ take skirt
 inventory
 take chair
 inventory
-; ** NOTE ** Using 'drop' here until 'remove' is fixed!
+remove sneakers
 drop sneakers
+DBG sneakers
+remove khakis
 drop khakis
+remove undershirt
 drop undershirt
+drop skirt
 drop chair
 drop basket
-drop skirt
 drop wallet
 ; ------------------------------------------------------------------------------
 ; HERO INVENTORY -> Empty handed + Wears two clothes
 ; ------------------------------------------------------------------------------
 ; Check that the 2 worn items are "and" separated:
 inventory
+remove socks
 drop socks
 ; ------------------------------------------------------------------------------
 ; HERO INVENTORY -> Empty handed + Wears one clothing
 ; ------------------------------------------------------------------------------
 ; Check that single worn item is followed by "." (no "," or "and"):
 inventory
+remove boxers
 drop boxers
 ; ------------------------------------------------------------------------------
 ; HERO INVENTORY -> Empty handed + Wears nothing
@@ -112,6 +117,7 @@ inventory
 take wallet
 take skirt
 take sneakers
+DBG sneakers
 south
 ; ------------------------------------------------------------------------------
 ; NPC EXAMINE -> Carries one item + Wears 2 clothes
@@ -150,8 +156,3 @@ ask assistant for uniform
 ; NPC EXAMINE -> Empty handed + Wears nothing
 ; ------------------------------------------------------------------------------
 examine assistant
-; ==============================================================================
-; WEARING & REMOVING    ( WIP )
-; ==============================================================================
-; The 'wear' and 'remove' verbs haven't yet been adapted to work with the new
-; system, so they are not working right now.

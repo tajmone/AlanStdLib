@@ -180,23 +180,37 @@ You're carrying a chair, a basket, a skirt and your wallet. You are
 wearing your socks, your boxers, your undershirt, your sneakers and your 
 khakis.
 
-> ; ** NOTE ** Using 'drop' here until 'remove' is fixed!
+> remove sneakers
+You take off your sneakers.
+
 > drop sneakers
 Dropped.
+
+> DBG sneakers
+'sneakers' VALUES: | feetcover: 4 | 
+DONNED: No. 
+IN WORN: No. 
+IN WEARING OF:
+
+> remove khakis
+You take off your khakis.
 
 > drop khakis
 Dropped.
 
+> remove undershirt
+You take off your undershirt.
+
 > drop undershirt
+Dropped.
+
+> drop skirt
 Dropped.
 
 > drop chair
 Dropped.
 
 > drop basket
-Dropped.
-
-> drop skirt
 Dropped.
 
 > drop wallet
@@ -209,6 +223,9 @@ Dropped.
 > inventory
 You are empty-handed. You are wearing your socks and your boxers.
 
+> remove socks
+You take off your socks.
+
 > drop socks
 Dropped.
 
@@ -218,6 +235,9 @@ Dropped.
 > ; Check that single worn item is followed by "." (no "," or "and"):
 > inventory
 You are empty-handed. You are wearing your boxers.
+
+> remove boxers
+You take off your boxers.
 
 > drop boxers
 Dropped.
@@ -247,6 +267,12 @@ Taken.
 
 > take sneakers
 Taken.
+
+> DBG sneakers
+'sneakers' VALUES: | feetcover: 4 | 
+DONNED: No. 
+IN WORN: No. 
+IN WEARING OF:
 
 > south
 Emporium Alani Main Hall
@@ -308,8 +334,8 @@ You give your sneakers to the assistant.
 > ; ------------------------------------------------------------------------------
 > examine assistant
 She's your personal shopping assistant. The assistant is carrying a 
-prices list, a skirt and your wallet. The assistant is wearing a uniform, 
-a pair of fashion boots and your sneakers.
+prices list, a skirt, your sneakers and your wallet. The assistant is 
+wearing a uniform and a pair of fashion boots.
 
 > ask assistant for list
 The assistant gives the prices list to you.
@@ -343,11 +369,6 @@ The assistant gives the uniform to you.
 She's your personal shopping assistant. The assistant is empty-handed. The 
 assistant is not wearing anything.
 
-> ; ==============================================================================
-> ; WEARING & REMOVING    ( WIP )
-> ; ==============================================================================
-> ; The 'wear' and 'remove' verbs haven't yet been adapted to work with the new
-> ; system, so they are not working right now.
 > 
 
 Do you want to RESTART, RESTORE, QUIT or UNDO? 
