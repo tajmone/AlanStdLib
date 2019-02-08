@@ -11,6 +11,7 @@ Some notes on the current work to attempt getting rid of `worn` to store Hero's 
 
 - [Introduction](#introduction)
 - [Development Plan and Status](#development-plan-and-status)
+    - [How The New System Works](#how-the-new-system-works)
 - [Overview of `worn`](#overview-of-worn)
 - [Occurences of `worn` in The Library](#occurences-of-worn-in-the-library)
     - [Clothing Initialization](#clothing-initialization)
@@ -44,8 +45,14 @@ Due to `worn` being referenced in many parts of the library code, a well planned
 
 - [x] Document [all occurences of `worn` in the StdLib code][occurences of worn].
 - [ ] Disable handling Hero's worn items via `worn`:
-    + [ ] Tweak initialization of `clothing` class.
-    + [ ] Tweak [`worn_clothing_check` Event][worn event].
+    + [x] Tweak initialization of `clothing` class:
+        * [x] Remove handling Hero differently.
+        * [x] Remove any reference to `worn`.
+        * [x] Iterate over all clothing items _directly in_ every actor, and if the item was marked as `donned` by the author then add it to the `wearing` set of the actor.
+    + [x] Tweak [`worn_clothing_check` Event][worn event]:
+        * [x] Remove handling Hero differently.
+        * [x] Remove any reference to `worn`.
+        * [x] Just ensure that any clothing _directly in_ an actor and `donned` is added to `wearing` set of the actor.
     + [ ] Tweak `wear` and `remove` verbs in `lib_classes.i`.
     + [ ] Tweak [RunTime messages] in `lib_messages.i`.
     + [ ] Tweak inventory/`i` verb.
@@ -56,6 +63,27 @@ Due to `worn` being referenced in many parts of the library code, a well planned
 During the development stages the `worn` entity should be left in the library, to prevent compiler errors, until no more references to it are left in the library code.
 
 The clothing tests already present in the test suite should provide enough feedback on the impact that these changes will have on the library behavior. It's better not to commit changed tests transcripts for keeping the original output provides a better comparison to the upstream code behaviour — at least not until the tweaks are deemed as stable and there is a need to fine tuning.
+
+> __NOTE__ — I'll be adding a comment containing `devworn` to all the tweaked code, to make it easier to carry out search operations to spot the modified code sections before merging into master. I'll also be adding similar comments to any code that requires tweaking, as a reminder.
+> 
+> For now, I'll also be leaving a commented-out copy of the original code, enclosed in these comments:
+> 
+> ```
+> -- >>> original code >>>
+> ...
+> -- <<< original code <<<
+> ```
+
+## How The New System Works
+
+Because we don't have a separate `worn` container to store the Hero's worn items, authors will now define worn clothes in their adventures by placing them in the actor and marking them as `IS donned`. Example:
+
+```alan
+THE hero_shoes IsA cl_shoes IN hero
+  IS donned.
+```
+
+The library will take care of all `donned` items during initialization of the `clothing` class, and ensure that they are also included in the `wearing` set of the actor.
 
 # Overview of `worn`
 

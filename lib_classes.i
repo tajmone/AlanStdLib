@@ -184,11 +184,11 @@ END ADD.
 -- An entity is present everywhere and thus the hero's clothing is always accessible.
 -- This container is only used internally in the library; ignore.
 
-
+-- >>> devworn >>> TODO: delete when everything is working wihtout 'worn'.
 THE worn ISA ENTITY
   CONTAINER TAKING CLOTHING.
-    HEADER SAY hero_worn_header OF my_game.
-    ELSE SAY hero_worn_else OF my_game.
+    HEADER SAY my_game:hero_worn_header.
+    ELSE   SAY my_game:hero_worn_else.
 END THE.
 
 
@@ -213,40 +213,55 @@ EVERY clothing ISA OBJECT
   IS topcover 0.
   IS botcover 0.
 
-  IS NOT donned. -- not in the 'wearing' set of any actor; this attribute
-        -- is used internally in the library; ignore
+  IS NOT donned.  -- not in the 'wearing' set of any actor; this attribute
+                  -- is used internally in the library; ignore
 
 
   INITIALIZE
 
-
-    -- the set attribute 'IS wearing' is defined to work for both the hero
-    -- and NPCs:
-
-    IF THIS IN worn
-      THEN INCLUDE THIS IN wearing OF hero.
-    END IF.
+    -- NOTE: | The set attribute 'IS wearing' is defined to work for both
+    --       | the Hero as well as for NPCs.
 
     FOR EACH ac ISA ACTOR
       DO
-        IF ac = hero
-          THEN
-            IF THIS IN wearing OF hero AND THIS <> null_clothing
-              THEN
-                IF THIS NOT IN worn
-                  THEN LOCATE THIS IN worn.
-                END IF.
-                MAKE THIS donned.
-            END IF.
-        ELSIF THIS IN wearing OF ac AND THIS <> null_clothing
-            THEN
-              IF THIS NOT IN ac
-                THEN
-                  LOCATE THIS IN ac.
-              END IF.
-              MAKE THIS donned.
-        END IF.
+        -- >>> devworn >>> tweaked:
+        -- * removed handling of Hero via worn.
+        -- * use 'donned' as criteria for items being worn.
+        ------------------------------------------------------------
+        -- Any clothing item directly inside an actor and marked as
+        -- 'donned' must also be added to the actor's 'wearing' set.
+        ------------------------------------------------------------
+        FOR EACH cl ISA CLOTHING, DIRECTLY IN ac, IS donned
+          DO INCLUDE cl IN wearing OF ac.
+        END FOR.
     END FOR.
+
+-- >>> original code >>>
+    -- IF THIS IN worn
+    --   THEN INCLUDE THIS IN wearing OF hero.
+    -- END IF.
+
+    -- FOR EACH ac ISA ACTOR
+    --   DO
+    --     IF ac = hero
+    --       THEN
+    --         IF THIS IN wearing OF hero AND THIS <> null_clothing
+    --           THEN
+    --             IF THIS NOT IN worn
+    --               THEN LOCATE THIS IN worn.
+    --             END IF.
+    --             MAKE THIS donned.
+    --         END IF.
+    --     ELSIF THIS IN wearing OF ac AND THIS <> null_clothing
+    --         THEN
+    --           IF THIS NOT IN ac
+    --             THEN
+    --               LOCATE THIS IN ac.
+    --           END IF.
+    --           MAKE THIS donned.
+    --     END IF.
+    -- END FOR.
+-- <<< original code <<<
 
 
 
@@ -611,24 +626,45 @@ END ADD TO.
 EVENT worn_clothing_check
   FOR EACH ac ISA ACTOR
     DO
-      FOR EACH cl ISA CLOTHING, IN wearing OF ac
-        DO
-          IF ac = hero
-            THEN
-              IF cl NOT IN worn
-                THEN LOCATE cl IN worn.
-                  MAKE cl donned.
-              END IF.
-            ELSE
-              IF cl NOT IN ac
-                THEN LOCATE cl IN ac.
-                  MAKE cl donned.
-              END IF.
-          END IF.
+      -- >>> devworn >>> TODO:
+      -- * Handle clothing indirectly IN actor: they should be carried!
+      -- >>> devworn >>> tweaked:
+      -- * Removed handling of Hero via worn.
+      -- * Use 'donned' as check criteria, instead of 'wearing'.
+      ------------------------------------------------------------
+      -- Any clothing item directly inside an actor and marked as
+      -- 'donned' must also be added to the actor's 'wearing' set.
+      ------------------------------------------------------------
+      FOR EACH cl ISA CLOTHING, DIRECTLY IN ac, IS donned
+        DO INCLUDE cl IN wearing OF ac.
       END FOR.
    END FOR.
    SCHEDULE worn_clothing_check AFTER 1.
 END EVENT.
+
+-- >>> original code >>>
+-- EVENT worn_clothing_check
+--   FOR EACH ac ISA ACTOR
+--     DO
+--       FOR EACH cl ISA CLOTHING, IN wearing OF ac
+--         DO
+--           IF ac = hero
+--             THEN
+--               IF cl NOT IN worn
+--                 THEN LOCATE cl IN worn.
+--                   MAKE cl donned.
+--               END IF.
+--             ELSE
+--               IF cl NOT IN ac
+--                 THEN LOCATE cl IN ac.
+--                   MAKE cl donned.
+--               END IF.
+--           END IF.
+--       END FOR.
+--    END FOR.
+--    SCHEDULE worn_clothing_check AFTER 1.
+-- END EVENT.
+-- <<< original code <<<
 
 
 
