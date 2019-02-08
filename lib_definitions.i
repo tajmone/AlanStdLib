@@ -83,7 +83,8 @@ ADD TO EVERY THING
 
   CAN NOT talk.
 
-
+  -- >>> devworn >>> tweaked: (trying to avoid need of 'wearing' set)
+  IS NOT donned. -- only used for clothing items.
 
 
 -- We still define that plural nouns are preceded by "some" (and not by "a" or "an"):

@@ -59,8 +59,10 @@ Due to `worn` being referenced in many parts of the library code, a well planned
     + [x]  [`tests/clothing/MIGRATION_TESTS.bat`][MIGRATION_TESTS.bat] — convenience batch to compile EGA and execute only tests named `MIGRATION_TESTS*.a3sol` (prevents cluttering Git with other logs, and it's faster).
 - [ ] Try not using `wearing` — since we might handle clothing without using `wearing` set at all, try not using it if `donned` can be used:
     + [ ] Keep updating the `wearing` set anyhow but try using just `donned` for checks, instead of `wearing` in:
-        * [ ] Tweak inventory/`i` verb.
-        * [x] `wear`/`remove` verbs.
+        * [ ] The inventory/`i` verb.
+        * [x] The `examine` verb on `actor` (DOES AFTER).
+        * [x] The `wear`/`remove` verbs.
+        * [x] The [`worn_clothing_check` Event][worn event].
 - [ ] Disable handling Hero's worn items via `worn`:
     + [x] Tweak initialization of `clothing` class:
         * [x] Remove handling Hero differently.
@@ -141,6 +143,10 @@ Chances are that all clothing operations, checks and status updates can be done 
 - Having to control a single boolean attribute is going to make maintainance of code easier for both the library and end user adventures authors.
 
 So, right now I'm still ensuring that all clothing-handling code updates the `wearing` attribute correctly, but I'm also trying not to rely on it inside loops and other checks, to see if we can dispose of it. So, if we encounter a situation which requires use of the `wearing` set, it's still there, but if we end up doing without out we only have to remove all references to it.
+
+> __NOTE__ — For this to happen, I had to add the `donned` attribute to EVERY THING, instead of just to the `clothing` class, because it's needed in various checks, filters and aggregators that need to treat `NOT donned` clothing items as carried items (inside expressions that also include non-clothing objects).
+> 
+> This would be a small price to pay for the considerable benefits of having a single attribute for controlling worn clothing.
 
 ## Authors Should Now Use `Donned` to Dress Actors
 

@@ -217,6 +217,10 @@ EVERY clothing ISA OBJECT
   IS topcover 0.
   IS botcover 0.
 
+  -- >>> devworn >>> NOTE: -----------------------------------------------------
+  --     | Now 'donned' was added to EVERY THING (in lib_definitions.i) to allow
+  --     | checking for unworn items in custom loops, without needing 'wearing'
+  --     +----------------------------------------------------------------------
   IS NOT donned.  -- not in the 'wearing' set of any actor; this attribute
                   -- is used internally in the library; ignore
 
@@ -2316,11 +2320,14 @@ ADD TO EVERY ACTOR
             THEN "is"
             ELSE "are"
           END IF.
-          SET my_game:temp_cnt TO COUNT IsA object, DIRECTLY IN THIS, NOT IN wearing of THIS.
+          -- @NOTE: Try avoid using 'wearing' set: if is NOT donned it's carried:
+          SET my_game:temp_cnt TO COUNT IsA object, IS NOT donned, DIRECTLY IN THIS.
+       -- SET my_game:temp_cnt TO COUNT IsA object, DIRECTLY IN THIS, NOT IN wearing of THIS.
           IF  my_game:temp_cnt = 0
             THEN "empty-handed."
             ELSE "carrying"
-            FOR EACH carried_item ISA object, DIRECTLY IN THIS, NOT IN wearing of THIS
+            FOR EACH carried_item ISA object, IS NOT donned, DIRECTLY IN THIS
+         -- FOR EACH carried_item ISA object, DIRECTLY IN THIS, NOT IN wearing of THIS
               DO
                 SAY AN carried_item.
                 DECREASE my_game:temp_cnt.

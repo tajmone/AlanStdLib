@@ -27,6 +27,11 @@ fashion consumism.
 > ; This script is designed to test the 'WEAR'and 'REMOVE' verbs of the new
 > ; clothing system, which doesn't use the 'worn' entity any more to store clothes
 > ; worn by Hero.
+> ; ** NOTE ** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> ;            The new 'WEAR'and 'REMOVE' verbs only use `donned` to do their
+> ;            magic! No need to check 'wearing'set!
+> ;            (they do still set it, but don't use it in calculations)
+> ;            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 > north
 As you move toward the doors they automagically slide open before you.
 
