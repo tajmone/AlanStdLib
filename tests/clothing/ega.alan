@@ -742,6 +742,17 @@ EVENT Reactivate_Assistant
 END EVENT.
 
 --==============================================================================
+-- Personal Assistant Inventory
+--==============================================================================
+-- Let's give her some items to carry around too.
+
+THE priceslist IsA object IN personal_assistant.
+  NAME prices 'list'.
+  HAS ex "It's a very long list with all the prices of the clothes exposed at
+          the Emporium.".
+    
+END THE priceslist.
+--==============================================================================
 -- Personal Assistant Clothing
 --==============================================================================
 -- We'll dress her with some clothing items so that we can test how worn items
