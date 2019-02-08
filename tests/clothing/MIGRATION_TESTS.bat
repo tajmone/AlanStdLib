@@ -8,7 +8,16 @@ CHCP 28591 > nul
 
 ECHO COMPILING: ega.alan
 CALL alan.exe -import ..\..\ ega.alan
-ECHO TESTING:   MIGRATION_TESTS.a3sol
-CALL arun.exe -r ega.a3c < MIGRATION_TESTS.a3sol > MIGRATION_TESTS.a3log
+FOR %%i IN (MIGRATION_TESTS*.a3sol) DO (
+  ECHO TEST WITH:  %%i
+  CALL :ExecTest %%i
+  rem CALL arun.exe -r ega.a3c < MIGRATION_TESTS.a3sol > MIGRATION_TESTS.a3log
+ 
+)
 
 EXIT /B
+
+:ExecTest
+CALL arun.exe -r ega.a3c < %1 > %~n1.a3log
+EXIT /B
+
