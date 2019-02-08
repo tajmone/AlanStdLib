@@ -7,30 +7,33 @@ Some notes on the current work to attempt getting rid of `worn` to store Hero's 
 
 **Table of Contents**
 
-<!-- MarkdownTOC autolink="true" bracket="round" autoanchor="false" lowercase="only_ascii" uri_encoding="true" levels="1,2,3" -->
+<!-- MarkdownTOC autolink="true" bracket="round" autoanchor="false" lowercase="only_ascii" uri_encoding="true" levels="1,2,3,4" -->
 
 - [Introduction](#introduction)
 - [Development Plan and Status](#development-plan-and-status)
-    - [How The New System Works](#how-the-new-system-works)
-        - [Authors use `donned` to dress actors](#authors-use-donned-to-dress-actors)
-        - [Inventory listing](#inventory-listing)
-        - [Examining Actors](#examining-actors)
-- [Overview of `worn`](#overview-of-worn)
-- [Occurences of `worn` in The Library](#occurences-of-worn-in-the-library)
-    - [Clothing Initialization](#clothing-initialization)
-    - [Verbs `wear` and `remove`](#verbs-wear-and-remove)
-    - [The `worn_clothing_check` Event](#the-worn_clothing_check-event)
-    - [RunTime Messages](#runtime-messages)
-    - [Generic Verbs Referring to `worn`](#generic-verbs-referring-to-worn)
-        - [attack](#attack)
-        - [attack_with](#attack_with)
-        - [drop](#drop)
-        - [inventory](#inventory)
-        - [kick](#kick)
-        - [shoot](#shoot)
-        - [shoot_with](#shoot_with)
-        - [take](#take)
-        - [wear](#wear)
+    - [Development Tests](#development-tests)
+    - [Commented Annotations](#commented-annotations)
+- [The New Clothing System](#the-new-clothing-system)
+    - [Authors Should Now Use `Donned` to Dress Actors](#authors-should-now-use-donned-to-dress-actors)
+    - [Listing Inventory](#listing-inventory)
+    - [Examining Actors](#examining-actors)
+- [The Old Clothing System](#the-old-clothing-system)
+    - [Overview of `worn`](#overview-of-worn)
+    - [Occurences of `worn` in the Library](#occurences-of-worn-in-the-library)
+        - [Clothing Initialization](#clothing-initialization)
+        - [Verbs `wear` and `remove`](#verbs-wear-and-remove)
+        - [The `worn_clothing_check` Event](#the-worn_clothing_check-event)
+        - [RunTime Messages](#runtime-messages)
+        - [Generic Verbs Referring to `worn`](#generic-verbs-referring-to-worn)
+            - [attack](#attack)
+            - [attack_with](#attack_with)
+            - [drop](#drop)
+            - [inventory](#inventory)
+            - [kick](#kick)
+            - [shoot](#shoot)
+            - [shoot_with](#shoot_with)
+            - [take](#take)
+            - [wear](#wear)
 
 <!-- /MarkdownTOC -->
 
@@ -82,21 +85,37 @@ Due to `worn` being referenced in many parts of the library code, a well planned
 
 During the development stages the `worn` entity should be left in the library, to prevent compiler errors, until no more references to it are left in the library code.
 
+## Development Tests
+
 The clothing tests already present in the test suite should provide enough feedback on the impact that these changes will have on the library behavior. It's better not to commit changed tests transcripts for keeping the original output provides a better comparison to the upstream code behaviour — at least not until the tweaks are deemed as stable and there is a need to fine tuning.
 
-> __NOTE__ — I'll be adding a comment containing `devworn` to all the tweaked code, to make it easier to carry out search operations to spot the modified code sections before merging into master. I'll also be adding similar comments to any code that requires tweaking, as a reminder.
-> 
-> For now, I'll also be leaving a commented-out copy of the original code, enclosed in these comments:
-> 
-> ```
-> -- >>> original code >>>
-> ...
-> -- <<< original code <<<
-> ```
+A new test specifically designed to track and check the ongoing development has been added to this development branch:
 
-## How The New System Works
+- [`tests/clothing/MIGRATION_TESTS.a3sol`][MIGRATION_TESTS.a3sol]
+- [`tests/clothing/MIGRATION_TESTS.a3log`][MIGRATION_TESTS.a3log]
 
-### Authors use `donned` to dress actors
+With a custom batch script to quickly compile `ega.alan` and run this single test on it, without disturbing the original tests:
+
+- [`tests/clothing/MIGRATION_TESTS.bat`][MIGRATION_TESTS.bat] 
+
+## Commented Annotations
+
+I'll be adding a comment containing `devworn` to all the tweaked code, to make it easier to carry out search operations to spot the modified code sections before merging into master. I'll also be adding similar comments to any code that requires tweaking, as a reminder.
+
+For now, I'll also be leaving a commented-out copy of the original code, enclosed in these comments:
+
+```
+-- >>> original code >>>
+...
+-- <<< original code <<<
+```
+
+
+-------------------------------------------------------------------------------
+
+# The New Clothing System
+
+## Authors Should Now Use `Donned` to Dress Actors
 
 Because we don't have a separate `worn` container to store the Hero's worn items, authors will now define worn clothes in their adventures by placing them in the actor and marking them as `IS donned`. Example:
 
@@ -107,7 +126,7 @@ THE hero_shoes IsA cl_shoes IN hero
 
 The library will take care of all `donned` items during initialization of the `clothing` class, and ensure that they are also included in the `wearing` set of the actor.
 
-### Inventory listing
+## Listing Inventory
 
 The inventory/`i` verb has been rewritten to achieve the same results as before. But now it doesn't use `LIST` but custom loops that check for `clothing` and `donned`.
 
@@ -135,13 +154,15 @@ The inventory/`i` verb has been rewritten to achieve the same results as before.
 >     END IF.
 > ```
 
-### Examining Actors
+## Examining Actors
 
 Now examining an actor also produces two separate lists for carried and worn items, just like for Hero inventory. The system used is the same as for the inventory/`i` verb, so it relies only on `donned`.
 
 -------------------------------------------------------------------------------
 
-# Overview of `worn`
+# The Old Clothing System
+
+## Overview of `worn`
 
 The `worn` is a `entity` with container properties, defined in `lib_classes.i` (188):
 
@@ -154,11 +175,11 @@ END THE.
 ```
 
 
-# Occurences of `worn` in The Library
+## Occurences of `worn` in the Library
 
 I'll list here all the places of the library code which reference the `worn`, so that every occurence might be adjusted to work with the new system.
 
-## Clothing Initialization
+### Clothing Initialization
 
 In `lib_classes.i` (220, 230), initialization of `clothing` ensure that:
 
@@ -193,11 +214,11 @@ In `lib_classes.i` (220, 230), initialization of `clothing` ensure that:
                 END IF.
     ```
 
-## Verbs `wear` and `remove`
+### Verbs `wear` and `remove`
 
 Both the `wear` and `remove` verbs `lib_classes.i` (339, 476) rely heavily on clothing items being inside `worn` during their execution to make the necessary calculations on the currently worn items which might prevent the action (by blocking the various wearing layers).
 
-## The `worn_clothing_check` Event
+### The `worn_clothing_check` Event
 
 An every-turn event is defined in `lib_classes.i` (611) to ensure that clothing acquired by Hero in mid-game are correctly marked as `donned` and placed in `worn`
 
@@ -215,7 +236,7 @@ EVENT worn_clothing_check
               END IF.
 ```
 
-## RunTime Messages
+### RunTime Messages
 
 In `lib_messages.i` (41, 55, 71) the `worn` is referenced to customize listings of worn items:
 
@@ -277,21 +298,21 @@ In `lib_messages.i` (41, 55, 71) the `worn` is referenced to customize listings 
         "."
     ```
 
-## Generic Verbs Referring to `worn`
+### Generic Verbs Referring to `worn`
 
 Various verbs in `libs_verbs.i` also refer to `worn` and will have to be fixed accordingly:
 
 - [ ] `attack` (481)
 - [ ] `attack_with` (557)
 - [ ] `drop` (1964)
-- [ ] inventory/`i` (3385)
+- [x] inventory/`i` (3385)
 - [ ] `kick` (3550)
 - [ ] `shoot` (6314)
 - [ ] `shoot_with` (6393)
 - [ ] `take` (7178)
 - [ ] `wear` (8743)
 
-### attack
+#### attack
 
 - `attack` (481):
 
@@ -304,7 +325,7 @@ Various verbs in `libs_verbs.i` also refer to `worn` and will have to be fixed a
           ELSE SAY check_obj_not_in_worn2 OF my_game.
     ```
 
-### attack_with
+#### attack_with
 
 - `attack_with` (557):
 
@@ -319,7 +340,7 @@ Various verbs in `libs_verbs.i` also refer to `worn` and will have to be fixed a
 
     ```
 
-### drop
+#### drop
 
 - `drop` (1964):
 
@@ -336,7 +357,7 @@ Various verbs in `libs_verbs.i` also refer to `worn` and will have to be fixed a
                 END IF.
     ```
 
-### inventory
+#### inventory
 
 - inventory/`i` (3385):
 
@@ -353,7 +374,7 @@ Various verbs in `libs_verbs.i` also refer to `worn` and will have to be fixed a
         END IF.
     ```
 
-### kick
+#### kick
 
 - `kick` (3550):
 
@@ -367,7 +388,7 @@ Various verbs in `libs_verbs.i` also refer to `worn` and will have to be fixed a
           ELSE SAY check_obj_not_in_worn2 OF my_game.
     ```
 
-### shoot
+#### shoot
 
 - `shoot` (6314):
 
@@ -381,7 +402,7 @@ Various verbs in `libs_verbs.i` also refer to `worn` and will have to be fixed a
           ELSE SAY check_obj_not_in_worn2 OF my_game.
     ```
 
-### shoot_with
+#### shoot_with
 
 - `shoot_with` (6393):
 
@@ -397,7 +418,7 @@ Various verbs in `libs_verbs.i` also refer to `worn` and will have to be fixed a
     ```
 
 
-### take
+#### take
 
 - `take` (7178):
 
@@ -422,7 +443,7 @@ Various verbs in `libs_verbs.i` also refer to `worn` and will have to be fixed a
           END IF.
     ```
 
-### wear
+#### wear
 
 - `wear` (8743):
 
