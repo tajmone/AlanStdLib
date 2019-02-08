@@ -14,6 +14,7 @@ Some notes on the current work to attempt getting rid of `worn` to store Hero's 
     - [Development Tests](#development-tests)
     - [Commented Annotations](#commented-annotations)
 - [The New Clothing System](#the-new-clothing-system)
+    - [Trying to Use Only `donned`](#trying-to-use-only-donned)
     - [Authors Should Now Use `Donned` to Dress Actors](#authors-should-now-use-donned-to-dress-actors)
     - [Listing Inventory](#listing-inventory)
     - [Examining Actors](#examining-actors)
@@ -56,6 +57,10 @@ Due to `worn` being referenced in many parts of the library code, a well planned
     + [x]  [`tests/clothing/MIGRATION_TESTS_WEAR.a3sol`][MIGRATION_TESTS_WEAR.a3sol]
     + [x]  [`tests/clothing/MIGRATION_TESTS_WEAR.a3log`][MIGRATION_TESTS_WEAR.a3log]
     + [x]  [`tests/clothing/MIGRATION_TESTS.bat`][MIGRATION_TESTS.bat] — convenience batch to compile EGA and execute only tests named `MIGRATION_TESTS*.a3sol` (prevents cluttering Git with other logs, and it's faster).
+- [ ] Try not using `wearing` — since we might handle clothing without using `wearing` set at all, try not using it if `donned` can be used:
+    + [ ] Keep updating the `wearing` set anyhow but try using just `donned` for checks, instead of `wearing` in:
+        * [ ] Tweak inventory/`i` verb.
+        * [x] `wear`/`remove` verbs.
 - [ ] Disable handling Hero's worn items via `worn`:
     + [x] Tweak initialization of `clothing` class:
         * [x] Remove handling Hero differently.
@@ -121,6 +126,21 @@ For now, I'll also be leaving a commented-out copy of the original code, enclose
 -------------------------------------------------------------------------------
 
 # The New Clothing System
+
+## Trying to Use Only `donned`
+
+Chances are that all clothing operations, checks and status updates can be done via `donned`, based on the following assumptions:
+
+- For an item to be worn _it must_ be inside an ACTOR, therefore:
+    + Iterating over an ACTOR's contained-clothing is safer than relying on a list (the `wearing` set) which might have not been correctly updated.
+    + A clothing item DIRECTLY IN an ACTOR is either:
+        * `donned` — then it's worn.
+        * `NOT donned` — then it's just a carried item.
+        That's really all we need to know about clothing items.
+- Items outside ACTORS should never be `donned`, but even if they (accidently) are, they will not be considered when iterating through the clothing items IN an actor (so they should never be seen as being worn, regardless of the wrong value of `donned`)
+- Having to control a single boolean attribute is going to make maintainance of code easier for both the library and end user adventures authors.
+
+So, right now I'm still ensuring that all clothing-handling code updates the `wearing` attribute correctly, but I'm also trying not to rely on it inside loops and other checks, to see if we can dispose of it. So, if we encounter a situation which requires use of the `wearing` set, it's still there, but if we end up doing without out we only have to remove all references to it.
 
 ## Authors Should Now Use `Donned` to Dress Actors
 
