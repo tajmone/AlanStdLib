@@ -191,8 +191,12 @@ THE worn ISA ENTITY
     ELSE   SAY my_game:hero_worn_else.
 END THE.
 
+-- >>> devworn >>> added:
 
-
+-- TODO: Move somewhere else before merging into master!
+ADD TO EVERY definition_block
+  HAS temp_cnt 0.             --> temporary counter used by the library - ignore.
+END ADD TO definition_block.
 
 
 -------------------------------------------------------------------

@@ -12,6 +12,8 @@ Some notes on the current work to attempt getting rid of `worn` to store Hero's 
 - [Introduction](#introduction)
 - [Development Plan and Status](#development-plan-and-status)
     - [How The New System Works](#how-the-new-system-works)
+        - [Authors use `donned` to dress actors](#authors-use-donned-to-dress-actors)
+        - [Inventory listing](#inventory-listing)
 - [Overview of `worn`](#overview-of-worn)
 - [Occurences of `worn` in The Library](#occurences-of-worn-in-the-library)
     - [Clothing Initialization](#clothing-initialization)
@@ -57,9 +59,15 @@ Due to `worn` being referenced in many parts of the library code, a well planned
         * [x] Remove handling Hero differently.
         * [x] Remove any reference to `worn`.
         * [x] Just ensure that any clothing _directly in_ an actor and `donned` is added to `wearing` set of the actor.
+    + [x] Tweak inventory/`i` verb:
+        * [x] Produce two separate lists for carried and worn items.
+        * [x] Use custom loops instead of `LIST`.
+        * [x] Ensure correct usage items separators:
+            - [x] "`,`" — comma for multiple items from 2nd to 2nd-last.
+            - [x] "`and`" — between 2nd-last and last.
+            - [x] "`.`" — after last.
     + [ ] Tweak `wear` and `remove` verbs in `lib_classes.i`.
     + [ ] Tweak [RunTime messages] in `lib_messages.i`.
-    + [ ] Tweak inventory/`i` verb.
 - [ ] Fix all [verbs in `lib_verbs.i` referencing `worn`][worn verbs].
 - [ ] Check that there are no leftover references to `worn` in the library.
 - [ ] Delete definition of `worn` entity.
@@ -80,6 +88,8 @@ The clothing tests already present in the test suite should provide enough feedb
 
 ## How The New System Works
 
+### Authors use `donned` to dress actors
+
 Because we don't have a separate `worn` container to store the Hero's worn items, authors will now define worn clothes in their adventures by placing them in the actor and marking them as `IS donned`. Example:
 
 ```alan
@@ -88,6 +98,35 @@ THE hero_shoes IsA cl_shoes IN hero
 ```
 
 The library will take care of all `donned` items during initialization of the `clothing` class, and ensure that they are also included in the `wearing` set of the actor.
+
+### Inventory listing
+
+The inventory/`i` verb has been rewritten to achieve the same results as before. But now it doesn't use `LIST` but custom loops that check for `clothing` and `donned`.
+
+> __NOTE__ — The inventory doesn't use `wearing` at all, just `donned`:
+> 
+> ```alan
+>     -- -----------------
+>     -- List worn clothes
+>     -- -----------------
+>     SET my_game:temp_cnt TO COUNT IsA CLOTHING, DIRECTLY IN Hero, IS donned.
+>     IF  my_game:temp_cnt = 0
+>       THEN SAY my_game:hero_worn_else.  --> "You are not wearing anything."
+>     ELSE
+>       SAY my_game:hero_worn_header.     --> "You are wearing"
+>       FOR EACH worn_item IsA CLOTHING, DIRECTLY IN Hero, IS donned
+>         DO
+>           SAY AN worn_item.
+>           DECREASE my_game:temp_cnt.
+>           DEPENDING ON my_game:temp_cnt
+>             = 1 THEN "and"
+>             = 0 THEN "."
+>             ELSE ","
+>           End Depend.
+>       END FOR.
+>     END IF.
+> ```
+
 
 # Overview of `worn`
 

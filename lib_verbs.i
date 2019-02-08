@@ -3387,11 +3387,58 @@ VERB i
     ELSE SAY restricted_response OF my_game.
 
   DOES
-    LIST hero.
+-- >>> devworn >>> tweaked: new method for listing separately carried and worn.
+    -- ------------------
+    -- List carried items
+    -- ------------------
+    SET my_game:temp_cnt TO COUNT IsA object, DIRECTLY IN Hero, NOT IN wearing of Hero.
+    IF  my_game:temp_cnt = 0
+      THEN "You are empty-handed."
+    ELSE
+      "You're carrying"
+      FOR EACH carried_item ISA object, DIRECTLY IN Hero, NOT IN wearing of Hero
+        DO
+          SAY AN carried_item.
+          DECREASE my_game:temp_cnt.
+          DEPENDING ON my_game:temp_cnt
+            = 1 THEN "and"
+            = 0 THEN "."
+            ELSE ","
+          End Depend.
 
-    IF COUNT DIRECTLY IN worn > 0   -- See the file 'classes.i', subclass 'clothing'.
-      THEN LIST worn.     -- This code will list what the hero is wearing.
+      END FOR.
     END IF.
+    -- -----------------
+    -- List worn clothes
+    -- -----------------
+    SET my_game:temp_cnt TO COUNT IsA CLOTHING, DIRECTLY IN Hero, IS donned.
+    IF  my_game:temp_cnt = 0
+      THEN SAY my_game:hero_worn_else.  --> "You are not wearing anything."
+    ELSE
+      SAY my_game:hero_worn_header.     --> "You are wearing"
+      FOR EACH worn_item IsA CLOTHING, DIRECTLY IN Hero, IS donned
+        DO
+          SAY AN worn_item.
+          DECREASE my_game:temp_cnt.
+          DEPENDING ON my_game:temp_cnt
+            = 1 THEN "and"
+            = 0 THEN "."
+            ELSE ","
+          End Depend.
+      END FOR.
+    END IF.
+    -- IF COUNT IsA CLOTHING, DIRECTLY IN Hero, IS donned = 0
+    -- FOR EACH cl ISA CLOTHING, DIRECTLY IN ac, IS donned
+    --   DO INCLUDE cl IN wearing OF ac.
+    -- END FOR.
+
+-- >>> original code >>>
+    -- LIST hero.
+
+    -- IF COUNT DIRECTLY IN worn > 0   -- See the file 'classes.i', subclass 'clothing'.
+    --   THEN LIST worn.     -- This code will list what the hero is wearing.
+    -- END IF.
+-- <<< original code <<<
 
 END VERB i.
 

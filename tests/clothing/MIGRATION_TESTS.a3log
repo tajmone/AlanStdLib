@@ -32,7 +32,7 @@ As you move toward the doors they automagically slide open before you.
 Emporium Alani Main Hall
 This luxurious hall is the crossroad to the various clothing departments
 of the emporium. Two large brass doors lead the way south, out of the
-fashion temple and back into the world of mortal souls.There is your
+fashion temple and back into the world of mortal souls. There is your
 personal assistant here.
 
 > ; ==============================================================================
@@ -45,9 +45,8 @@ personal assistant here.
 > ; HERO'S CLOTHING -> OK!
 > ; ------------------------------------------------------------------------------
 > inventory
-You are carrying your undershirt (being worn), your sneakers (being worn), 
-your khakis (being worn), your boxers (being worn) and your socks (being
-worn).
+You are empty-handed. You are wearing your socks, your boxers, your 
+undershirt, your sneakers and your khakis.
 
 > DBG sneakers
 'sneakers' VALUES: | feetcover: 4 | 
@@ -110,14 +109,148 @@ IN WORN: No.
 IN WEARING OF:
 
 > ; ==============================================================================
-> ; CLOTHES LISTINGS      ( WIP )
+> ; CLOTHES LISTINGS: HERO 
 > ; ==============================================================================
-> ; Currently taking inventory doesn't show two separate lists for carried and
-> ; worn items. Still needs to be implemented:
+> ; Now taking inventory shows two separate lists for carried and worn items.
+> ; 
+> ; ** NOTE ** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> ;            This is achieved via two custom loops (no LIST used) and only
+> ;            checking if carried items are 'clothing' and 'donned'.
+> ;            (no use of 'wearing' set)
+> ; ------------------------------------------------------------------------------
+> ; HERO INVENTORY -> Empty handed + Wears many clothes
+> ; ------------------------------------------------------------------------------
+> ; If Hero is not carrying anything, should report "empty-handed" message:
 > inventory
-You are carrying your undershirt (being worn), your sneakers (being worn), 
-your khakis (being worn), your boxers (being worn) and your socks (being
-worn).
+You are empty-handed. You are wearing your socks, your boxers, your 
+undershirt, your sneakers and your khakis.
+
+> ; ** NOTE ** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> ;            "empty-handed" would be better without hyphen!
+> ;            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> take wallet
+Taken.
+
+> ; ------------------------------------------------------------------------------
+> ; HERO INVENTORY -> Carries one item + Wears many clothes
+> ; ------------------------------------------------------------------------------
+> ; Check correct handling of single item (no "," nor "and"):
+> inventory
+You're carrying your wallet. You are wearing your socks, your boxers, your 
+undershirt, your sneakers and your khakis.
+
+> north
+The Dressing Room
+The curtains surrounding this room provide you all the privacy you need
+to disrobe yourself and try on clothing. There is a chair, a basket, a
+pair of dungarees, a skirt, a pair of white pantyhose and a pair of jeans 
+here.
+
+> put dungarees in basket
+You put the dungarees into the basket.
+
+> take basket
+Taken.
+
+> ; ------------------------------------------------------------------------------
+> ; HERO INVENTORY -> Carries two item + Wears many clothes
+> ; ------------------------------------------------------------------------------
+> ; Check correct reporting using "and" between two items:
+> inventory
+You're carrying a basket and your wallet. You are wearing your socks, your 
+boxers, your undershirt, your sneakers and your khakis.
+
+> take skirt
+Taken.
+
+> ; ------------------------------------------------------------------------------
+> ; HERO INVENTORY -> Carries many item + Wears many clothes
+> ; ------------------------------------------------------------------------------
+> ; Check that multiple items are comma separated except last ("and"):
+> inventory
+You're carrying a basket, a skirt and your wallet. You are wearing your 
+socks, your boxers, your undershirt, your sneakers and your khakis.
+
+> take chair
+Taken.
+
+> inventory
+You're carrying a chair, a basket, a skirt and your wallet. You are
+wearing your socks, your boxers, your undershirt, your sneakers and your 
+khakis.
+
+> ; ** NOTE ** Using 'drop' here until 'remove' is fixed!
+> drop sneakers
+Dropped.
+
+> drop khakis
+Dropped.
+
+> drop undershirt
+Dropped.
+
+> drop chair
+Dropped.
+
+> drop basket
+Dropped.
+
+> drop skirt
+Dropped.
+
+> drop wallet
+Dropped.
+
+> ; ------------------------------------------------------------------------------
+> ; HERO INVENTORY -> Empty handed + Wears two clothes
+> ; ------------------------------------------------------------------------------
+> ; Check that the 2 worn items are "and" separated:
+> inventory
+You are empty-handed. You are wearing your socks and your boxers.
+
+> drop socks
+Dropped.
+
+> ; ------------------------------------------------------------------------------
+> ; HERO INVENTORY -> Empty handed + Wears one clothing
+> ; ------------------------------------------------------------------------------
+> ; Check that single worn item is followed by "." (no "," or "and"):
+> inventory
+You are empty-handed. You are wearing your boxers.
+
+> drop boxers
+Dropped.
+
+> ; ------------------------------------------------------------------------------
+> ; HERO INVENTORY -> Empty handed + Wears nothing
+> ; ------------------------------------------------------------------------------
+> inventory
+You are empty-handed. You are not wearing anything.
+
+> ; ** NOTE ** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> ;            When the Hero is wearing nothing it might be best not to mention
+> ;            "You are not wearing anything" because in games that won't be using
+> ;            clothing it would be a useless messages. Not mentioning worn items
+> ;            should be enough.
+> ;            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> ; ==============================================================================
+> ; CLOTHES LISTINGS: NPC  ( WIP )
+> ; ==============================================================================
+> ; Currently examining actors doesn't show two separate lists for carried and
+> ; worn items. Still needs to be implemented.
+> south
+Emporium Alani Main Hall
+This luxurious hall is the crossroad to the various clothing departments
+of the emporium. Two large brass doors lead the way south, out of the
+fashion temple and back into the world of mortal souls. There is your
+personal assistant here.
+
+> ; ------------------------------------------------------------------------------
+> ; NPC EXAMINE
+> ; ------------------------------------------------------------------------------
+> examine assistant
+She's your personal shopping assistant. The assistant is carrying a pair
+of fashion boots (being worn) and a uniform (being worn).
 
 > ; ==============================================================================
 > ; WEARING & REMOVING    ( WIP )
