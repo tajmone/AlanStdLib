@@ -1,0 +1,197 @@
+
+
+Emporium Giorgio Alani 
+An adventure to test clothing. 
+(C) 2018 by Tristano Ajmone 
+Programmed with the ALAN Interactive Fiction Language v3.0beta6 build 1866
+.
+Standard Library v2.1 
+Version 1 
+All rights reserved. 
+
+Type EXITS to view the list of exits of a room. 
+Use the DBG command (DGB <ITEM NAME>) to show the coverage values of any
+clothing item.
+
+
+Outside Emporium Alani
+You're standing in front of the Giorgio Alani Emporium entrance. Two
+large brass doors await northward your entrance into the sanctuary of
+fashion consumism.
+
+> ; ******************************************************************************
+> ; *                                                                            *
+> ; *                   TEST NEW CLOTHING SYSTEM: WEAR/REMOVE                    *
+> ; *                                                                            *
+> ; ******************************************************************************
+> ; This script is designed to test the 'WEAR'and 'REMOVE' verbs of the new
+> ; clothing system, which doesn't use the 'worn' entity any more to store clothes
+> ; worn by Hero.
+> north
+As you move toward the doors they automagically slide open before you.
+
+Emporium Alani Main Hall
+This luxurious hall is the crossroad to the various clothing departments
+of the emporium. Two large brass doors lead the way south, out of the
+fashion temple and back into the world of mortal souls.There is your
+personal assistant here.
+
+> north
+The Dressing Room
+The curtains surrounding this room provide you all the privacy you need
+to disrobe yourself and try on clothing. There is a chair, a basket, a
+pair of dungarees, a skirt, a pair of white pantyhose and a pair of jeans 
+here.
+
+> inventory
+You are empty-handed. You are wearing your socks, your boxers, your 
+undershirt, your sneakers and your khakis.
+
+> ; ==============================================================================
+> ; CAN'T WEAR ITEMS
+> ; ==============================================================================
+> wear skirt
+You pick up the skirt. In order to wear the skirt you should remove
+something first. You are wearing your socks, your boxers, your undershirt, 
+your sneakers and your khakis.
+
+> wear dungarees
+You pick up the dungarees. In order to wear the dungarees you should
+remove something first. You are wearing your socks, your boxers, your 
+undershirt, your sneakers and your khakis.
+
+> wear pantyhose
+You pick up the white pantyhose. In order to wear the white pantyhose you
+should remove something first. You are wearing your socks, your boxers, 
+your undershirt, your sneakers and your khakis.
+
+> wear jeans
+You pick up the jeans. In order to wear the jeans you should remove
+something first. You are wearing your socks, your boxers, your undershirt, 
+your sneakers and your khakis.
+
+> ; ==============================================================================
+> ; CAN'T REMOVE ITEMS
+> ; ==============================================================================
+> remove socks
+In order to remove your socks you should remove something first. You are
+wearing your socks, your boxers, your undershirt, your sneakers and your 
+khakis.
+
+> DBG socks
+'socks' VALUES: | feetcover: 2 | 
+DONNED: Yes 
+IN WORN: No. 
+IN WEARING OF: | hero
+
+> remove boxers
+In order to remove your boxers you should remove something first. You are
+wearing your socks, your boxers, your undershirt, your sneakers and your 
+khakis.
+
+> DBG boxers
+'boxers' VALUES: | botcover: 2 | 
+DONNED: Yes 
+IN WORN: No. 
+IN WEARING OF: | hero
+
+> ; ==============================================================================
+> ; REMOVE ITEMS
+> ; ==============================================================================
+> remove sneakers
+You take off your sneakers.
+
+> DBG sneakers
+'sneakers' VALUES: | feetcover: 4 | 
+DONNED: No. 
+IN WORN: No. 
+IN WEARING OF:
+
+> remove socks
+You take off your socks.
+
+> DBG socks
+'socks' VALUES: | feetcover: 2 | 
+DONNED: No. 
+IN WORN: No. 
+IN WEARING OF:
+
+> remove khakis
+You take off your khakis.
+
+> DBG khakis
+'khakis' VALUES: | botcover: 16 | 
+DONNED: No. 
+IN WORN: No. 
+IN WEARING OF:
+
+> remove boxers
+You take off your boxers.
+
+> DBG boxers
+'boxers' VALUES: | botcover: 2 | 
+DONNED: No. 
+IN WORN: No. 
+IN WEARING OF:
+
+> remove undershirt
+You take off your undershirt.
+
+> DBG undershirt
+'undershirt' VALUES: | topcover: 2 | 
+DONNED: No. 
+IN WORN: No. 
+IN WEARING OF:
+
+> ; ==============================================================================
+> ; WEAR ITEMS
+> ; ==============================================================================
+> wear dungarees
+You put on the dungarees.
+
+> DBG dungarees
+'dungarees' VALUES: | topcover: 8 | botcover: 32 | 
+DONNED: Yes 
+IN WORN: No. 
+IN WEARING OF: | hero
+
+> remove dungarees
+You take off the dungarees.
+
+> wear jeans
+You put on the jeans.
+
+> DBG jeans
+'jeans' VALUES: | botcover: 16 | 
+DONNED: Yes 
+IN WORN: No. 
+IN WEARING OF: | hero
+
+> remove jeans
+You take off the jeans.
+
+> ; ==============================================================================
+> ; WEAR ITEMS -> Skirt THEN Pantyhose
+> ; ==============================================================================
+> ; Check that the old system of skirt exception still works:
+> wear skirt
+You put on the skirt.
+
+> DBG skirt
+'skirt' VALUES: | botcover: 32 | 
+DONNED: Yes 
+IN WORN: No. 
+IN WEARING OF: | hero
+
+> wear pantyhose
+You put on the white pantyhose.
+
+> DBG pantyhose
+'white pantyhose' VALUES: | botcover: 8 | 
+DONNED: Yes 
+IN WORN: No. 
+IN WEARING OF: | hero
+
+> 
+
+Do you want to RESTART, RESTORE, QUIT or UNDO? 

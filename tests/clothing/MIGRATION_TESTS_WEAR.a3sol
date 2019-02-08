@@ -1,0 +1,60 @@
+; ******************************************************************************
+; *                                                                            *
+; *                   TEST NEW CLOTHING SYSTEM: WEAR/REMOVE                    *
+; *                                                                            *
+; ******************************************************************************
+; This script is designed to test the 'WEAR'and 'REMOVE' verbs of the new
+; clothing system, which doesn't use the 'worn' entity any more to store clothes
+; worn by Hero.
+; ** NOTE ** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+;            The new 'WEAR'and 'REMOVE' verbs only use `donned` to do their
+;            magic! No need to check 'wearing'set!
+;            (they do still set it, but don't use it in calculations)
+;            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+north
+north
+inventory
+; ==============================================================================
+; CAN'T WEAR ITEMS
+; ==============================================================================
+wear skirt
+wear dungarees
+wear pantyhose
+wear jeans
+; ==============================================================================
+; CAN'T REMOVE ITEMS
+; ==============================================================================
+remove socks
+DBG socks
+remove boxers
+DBG boxers
+; ==============================================================================
+; REMOVE ITEMS
+; ==============================================================================
+remove sneakers
+DBG sneakers
+remove socks
+DBG socks
+remove khakis
+DBG khakis
+remove boxers
+DBG boxers
+remove undershirt
+DBG undershirt
+; ==============================================================================
+; WEAR ITEMS
+; ==============================================================================
+wear dungarees
+DBG dungarees
+remove dungarees
+wear jeans
+DBG jeans
+remove jeans
+; ==============================================================================
+; WEAR ITEMS -> Skirt THEN Pantyhose
+; ==============================================================================
+; Check that the old system of skirt exception still works:
+wear skirt
+DBG skirt
+wear pantyhose
+DBG pantyhose

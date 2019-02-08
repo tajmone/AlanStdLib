@@ -308,8 +308,7 @@ EVERY clothing ISA OBJECT
 
 
 
-    VERB wear
-
+  VERB wear
     CHECK sex OF THIS = sex OF hero OR sex OF THIS = 0
       ELSE SAY check_clothing_sex OF my_game.
 
@@ -334,8 +333,7 @@ EVERY clothing ISA OBJECT
 
 
     IF THIS NOT IN hero
-      THEN
-        SET wear_flag OF hero TO 1.
+      THEN SET wear_flag OF hero TO 1.
     END IF.
 
 
@@ -354,10 +352,14 @@ EVERY clothing ISA OBJECT
 -- 5 to the 'wear_flag' attribute as an indicator this test failed.
 --------------------------------------------------------------------
 
+    -- >>> original code >>>
+    -- IF topcover OF THIS <> 0 AND topcover OF THIS <= SUM OF topcover DIRECTLY IN worn
+    -- <<< original code <<<
 
-    IF topcover OF THIS <> 0 AND topcover OF THIS <= SUM OF topcover DIRECTLY IN worn
-      THEN
-        INCREASE wear_flag OF hero BY 5.
+    -- >>> devworn >>> tweaked:
+    IF  topcover OF THIS <> 0
+    AND topcover OF THIS <= SUM OF topcover IsA CLOTHING, DIRECTLY IN hero, IS donned
+      THEN INCREASE wear_flag OF hero BY 5.
     END IF.
 
 
@@ -365,22 +367,36 @@ EVERY clothing ISA OBJECT
 -- Perform a similar test for other attributes.
 --------------------------------------------------------------------
 
+    -- >>> original code >>>
+    -- IF handscover OF THIS <> 0 AND handscover OF THIS <= SUM OF handscover DIRECTLY IN worn
+    -- <<< original code <<<
 
-    IF handscover OF THIS <> 0 AND handscover OF THIS <= SUM OF handscover DIRECTLY IN worn
-      THEN
-        INCREASE wear_flag OF hero BY 5.
+    -- >>> devworn >>> tweaked:
+    IF  handscover OF THIS <> 0
+    AND handscover OF THIS <= SUM OF handscover IsA CLOTHING, DIRECTLY IN hero, IS donned
+      THEN INCREASE wear_flag OF hero BY 5.
     END IF.
 
 
-    IF feetcover OF THIS <> 0 AND feetcover OF THIS <= SUM OF feetcover DIRECTLY IN worn
-      THEN
-        INCREASE wear_flag OF hero BY 5.
+    -- >>> original code >>>
+    -- IF feetcover OF THIS <> 0 AND feetcover OF THIS <= SUM OF feetcover DIRECTLY IN worn
+    -- <<< original code <<<
+
+    -- >>> devworn >>> tweaked:
+    IF  feetcover OF THIS <> 0
+    AND feetcover OF THIS <= SUM OF feetcover IsA CLOTHING, DIRECTLY IN hero, IS donned
+      THEN INCREASE wear_flag OF hero BY 5.
     END IF.
 
 
-    IF headcover OF THIS <> 0 AND headcover OF THIS <= SUM OF headcover DIRECTLY IN worn
-      THEN
-        INCREASE wear_flag OF hero BY 5.
+    -- >>> original code >>>
+    -- IF headcover OF THIS <> 0 AND headcover OF THIS <= SUM OF headcover DIRECTLY IN worn
+    -- <<< original code <<<
+
+    -- >>> devworn >>> tweaked:
+    IF  headcover OF THIS <> 0
+    AND headcover OF THIS <= SUM OF headcover IsA CLOTHING, DIRECTLY IN hero, IS donned
+      THEN INCREASE wear_flag OF hero BY 5.
     END IF.
 
 
@@ -392,11 +408,15 @@ EVERY clothing ISA OBJECT
 --------------------------------------------------------------------
 
 
-    SET tempcovered OF hero TO SUM OF botcover DIRECTLY IN worn.
+    -- >>> original code >>>
+    -- SET tempcovered OF hero TO SUM OF botcover DIRECTLY IN worn.
+    -- <<< original code <<<
 
-    IF tempcovered OF hero >63 and botcover OF THIS < 33
-      THEN
-        SET tempcovered OF hero TO tempcovered OF hero -64.
+    -- >>> devworn >>> tweaked:
+    SET tempcovered OF hero TO SUM OF botcover IsA CLOTHING, DIRECTLY IN hero, IS donned.
+
+    IF tempcovered OF hero >63 AND botcover OF THIS < 33
+      THEN SET tempcovered OF hero TO tempcovered OF hero -64.
     END IF.
 
 
@@ -410,9 +430,8 @@ EVERY clothing ISA OBJECT
 --------------------------------------------------------------------
 
 
-    IF tempcovered OF hero >31 AND botcover OF THIS < 16 and botcover OF THIS <> 4
-      THEN
-        SET tempcovered OF hero TO tempcovered OF hero -32.
+    IF tempcovered OF hero >31 AND botcover OF THIS < 16 AND botcover OF THIS <> 4
+      THEN SET tempcovered OF hero TO tempcovered OF hero -32.
     END IF.
 
 
@@ -424,8 +443,7 @@ EVERY clothing ISA OBJECT
 
 
     IF tempcovered OF hero >15 AND botcover OF THIS > 16
-      THEN
-        SET tempcovered OF hero TO tempcovered OF hero +16.
+      THEN SET tempcovered OF hero TO tempcovered OF hero +16.
     END IF.
 
 
@@ -434,9 +452,8 @@ EVERY clothing ISA OBJECT
 --------------------------------------------------------------------
 
 
-    IF botcover OF THIS <> 0  AND botcover OF THIS <= tempcovered OF hero
-      THEN
-        INCREASE wear_flag OF hero BY 5.
+    IF botcover OF THIS <> 0 AND botcover OF THIS <= tempcovered OF hero
+      THEN INCREASE wear_flag OF hero BY 5.
     END IF.
 
 
@@ -460,15 +477,44 @@ EVERY clothing ISA OBJECT
         LOCATE THIS IN hero.
         -- <<< implicit taking. <<<
 
-        LIST worn.
-        "Trying to put" SAY THE THIS. "on isn't very sensible."
+-- >>> original code >>>
+        -- LIST worn.
+        -- 
+        -- "Trying to put" SAY THE THIS. "on isn't very sensible."
+-- <<< original code <<<
 
+        -- >>> devworn >>> tweaked:
+        "In order to wear $+1 you should remove something first."
+        -- -----------------
+        -- List worn clothes
+        -- -----------------
+        -- >>> devworn >>> TODO: Should list only blocking clothes really!
+
+        SET my_game:temp_cnt TO COUNT IsA CLOTHING, DIRECTLY IN Hero, IS donned.
+        IF  my_game:temp_cnt = 0
+          THEN SAY my_game:hero_worn_else.  --> "You are not wearing anything."
+          ELSE
+            SAY my_game:hero_worn_header.     --> "You are wearing"
+            FOR EACH worn_item IsA CLOTHING, DIRECTLY IN Hero, IS donned
+              DO
+                SAY AN worn_item.
+                DECREASE my_game:temp_cnt.
+                DEPENDING ON my_game:temp_cnt
+                  = 1 THEN "and"
+                  = 0 THEN "."
+                  ELSE ","
+                End Depend.
+            END FOR.
+        END IF.
+        -- <<<
       ELSE
         -- -----------------------------
         -- The clothing item can be worn
         -- -----------------------------
         MAKE THIS donned.
-        LOCATE THIS IN worn.
+        -- >>> original code >>>
+        -- LOCATE THIS IN worn.
+        -- <<< original code <<<
         INCLUDE THIS IN wearing OF hero.
         IF wear_flag OF hero = 1
           THEN
@@ -488,19 +534,26 @@ EVERY clothing ISA OBJECT
           END IF.
     END IF.
 
-END VERB wear.
+  END VERB wear.
 
 
 
-VERB remove
-  CHECK THIS IN worn
-    ELSE SAY check_obj_in_worn OF my_game.
-  AND CURRENT LOCATION IS lit
-    ELSE SAY check_current_loc_lit OF my_game.
+  VERB remove
+    -- >>> original code >>>
+    -- CHECK THIS IN worn
+    --   ELSE SAY check_obj_in_worn OF my_game.
+    -- <<< original code <<<
 
-  DOES ONLY
+    -- >>> devworn >>> tweaked:
+    CHECK THIS DIRECTLY IN hero AND THIS IS donned
+      ELSE SAY check_obj_in_worn OF my_game.
+    -- <<<
+    AND CURRENT LOCATION IS lit
+      ELSE SAY check_current_loc_lit OF my_game.
 
-  SET wear_flag OF hero TO 0.
+    DOES ONLY
+
+      SET wear_flag OF hero TO 0.
 
 
 --------------------------------------------------------------------
@@ -515,11 +568,15 @@ VERB remove
 --------------------------------------------------------------------
 
 
-  SET tempcovered OF hero TO SUM OF topcover DIRECTLY IN worn /2.
-  IF topcover OF THIS <> 0 AND topcover OF THIS < tempcovered OF hero
-    THEN
-    INCREASE wear_flag OF hero BY 1.
-  END IF.
+      -- >>> original code >>>
+      -- <<< original code <<<
+
+      -- >>> devworn >>> tweaked:
+      SET tempcovered OF hero TO SUM OF topcover DIRECTLY IN worn /2.
+      IF topcover OF THIS <> 0 AND topcover OF THIS < tempcovered OF hero
+        THEN
+        INCREASE wear_flag OF hero BY 1.
+      END IF.
 
 
 --------------------------------------------------------------------
@@ -527,25 +584,41 @@ VERB remove
 --------------------------------------------------------------------
 
 
-  SET tempcovered OF hero TO SUM OF handscover DIRECTLY IN worn /2.
-  IF handscover OF THIS <> 0 AND handscover OF THIS < tempcovered OF hero
-    THEN
-      INCREASE wear_flag OF hero BY 1.
-  END IF.
+      -- >>> original code >>>
+      -- SET tempcovered OF hero TO SUM OF handscover DIRECTLY IN worn /2.
+      -- <<< original code <<<
 
+      -- >>> devworn >>> tweaked:
+      SET tempcovered OF hero TO
+      SUM OF handscover IsA CLOTHING, DIRECTLY IN hero, IS donned /2.
+      IF handscover OF THIS <> 0 AND handscover OF THIS < tempcovered OF hero
+        THEN
+          INCREASE wear_flag OF hero BY 1.
+      END IF.
 
-  SET tempcovered OF hero TO SUM OF feetcover DIRECTLY IN worn /2.
-  IF feetcover OF THIS <> 0 AND feetcover OF THIS < tempcovered OF hero
-    THEN
-      INCREASE wear_flag OF hero BY 1.
-  END IF.
+      -- >>> original code >>>
+      -- SET tempcovered OF hero TO SUM OF feetcover DIRECTLY IN worn /2.
+      -- <<< original code <<<
 
+      -- >>> devworn >>> tweaked:
+      SET tempcovered OF hero TO
+      SUM OF feetcover IsA CLOTHING, DIRECTLY IN hero, IS donned /2.
+      IF feetcover OF THIS <> 0 AND feetcover OF THIS < tempcovered OF hero
+        THEN
+          INCREASE wear_flag OF hero BY 1.
+      END IF.
 
-  SET tempcovered OF hero TO SUM OF headcover DIRECTLY IN worn /2.
-  IF headcover OF THIS <> 0 AND headcover OF THIS < tempcovered OF hero
-    THEN
-      INCREASE wear_flag OF hero BY 1.
-  END IF.
+      -- >>> original code >>>
+      -- SET tempcovered OF hero TO SUM OF headcover DIRECTLY IN worn /2.
+      -- <<< original code <<<
+
+      -- >>> devworn >>> tweaked:
+      SET tempcovered OF hero TO
+      SUM OF headcover IsA CLOTHING, DIRECTLY IN hero, IS donned /2.
+      IF headcover OF THIS <> 0 AND headcover OF THIS < tempcovered OF hero
+        THEN
+          INCREASE wear_flag OF hero BY 1.
+      END IF.
 
 
 --------------------------------------------------------------------
@@ -553,12 +626,18 @@ VERB remove
 -- as these do not affect ability to take off other lower garments.
 --------------------------------------------------------------------
 
+      -- >>> original code >>>
+      -- SET tempcovered OF hero TO SUM OF botcover DIRECTLY IN worn.
+      -- <<< original code <<<
 
-  SET tempcovered OF hero TO SUM OF botcover DIRECTLY IN worn.
-  IF tempcovered OF hero >63
-    THEN
-      SET tempcovered OF hero TO tempcovered OF hero -64.
-  END IF.
+      -- >>> devworn >>> tweaked:
+
+      SET tempcovered OF hero TO
+      SUM OF botcover IsA CLOTHING, DIRECTLY IN hero, IS donned.
+      IF tempcovered OF hero >63
+        THEN
+          SET tempcovered OF hero TO tempcovered OF hero -64.
+      END IF.
 
 
 --------------------------------------------------------------------
@@ -568,10 +647,10 @@ VERB remove
 --------------------------------------------------------------------
 
 
-  IF tempcovered OF hero >31 and botcover OF THIS <>4
-    THEN
-      SET tempcovered OF hero TO tempcovered OF hero -32.
-  END IF.
+      IF tempcovered OF hero >31 and botcover OF THIS <>4
+        THEN
+          SET tempcovered OF hero TO tempcovered OF hero -32.
+      END IF.
 
 
 --------------------------------------------------------------------
@@ -579,11 +658,11 @@ VERB remove
 --------------------------------------------------------------------
 
 
-  SET tempcovered OF hero TO tempcovered OF hero /2.
-  IF botcover OF THIS <> 0 AND botcover OF THIS < tempcovered OF hero
-    THEN
-      INCREASE wear_flag OF hero BY 1.
-  END IF.
+      SET tempcovered OF hero TO tempcovered OF hero /2.
+      IF botcover OF THIS <> 0 AND botcover OF THIS < tempcovered OF hero
+        THEN
+          INCREASE wear_flag OF hero BY 1.
+      END IF.
 
 
 --------------------------------------------------------------------
@@ -593,18 +672,44 @@ VERB remove
 --------------------------------------------------------------------
 
 
-  IF wear_flag OF hero > 0
-    THEN
-      LIST worn.
-      "Trying to take" SAY THE THIS. "off isn't very sensible."
-    ELSE
-      LOCATE THIS IN hero.
-      "You take off" SAY THE THIS. "."
-      EXCLUDE THIS FROM wearing OF hero.
-      MAKE THIS NOT donned.
-  END IF.
-END VERB remove.
+      IF wear_flag OF hero > 0
+        THEN
+      -- >>> original code >>>
+          -- LIST worn.
+          -- "Trying to take" SAY THE THIS. "off isn't very sensible."
+      -- <<< original code <<<
 
+        -- >>> devworn >>> tweaked:
+        "In order to remove $+1 you should remove something first."
+        -- -----------------
+        -- List worn clothes
+        -- -----------------
+        -- >>> devworn >>> TODO: Should list only blocking clothes really!
+
+        SET my_game:temp_cnt TO COUNT IsA CLOTHING, DIRECTLY IN Hero, IS donned.
+        IF  my_game:temp_cnt = 0
+          THEN SAY my_game:hero_worn_else.  --> "You are not wearing anything."
+          ELSE
+            SAY my_game:hero_worn_header.     --> "You are wearing"
+            FOR EACH worn_item IsA CLOTHING, DIRECTLY IN Hero, IS donned
+              DO
+                SAY AN worn_item.
+                DECREASE my_game:temp_cnt.
+                DEPENDING ON my_game:temp_cnt
+                  = 1 THEN "and"
+                  = 0 THEN "."
+                  ELSE ","
+                End Depend.
+            END FOR.
+        END IF.
+        -- <<<
+        ELSE
+          LOCATE THIS IN hero.
+          "You take off" SAY THE THIS. "."
+          EXCLUDE THIS FROM wearing OF hero.
+          MAKE THIS NOT donned.
+      END IF.
+  END VERB remove.
 
 END EVERY.
 

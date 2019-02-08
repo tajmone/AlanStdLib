@@ -3394,19 +3394,18 @@ VERB i
     SET my_game:temp_cnt TO COUNT IsA object, DIRECTLY IN Hero, NOT IN wearing of Hero.
     IF  my_game:temp_cnt = 0
       THEN "You are empty-handed."
-    ELSE
-      "You're carrying"
-      FOR EACH carried_item ISA object, DIRECTLY IN Hero, NOT IN wearing of Hero
-        DO
-          SAY AN carried_item.
-          DECREASE my_game:temp_cnt.
-          DEPENDING ON my_game:temp_cnt
-            = 1 THEN "and"
-            = 0 THEN "."
-            ELSE ","
-          End Depend.
-
-      END FOR.
+      ELSE
+        "You're carrying"
+        FOR EACH carried_item ISA object, DIRECTLY IN Hero, NOT IN wearing of Hero
+          DO
+            SAY AN carried_item.
+            DECREASE my_game:temp_cnt.
+            DEPENDING ON my_game:temp_cnt
+              = 1 THEN "and"
+              = 0 THEN "."
+              ELSE ","
+            End Depend.
+        END FOR.
     END IF.
     -- -----------------
     -- List worn clothes
@@ -3414,18 +3413,18 @@ VERB i
     SET my_game:temp_cnt TO COUNT IsA CLOTHING, DIRECTLY IN Hero, IS donned.
     IF  my_game:temp_cnt = 0
       THEN SAY my_game:hero_worn_else.  --> "You are not wearing anything."
-    ELSE
-      SAY my_game:hero_worn_header.     --> "You are wearing"
-      FOR EACH worn_item IsA CLOTHING, DIRECTLY IN Hero, IS donned
-        DO
-          SAY AN worn_item.
-          DECREASE my_game:temp_cnt.
-          DEPENDING ON my_game:temp_cnt
-            = 1 THEN "and"
-            = 0 THEN "."
-            ELSE ","
-          End Depend.
-      END FOR.
+      ELSE
+        SAY my_game:hero_worn_header.     --> "You are wearing"
+        FOR EACH worn_item IsA CLOTHING, DIRECTLY IN Hero, IS donned
+          DO
+            SAY AN worn_item.
+            DECREASE my_game:temp_cnt.
+            DEPENDING ON my_game:temp_cnt
+              = 1 THEN "and"
+              = 0 THEN "."
+              ELSE ","
+            End Depend.
+        END FOR.
     END IF.
 
 -- >>> original code >>>
