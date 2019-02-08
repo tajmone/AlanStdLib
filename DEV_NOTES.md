@@ -57,9 +57,9 @@ Due to `worn` being referenced in many parts of the library code, a well planned
     + [x]  [`tests/clothing/MIGRATION_TESTS_WEAR.a3sol`][MIGRATION_TESTS_WEAR.a3sol]
     + [x]  [`tests/clothing/MIGRATION_TESTS_WEAR.a3log`][MIGRATION_TESTS_WEAR.a3log]
     + [x]  [`tests/clothing/MIGRATION_TESTS.bat`][MIGRATION_TESTS.bat] — convenience batch to compile EGA and execute only tests named `MIGRATION_TESTS*.a3sol` (prevents cluttering Git with other logs, and it's faster).
-- [ ] Try not using `wearing` — since we might handle clothing without using `wearing` set at all, try not using it if `donned` can be used:
-    + [ ] Keep updating the `wearing` set anyhow but try using just `donned` for checks, instead of `wearing` in:
-        * [ ] The inventory/`i` verb.
+- [x] Try not using `wearing` — since we might handle clothing without using `wearing` set at all, try not using it if `donned` can be used:
+    + [x] Keep updating the `wearing` set anyhow but try using just `donned` for checks, instead of `wearing` in:
+        * [x] The inventory/`i` verb.
         * [x] The `examine` verb on `actor` (DOES AFTER).
         * [x] The `wear`/`remove` verbs.
         * [x] The [`worn_clothing_check` Event][worn event].

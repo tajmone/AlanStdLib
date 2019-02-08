@@ -3391,12 +3391,15 @@ VERB i
     -- ------------------
     -- List carried items
     -- ------------------
-    SET my_game:temp_cnt TO COUNT IsA object, DIRECTLY IN Hero, NOT IN wearing of Hero.
+    -- @NOTE: Try avoid using 'wearing' set: if is NOT donned it's carried:
+    SET my_game:temp_cnt TO COUNT IsA object, IS NOT donned, DIRECTLY IN Hero.
+ -- SET my_game:temp_cnt TO COUNT IsA object, DIRECTLY IN Hero, NOT IN wearing of Hero.
     IF  my_game:temp_cnt = 0
       THEN "You are empty-handed."
       ELSE
         "You're carrying"
-        FOR EACH carried_item ISA object, DIRECTLY IN Hero, NOT IN wearing of Hero
+        FOR EACH carried_item IsA object, IS NOT donned, DIRECTLY IN Hero
+     -- FOR EACH carried_item ISA object, DIRECTLY IN Hero, NOT IN wearing of Hero
           DO
             SAY AN carried_item.
             DECREASE my_game:temp_cnt.
@@ -3412,7 +3415,7 @@ VERB i
     -- -----------------
     SET my_game:temp_cnt TO COUNT IsA CLOTHING, DIRECTLY IN Hero, IS donned.
     IF  my_game:temp_cnt = 0
-      THEN SAY my_game:hero_worn_else.  --> "You are not wearing anything."
+      THEN SAY my_game:hero_worn_else.    --> "You are not wearing anything."
       ELSE
         SAY my_game:hero_worn_header.     --> "You are wearing"
         FOR EACH worn_item IsA CLOTHING, DIRECTLY IN Hero, IS donned
