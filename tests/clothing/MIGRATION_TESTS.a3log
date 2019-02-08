@@ -32,7 +32,7 @@ As you move toward the doors they automagically slide open before you.
 Emporium Alani Main Hall
 This luxurious hall is the crossroad to the various clothing departments
 of the emporium. Two large brass doors lead the way south, out of the
-fashion temple and back into the world of mortal souls. There is your
+fashion temple and back into the world of mortal souls.There is your
 personal assistant here.
 
 > ; ==============================================================================
@@ -70,8 +70,9 @@ IN WEARING OF: | hero
 > ; NPC CLOTHING  -> OK!
 > ; ------------------------------------------------------------------------------
 > examine assistant
-She's your personal shopping assistant. The assistant is carrying a pair
-of fashion boots (being worn) and a uniform (being worn).
+She's your personal shopping assistant. The assistant is carrying a 
+prices list. The assistant is wearing a uniform and a pair of fashion
+boots.
 
 > DBG boots
 'fashion boots' VALUES: | feetcover: 4 | 
@@ -234,23 +235,113 @@ You are empty-handed. You are not wearing anything.
 > ;            should be enough.
 > ;            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 > ; ==============================================================================
-> ; CLOTHES LISTINGS: NPC  ( WIP )
+> ; CLOTHES LISTINGS: NPC -> OK!
 > ; ==============================================================================
-> ; Currently examining actors doesn't show two separate lists for carried and
-> ; worn items. Still needs to be implemented.
+> ; Examining actors also prints two separate lists for carried and worn items.
+> ; The system used is the same as for 'inventory', via custom loops and 'donned'.
+> take wallet
+Taken.
+
+> take skirt
+Taken.
+
+> take sneakers
+Taken.
+
 > south
 Emporium Alani Main Hall
 This luxurious hall is the crossroad to the various clothing departments
 of the emporium. Two large brass doors lead the way south, out of the
-fashion temple and back into the world of mortal souls. There is your
+fashion temple and back into the world of mortal souls.There is your
 personal assistant here.
 
 > ; ------------------------------------------------------------------------------
-> ; NPC EXAMINE
+> ; NPC EXAMINE -> Carries one item + Wears 2 clothes
 > ; ------------------------------------------------------------------------------
 > examine assistant
-She's your personal shopping assistant. The assistant is carrying a pair
-of fashion boots (being worn) and a uniform (being worn).
+She's your personal shopping assistant. The assistant is carrying a 
+prices list. The assistant is wearing a uniform and a pair of fashion
+boots.
+
+> ask assistant for list
+The assistant gives the prices list to you.
+
+> ; ------------------------------------------------------------------------------
+> ; NPC EXAMINE -> Empty handed + Wears 2 clothes
+> ; ------------------------------------------------------------------------------
+> examine assistant
+She's your personal shopping assistant. The assistant is empty-handed. The 
+assistant is wearing a uniform and a pair of fashion boots.
+
+> give list to assistant
+You give the prices list to the assistant.
+
+> examine assistant
+She's your personal shopping assistant. The assistant is carrying a 
+prices list. The assistant is wearing a uniform and a pair of fashion
+boots.
+
+> give wallet to assistant
+You give your wallet to the assistant.
+
+> ; ------------------------------------------------------------------------------
+> ; NPC EXAMINE -> Carries 2 items + Wears 2 clothes
+> ; ------------------------------------------------------------------------------
+> examine assistant
+She's your personal shopping assistant. The assistant is carrying a 
+prices list and your wallet. The assistant is wearing a uniform and a
+pair of fashion boots.
+
+> give skirt to assistant
+You give the skirt to the assistant.
+
+> examine assistant
+She's your personal shopping assistant. The assistant is carrying a 
+prices list, a skirt and your wallet. The assistant is wearing a uniform 
+and a pair of fashion boots.
+
+> give sneakers to assistant
+You give your sneakers to the assistant.
+
+> ; ------------------------------------------------------------------------------
+> ; NPC EXAMINE -> Carries many items + Wears 2 clothes
+> ; ------------------------------------------------------------------------------
+> examine assistant
+She's your personal shopping assistant. The assistant is carrying a 
+prices list, a skirt and your wallet. The assistant is wearing a uniform, 
+a pair of fashion boots and your sneakers.
+
+> ask assistant for list
+The assistant gives the prices list to you.
+
+> ask assistant for wallet
+The assistant gives your wallet to you.
+
+> ask assistant for skirt
+The assistant gives the skirt to you.
+
+> ask assistant for sneakers
+The assistant gives your sneakers to you.
+
+> ask assistant for boots
+The assistant gives the fashion boots to you.
+
+> ; ------------------------------------------------------------------------------
+> ; NPC EXAMINE -> Empty handed + Wears 1 clothes
+> ; ------------------------------------------------------------------------------
+> examine assistant
+She's your personal shopping assistant. The assistant is empty-handed. The 
+assistant is wearing a uniform.
+
+> ask assistant for uniform
+The assistant gives the uniform to you.
+
+> ; ------------------------------------------------------------------------------
+> ; NPC EXAMINE -> Empty handed + Wears nothing
+> ; ------------------------------------------------------------------------------
+> examine assistant
+She's your personal shopping assistant. The assistant is empty-handed. The 
+assistant is not wearing anything.
 
 > ; ==============================================================================
 > ; WEARING & REMOVING    ( WIP )

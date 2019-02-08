@@ -14,6 +14,7 @@ Some notes on the current work to attempt getting rid of `worn` to store Hero's 
     - [How The New System Works](#how-the-new-system-works)
         - [Authors use `donned` to dress actors](#authors-use-donned-to-dress-actors)
         - [Inventory listing](#inventory-listing)
+        - [Examining Actors](#examining-actors)
 - [Overview of `worn`](#overview-of-worn)
 - [Occurences of `worn` in The Library](#occurences-of-worn-in-the-library)
     - [Clothing Initialization](#clothing-initialization)
@@ -60,6 +61,13 @@ Due to `worn` being referenced in many parts of the library code, a well planned
         * [x] Remove any reference to `worn`.
         * [x] Just ensure that any clothing _directly in_ an actor and `donned` is added to `wearing` set of the actor.
     + [x] Tweak inventory/`i` verb:
+        * [x] Produce two separate lists for carried and worn items.
+        * [x] Use custom loops instead of `LIST`.
+        * [x] Ensure correct usage items separators:
+            - [x] "`,`" — comma for multiple items from 2nd to 2nd-last.
+            - [x] "`and`" — between 2nd-last and last.
+            - [x] "`.`" — after last.
+    + [x] Tweak `examine` verb on `actor` (DOES AFTER):
         * [x] Produce two separate lists for carried and worn items.
         * [x] Use custom loops instead of `LIST`.
         * [x] Ensure correct usage items separators:
@@ -127,6 +135,11 @@ The inventory/`i` verb has been rewritten to achieve the same results as before.
 >     END IF.
 > ```
 
+### Examining Actors
+
+Now examining an actor also produces two separate lists for carried and worn items, just like for Hero inventory. The system used is the same as for the inventory/`i` verb, so it relies only on `donned`.
+
+-------------------------------------------------------------------------------
 
 # Overview of `worn`
 

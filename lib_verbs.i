@@ -3427,10 +3427,6 @@ VERB i
           End Depend.
       END FOR.
     END IF.
-    -- IF COUNT IsA CLOTHING, DIRECTLY IN Hero, IS donned = 0
-    -- FOR EACH cl ISA CLOTHING, DIRECTLY IN ac, IS donned
-    --   DO INCLUDE cl IN wearing OF ac.
-    -- END FOR.
 
 -- >>> original code >>>
     -- LIST hero.

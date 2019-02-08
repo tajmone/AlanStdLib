@@ -2201,7 +2201,60 @@ ADD TO EVERY ACTOR
     DOES AFTER
       IF THIS <> hero
         THEN
-          LIST THIS.
+
+-- >>> devworn >>> tweaked: new method for listing separately carried and worn.
+          -- ------------------
+          -- List carried items
+          -- ------------------
+          "$+1"
+          IF THIS IS NOT plural
+            THEN "is"
+            ELSE "are"
+          END IF.
+          SET my_game:temp_cnt TO COUNT IsA object, DIRECTLY IN THIS, NOT IN wearing of THIS.
+          IF  my_game:temp_cnt = 0
+            THEN "empty-handed."
+            ELSE "carrying"
+            FOR EACH carried_item ISA object, DIRECTLY IN THIS, NOT IN wearing of THIS
+              DO
+                SAY AN carried_item.
+                DECREASE my_game:temp_cnt.
+                DEPENDING ON my_game:temp_cnt
+                  = 1 THEN "and"
+                  = 0 THEN "."
+                  ELSE ","
+                End Depend.
+
+            END FOR.
+          END IF.
+          -- -----------------
+          -- List worn clothes
+          -- -----------------
+          "$+1"
+          IF THIS IS NOT plural
+            THEN "is"
+            ELSE "are"
+          END IF.
+          SET my_game:temp_cnt TO COUNT IsA CLOTHING, DIRECTLY IN THIS, IS donned.
+          IF  my_game:temp_cnt = 0
+            THEN "not wearing anything."
+          ELSE
+            "wearing"
+            FOR EACH worn_item IsA CLOTHING, DIRECTLY IN THIS, IS donned
+              DO
+                SAY AN worn_item.
+                DECREASE my_game:temp_cnt.
+                DEPENDING ON my_game:temp_cnt
+                  = 1 THEN "and"
+                  = 0 THEN "."
+                  ELSE ","
+                End Depend.
+            END FOR.
+          END IF.
+
+          -- >>> original code >>>
+          -- LIST THIS.
+          -- <<< original code <<<
       END IF.
   END VERB examine.
 

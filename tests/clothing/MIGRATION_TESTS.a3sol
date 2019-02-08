@@ -105,13 +105,49 @@ inventory
 ;            should be enough.
 ;            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ; ==============================================================================
-; CLOTHES LISTINGS: NPC  ( WIP )
+; CLOTHES LISTINGS: NPC -> OK!
 ; ==============================================================================
-; Currently examining actors doesn't show two separate lists for carried and
-; worn items. Still needs to be implemented.
+; Examining actors also prints two separate lists for carried and worn items.
+; The system used is the same as for 'inventory', via custom loops and 'donned'.
+take wallet
+take skirt
+take sneakers
 south
 ; ------------------------------------------------------------------------------
-; NPC EXAMINE
+; NPC EXAMINE -> Carries one item + Wears 2 clothes
+; ------------------------------------------------------------------------------
+examine assistant
+ask assistant for list
+; ------------------------------------------------------------------------------
+; NPC EXAMINE -> Empty handed + Wears 2 clothes
+; ------------------------------------------------------------------------------
+examine assistant
+give list to assistant
+examine assistant
+give wallet to assistant
+; ------------------------------------------------------------------------------
+; NPC EXAMINE -> Carries 2 items + Wears 2 clothes
+; ------------------------------------------------------------------------------
+examine assistant
+give skirt to assistant
+examine assistant
+give sneakers to assistant
+; ------------------------------------------------------------------------------
+; NPC EXAMINE -> Carries many items + Wears 2 clothes
+; ------------------------------------------------------------------------------
+examine assistant
+ask assistant for list
+ask assistant for wallet
+ask assistant for skirt
+ask assistant for sneakers
+ask assistant for boots
+; ------------------------------------------------------------------------------
+; NPC EXAMINE -> Empty handed + Wears 1 clothes
+; ------------------------------------------------------------------------------
+examine assistant
+ask assistant for uniform
+; ------------------------------------------------------------------------------
+; NPC EXAMINE -> Empty handed + Wears nothing
 ; ------------------------------------------------------------------------------
 examine assistant
 ; ==============================================================================
