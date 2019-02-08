@@ -1,0 +1,129 @@
+
+
+Emporium Giorgio Alani 
+An adventure to test clothing. 
+(C) 2018 by Tristano Ajmone 
+Programmed with the ALAN Interactive Fiction Language v3.0beta6 build 1866
+.
+Standard Library v2.1 
+Version 1 
+All rights reserved. 
+
+Type EXITS to view the list of exits of a room. 
+Use the DBG command (DGB <ITEM NAME>) to show the coverage values of any
+clothing item.
+
+
+Outside Emporium Alani
+You're standing in front of the Giorgio Alani Emporium entrance. Two
+large brass doors await northward your entrance into the sanctuary of
+fashion consumism. 
+
+> ; ******************************************************************************
+> ; *                                                                            *
+> ; *                          TEST NEW CLOTHING SYSTEM                          *
+> ; *                                                                            *
+> ; ******************************************************************************
+> ; This script is designed to test the development of the new clothing system,
+> ; which doesn't use the 'worn' entity any more to store clothes worn by Hero.
+> north
+As you move toward the doors they automagically slide open before you.
+
+Emporium Alani Main Hall
+This luxurious hall is the crossroad to the various clothing departments
+of the emporium. Two large brass doors lead the way south, out of the
+fashion temple and back into the world of mortal souls.There is your
+personal assistant here.
+
+> ; ==============================================================================
+> ; CLOTHING INITIALIZATION
+> ; ==============================================================================
+> ; Let's check that clothes have been properly initialized by the library.
+> ; In the source adventure, worn items are places IN the wearing actor and set as
+> ; 'IS donned', the library then takes care of adding them to the 'wearing' set.
+> ; ------------------------------------------------------------------------------
+> ; HERO'S CLOTHING -> OK!
+> ; ------------------------------------------------------------------------------
+> inventory
+You are carrying your undershirt (being worn), your sneakers (being worn), 
+your khakis (being worn), your boxers (being worn) and your socks (being
+worn).
+
+> DBG sneakers
+'sneakers' VALUES: | feetcover: 4 | 
+DONNED: Yes 
+IN WORN: No. 
+IN WEARING OF: | hero
+
+> DBG boxers
+'boxers' VALUES: | botcover: 2 | 
+DONNED: Yes 
+IN WORN: No. 
+IN WEARING OF: | hero
+
+> DBG socks
+'socks' VALUES: | feetcover: 2 | 
+DONNED: Yes 
+IN WORN: No. 
+IN WEARING OF: | hero
+
+> ; ------------------------------------------------------------------------------
+> ; NPC CLOTHING  -> OK!
+> ; ------------------------------------------------------------------------------
+> examine assistant
+She's your personal shopping assistant. The assistant is carrying a pair
+of fashion boots (being worn) and a uniform (being worn).
+
+> DBG boots
+'fashion boots' VALUES: | feetcover: 4 | 
+DONNED: Yes 
+IN WORN: No. 
+IN WEARING OF: | assistant
+
+> DBG uniform
+'uniform' VALUES: | topcover: 8 | botcover: 32 | 
+DONNED: Yes 
+IN WORN: No. 
+IN WEARING OF: | assistant
+
+> ; ------------------------------------------------------------------------------
+> ; NESTED CLOTHING AND OBJECTS -> OK!
+> ; ------------------------------------------------------------------------------
+> ; Let's check that clothing items inside worn clothes are seen as being just
+> ; carried, not worn. Previously the library would mark as 'donned' any object
+> ; inside a worn item.
+> examine khakis
+A pair of khaki beige cotton pants. Inside the khakis pockets there are 
+your kippah and your wallet.
+
+> DBG khakis
+'khakis' VALUES: | botcover: 16 | 
+DONNED: Yes 
+IN WORN: No. 
+IN WEARING OF: | hero
+
+> ; The kippah shouldn't be 'donned' nor in 'wearing' of Hero:
+> DBG kippah
+'kippah' VALUES: (none) 
+DONNED: No. 
+IN WORN: No. 
+IN WEARING OF:
+
+> ; ==============================================================================
+> ; CLOTHES LISTINGS      ( WIP )
+> ; ==============================================================================
+> ; Currently taking inventory doesn't show two separate lists for carried and
+> ; worn items. Still needs to be implemented:
+> inventory
+You are carrying your undershirt (being worn), your sneakers (being worn), 
+your khakis (being worn), your boxers (being worn) and your socks (being
+worn).
+
+> ; ==============================================================================
+> ; WEARING & REMOVING    ( WIP )
+> ; ==============================================================================
+> ; The 'wear' and 'remove' verbs haven't yet been adapted to work with the new
+> ; system, so they are not working right now.
+> 
+
+Do you want to RESTART, RESTORE, QUIT or UNDO? 

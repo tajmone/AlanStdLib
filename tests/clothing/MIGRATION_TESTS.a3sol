@@ -1,0 +1,48 @@
+; ******************************************************************************
+; *                                                                            *
+; *                          TEST NEW CLOTHING SYSTEM                          *
+; *                                                                            *
+; ******************************************************************************
+; This script is designed to test the development of the new clothing system,
+; which doesn't use the 'worn' entity any more to store clothes worn by Hero.
+north
+; ==============================================================================
+; CLOTHING INITIALIZATION
+; ==============================================================================
+; Let's check that clothes have been properly initialized by the library.
+; In the source adventure, worn items are places IN the wearing actor and set as
+; 'IS donned', the library then takes care of adding them to the 'wearing' set.
+; ------------------------------------------------------------------------------
+; HERO'S CLOTHING -> OK!
+; ------------------------------------------------------------------------------
+inventory
+DBG sneakers
+DBG boxers
+DBG socks
+; ------------------------------------------------------------------------------
+; NPC CLOTHING  -> OK!
+; ------------------------------------------------------------------------------
+examine assistant
+DBG boots
+DBG uniform
+; ------------------------------------------------------------------------------
+; NESTED CLOTHING AND OBJECTS -> OK!
+; ------------------------------------------------------------------------------
+; Let's check that clothing items inside worn clothes are seen as being just
+; carried, not worn. Previously the library would mark as 'donned' any object
+; inside a worn item.
+examine khakis
+DBG khakis
+; The kippah shouldn't be 'donned' nor in 'wearing' of Hero:
+DBG kippah
+; ==============================================================================
+; CLOTHES LISTINGS      ( WIP )
+; ==============================================================================
+; Currently taking inventory doesn't show two separate lists for carried and
+; worn items. Still needs to be implemented:
+inventory
+; ==============================================================================
+; WEARING & REMOVING    ( WIP )
+; ==============================================================================
+; The 'wear' and 'remove' verbs haven't yet been adapted to work with the new
+; system, so they are not working right now.

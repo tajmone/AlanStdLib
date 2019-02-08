@@ -44,6 +44,10 @@ This approach should also allow using shared code to handle items worn by both t
 Due to `worn` being referenced in many parts of the library code, a well planned multi-steps approach is required in order to avoid breaking the library.
 
 - [x] Document [all occurences of `worn` in the StdLib code][occurences of worn].
+- [x] Add new tests script explicitly targetting changes introduced by this dev branch:
+    + [x]  [`tests/clothing/MIGRATION_TESTS.a3sol`][MIGRATION_TESTS.a3sol]
+    + [x]  [`tests/clothing/MIGRATION_TESTS.a3log`][MIGRATION_TESTS.a3log]
+    + [x]  [`tests/clothing/MIGRATION_TESTS.bat`][MIGRATION_TESTS.bat] — convenience batch to compile EGA and execute this single test only (prevents cluttering Git with other logs, and it's faster).
 - [ ] Disable handling Hero's worn items via `worn`:
     + [x] Tweak initialization of `clothing` class:
         * [x] Remove handling Hero differently.
@@ -392,6 +396,11 @@ Various verbs in `libs_verbs.i` also refer to `worn` and will have to be fixed a
 [RunTime messages]: #runtime-messages "Jump to document section"
 [worn event]: #the-worn_clothing_check-event "Jump to document section"
 
+<!-- project files -->
+
+[MIGRATION_TESTS.a3sol]: ./tests/clothing/MIGRATION_TESTS.a3sol "View source"
+[MIGRATION_TESTS.a3log]: ./tests/clothing/MIGRATION_TESTS.a3log "View source"
+[MIGRATION_TESTS.bat]: ./tests/clothing/MIGRATION_TESTS.bat "View source"
 
 
 <!-- EOF -->
