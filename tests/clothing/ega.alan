@@ -185,9 +185,15 @@ THE dressing_room IsA room.
      NORTHWEST to Workswear.".
   VERB undress -- Allow undressing action when in Dressing Room:
     DOES ONLY
-      IF COUNT DIRECTLY IN worn, ISA CLOTHING > 0
-        THEN EMPTY worn IN hero.
-          "You remove all the items you were wearing."
+      IF COUNT IsA CLOTHING, DIRECTLY IN hero, IS donned > 0
+        THEN
+          "You remove all the items you are wearing and drop the on the floor."
+          FOR EACH worn_item IsA CLOTHING, DIRECTLY IN Hero, IS donned
+            DO
+              MAKE worn_item NOT donned.
+              EXCLUDE worn_item FROM wearing of Hero.
+              LOCATE worn_item AT CURRENT LOCATION.
+          END FOR.
         ELSE "You're not wearing anything you can remove."
       END IF.
   END VERB undress.  
@@ -436,6 +442,10 @@ EVERY cl_tshirt IsA proto_shirt.
   NAME tee.
 END EVERY.
 
+EVERY cl_shirt IsA proto_shirt.
+  NAME shirt.
+END EVERY.
+
 --==============================================================================
 -- LEGWEAR
 --==============================================================================
@@ -486,6 +496,17 @@ EVERY proto_dress IsA clothing.
   NAME dress.
   HAS topcover 8.
   HAS botcover 32.
+END EVERY.
+
+
+--==============================================================================
+-- COAT
+--==============================================================================
+
+EVERY cl_coat IsA clothing.
+  NAME coat.
+  HAS topcover 64.
+  HAS botcover 64.
 END EVERY.
 
 
@@ -819,6 +840,25 @@ THE blue_jeans IsA proto_trousers AT dressing_room.
   HAS ex "It's a pair of blue jeans.".
 END THE.
 
+THE baseball_cap IsA cl_hat AT dressing_room.
+  NAME baseball cap.
+END THE.
+
+THE fedora IsA cl_hat AT dressing_room.
+  NAME fedora.
+END THE.
+
+THE black_shirt IsA cl_shirt AT dressing_room.
+  NAME black shirt.
+END THE.
+
+THE red_shirt IsA cl_shirt AT dressing_room.
+  NAME red shirt.
+END THE.
+
+THE wool_coat IsA cl_coat AT dressing_room.
+  NAME wool coat.
+END THE.
 --=============================================================================
 --\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 --------------------------------------------------------------------------------
