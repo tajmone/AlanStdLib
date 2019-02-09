@@ -591,17 +591,13 @@ END VERB remove.
 VERB take
 	DOES ONLY
 		IF THIS DIRECTLY IN worn
-			THEN 
-			
-				MAKE worn NOT blocked.
-	
-				EXCLUDE THIS FROM wearing OF hero.
-				MAKE THIS NOT donned.
-				LOCATE THIS IN hero.
-				"You take off" SAY THE obj. "and carry it in your hands."	
-
-				MAKE worn blocked.			
-			
+			THEN 		
+			       "You already have" SAY THE THIS. "- you're wearing"
+			       IF THIS IS NOT plural 
+			       		THEN "it"
+					ELSE "them"
+				END IF.
+				"."
 			ELSE 
 				FOR EACH ac ISA ACTOR DO
 					IF THIS IN wearing OF ac
@@ -2185,7 +2181,7 @@ ADD TO EVERY ACTOR
 	      
 	      IF THIS IS NOT plural
                   THEN "is wearing"
-                  ELSE "are wearing."
+                  ELSE "are wearing"
               END IF.
 	          LIST npc_worn.
       END IF.
@@ -2196,10 +2192,9 @@ END ADD TO.
 
 
 THE npc_worn ISA LISTED_CONTAINER
-CONTAINER
-HEADER 
-   SAY CURRENT ACTOR. "is wearing"
-ELSE ""
+   CONTAINER
+     HEADER "" 
+     ELSE ""
 END THE.
 
 
