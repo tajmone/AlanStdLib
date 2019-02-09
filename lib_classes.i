@@ -2176,6 +2176,7 @@ ADD TO EVERY ACTOR
 	  FOR EACH cl ISA CLOTHING, IN THIS, IS donned
 	      DO 
 	      LOCATE cl IN npc_worn.
+	  END FOR.
               LIST THIS.
 	      SAY THE THIS.
 	      
