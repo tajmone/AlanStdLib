@@ -38,50 +38,9 @@ MESSAGE
       THEN "$+1 contains"
       ELSE "$+1 contain"
     END IF.
-  CONTAINS_COMMA: "$01"
-    IF parameter1 ISA CLOTHING
-      THEN
-        -- the following snippet adds "(being worn)" after all
-        -- pieces of clothing worn by an NPC, at 'x [actor]'
-
-        IF parameter1 IS donned
-          THEN
-            IF parameter1 NOT IN worn
-              THEN "(being worn)"
-            END IF.
-        END IF.
-    END IF.
-    "$$,"
-      CONTAINS_AND: "$01"
-    IF parameter1 ISA CLOTHING
-      THEN
-        -- the following snippet adds "(being worn)" after all
-        -- pieces of clothing worn by an NPC, after 'x [actor]'
-
-        IF parameter1 IS donned
-          THEN
-            IF parameter1 NOT IN worn
-              THEN "(being worn)"
-            END IF.
-        END IF.
-    END IF.
-
-    "and"
-
-  CONTAINS_END: "$01"
-    IF parameter1 ISA CLOTHING
-      THEN
-        -- the following snippet adds "(being worn)" after all
-        -- pieces of clothing worn by an NPC, after 'x [actor]'
-
-        IF parameter1 IS donned
-          THEN
-            IF parameter1 NOT IN worn
-              THEN "(being worn)"
-            END IF.
-        END IF.
-    END IF.
-    "."
+  CONTAINS_COMMA: "$01,"
+  CONTAINS_AND: "$01 and"
+  CONTAINS_END: "$01."
   EMPTY_HANDED:
     IF parameter1 IS NOT plural
       THEN "$+1 is empty-handed."
