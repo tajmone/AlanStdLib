@@ -7169,24 +7169,24 @@ ADD TO EVERY THING
         END IF.
 
     DOES
-      IF obj ISA ACTOR
-        THEN SAY THE obj. "would probably object to that."
-      -- actors are not prohibited from being taken in the checks; this is to
-      -- allow for example a dog to be picked up, or a bird to be taken out of
-      -- a cage, etc.
+   IF obj ISA ACTOR
+         THEN SAY THE obj. "would probably object to that."
 
-      ELSIF obj ISA OBJECT
-        THEN IF obj DIRECTLY IN worn
-            THEN LOCATE obj IN hero.
-              "You take off" SAY THE obj. "and carry it in your hands."
-              IF obj ISA CLOTHING
-                THEN EXCLUDE obj FROM wearing OF hero.
-              END IF.
-            ELSE LOCATE obj IN hero.
-              "Taken."
-          END IF.
-      END IF.
+		ELSIF obj ISA OBJECT
+			THEN 
+				IF obj IN worn       -- to allow items in clothing items to be taken
+					THEN MAKE worn NOT blocked.
+				END IF.
 
+				LOCATE obj IN hero.
+				"Taken."
+
+				IF worn IS NOT blocked   
+					THEN MAKE worn blocked.
+				END IF.
+
+		END IF.
+```
         -- Objects held by NPCs cannot be taken by the hero by default.
         -- The hero must *ask for* the object to obtain it.
 
