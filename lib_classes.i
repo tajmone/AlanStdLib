@@ -186,9 +186,13 @@ END ADD.
 
 
 THE worn ISA ENTITY
+  IS NOT blocked.
   CONTAINER TAKING CLOTHING.
     HEADER SAY hero_worn_header OF my_game.
     ELSE SAY hero_worn_else OF my_game.
+    EXTRACT 
+			    CHECK THIS IS NOT blocked
+			    ELSE "You should take off the $o first."
 END THE.
 
 
@@ -225,6 +229,7 @@ EVERY clothing ISA OBJECT
 
     IF THIS IN worn
       THEN INCLUDE THIS IN wearing OF hero.
+           MAKE THIS donned.
     END IF.
 
     FOR EACH ac ISA ACTOR
@@ -262,11 +267,6 @@ EVERY clothing ISA OBJECT
 
 
 
-    -- all clothing acquired and worn by the hero or an NPC mid-game is checked to
-    -- show correctly when the possessions of an actor are listed:
-
-
-    SCHEDULE worn_clothing_check AFTER 0.
 
 
 
@@ -579,12 +579,61 @@ VERB remove
       LIST worn.
       "Trying to take" SAY THE THIS. "off isn't very sensible."
     ELSE
+      MAKE worn NOT blocked.
       LOCATE THIS IN hero.
       "You take off" SAY THE THIS. "."
       EXCLUDE THIS FROM wearing OF hero.
       MAKE THIS NOT donned.
+      MAKE worn blocked.
   END IF.
 END VERB remove.
+
+VERB take
+	DOES ONLY
+		IF THIS DIRECTLY IN worn
+			THEN 
+			
+				MAKE worn NOT blocked.
+	
+				EXCLUDE THIS FROM wearing OF hero.
+				MAKE THIS NOT donned.
+				LOCATE THIS IN hero.
+				"You take off" SAY THE obj. "and carry it in your hands."	
+
+				MAKE worn blocked.			
+			
+			ELSE 
+				FOR EACH ac ISA ACTOR DO
+					IF THIS IN wearing OF ac
+						THEN EXCLUDE THIS FROM wearing OF ac.
+							MAKE THIS NOT donned.
+							"(from" SAY THE ac. "$$)$n"
+					END IF.			
+				END FOR.
+				LOCATE THIS IN hero.
+			 	"Taken."
+		END IF.
+
+END VERB.
+		
+
+VERB take_from
+	WHEN obj
+	DOES ONLY
+
+		FOR EACH ac ISA ACTOR DO
+			IF THIS IN wearing OF ac
+				THEN EXCLUDE THIS FROM wearing OF ac.
+					MAKE THIS NOT donned.
+			END IF.			
+		END FOR.
+		
+		LOCATE THIS IN hero.
+		"Taken."
+		
+
+END VERB.
+
 
 
 END EVERY.
@@ -607,29 +656,7 @@ END ADD TO.
 -- mid-game is recognised to be worn by the actor:
 --------------------------------------------------------------------
 
-
-EVENT worn_clothing_check
-  FOR EACH ac ISA ACTOR
-    DO
-      FOR EACH cl ISA CLOTHING, IN wearing OF ac
-        DO
-          IF ac = hero
-            THEN
-              IF cl NOT IN worn
-                THEN LOCATE cl IN worn.
-                  MAKE cl donned.
-              END IF.
-            ELSE
-              IF cl NOT IN ac
-                THEN LOCATE cl IN ac.
-                  MAKE cl donned.
-              END IF.
-          END IF.
-      END FOR.
-   END FOR.
-   SCHEDULE worn_clothing_check AFTER 1.
-END EVENT.
-
+---------
 
 
 
