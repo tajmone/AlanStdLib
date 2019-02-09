@@ -1,0 +1,157 @@
+
+
+Emporium Giorgio Alani 
+An adventure to test clothing. 
+(C) 2018 by Tristano Ajmone 
+Programmed with the ALAN Interactive Fiction Language v3.0beta6 build 1866
+.
+Standard Library v2.1 
+Version 1 
+All rights reserved. 
+
+Type EXITS to view the list of exits of a room. 
+Use the DBG command (DGB <ITEM NAME>) to show the coverage values of any
+clothing item.
+
+
+Outside Emporium Alani
+You're standing in front of the Giorgio Alani Emporium entrance. Two
+large brass doors await northward your entrance into the sanctuary of
+fashion consumism.
+
+> ; ******************************************************************************
+> ; *                                                                            *
+> ; *                      TEST LISTING ITEMS PREVENTI WEAR                      *
+> ; *                                                                            *
+> ; ******************************************************************************
+> ; The new clothing system will now report the specific items which are preventing
+> ; wearing a clothing item, instead of listing everything the player is wearing.
+> ; This script tests that the correct items are being reported -- i.e. that there
+> ; are no discrepancies between the internal system and the final report.
+> north
+As you move toward the doors they automagically slide open before you.
+
+Emporium Alani Main Hall
+This luxurious hall is the crossroad to the various clothing departments
+of the emporium. Two large brass doors lead the way south, out of the
+fashion temple and back into the world of mortal souls.There is your
+personal assistant here.
+
+> north
+The Dressing Room
+The curtains surrounding this room provide you all the privacy you need
+to disrobe yourself and try on clothing. There is a chair, a basket, a
+pair of dungarees, a skirt, a pair of white pantyhose, a pair of jeans, a 
+baseball cap, a fedora, a black shirt, a red shirt and a wool coat here.
+
+> inventory
+You are empty-handed. You are wearing your socks, your boxers, your 
+undershirt, your sneakers and your khakis.
+
+> ; ******************************************************************************
+> ; COMMON CLOTHING
+> ; ******************************************************************************
+> ; Here we test the "normal" clothing blocking rules -- i.e. normally a clothing
+> ; item prevents wearing anything on a layer below it.
+> undress
+You remove all the items you are wearing and drop the on the floor.
+
+> ; ==============================================================================
+> ; TEST FEET
+> ; ==============================================================================
+> wear sneakers
+You pick up your sneakers and put it on.
+
+> ; ------------------------------------------------------------------------------
+> ; TEST SHOES -> BLOCK SOCKS -> OK!
+> ; ------------------------------------------------------------------------------
+> wear socks
+You pick up your socks. In order to wear your socks you should first
+remove your sneakers.
+
+> ; ==============================================================================
+> ; TEST LEGS
+> ; ==============================================================================
+> wear khakis
+You pick up your khakis and put them on.
+
+> ; ------------------------------------------------------------------------------
+> ; TEST TROUSERS -> BLOCK PANTYHOSE
+> ; ------------------------------------------------------------------------------
+> wear pantyhose
+You pick up the white pantyhose. In order to wear the white pantyhose you
+should first remove your khakis.
+
+> ; ******************************************************************************
+> ; SPECIAL CLOTHING EXCEPTIONS
+> ; ******************************************************************************
+> ; Special items like skirts, coats, dresses, teddies, etc, are treated as special
+> ; cases in the internal evaluations of wether they are blocking the action, so
+> ; we need to check here that they are also treated correctly in the reported
+> ; blocking items (since the report code uses independent code to handle special
+> ; items).
+> ; ==============================================================================
+> ; TEST COAT (topcover: 64 | botcover: 64)
+> ; ==============================================================================
+> undress
+You remove all the items you are wearing and drop the on the floor.
+
+> wear coat
+You pick up the wool coat and put it on.
+
+> ; ------------------------------------------------------------------------------
+> ; TEST COAT -> DON'T BLOCK LOWER-BODY -> OK!
+> ; ------------------------------------------------------------------------------
+> ; Coats should not prevent wearing lower-body garnments (botcover <64).
+> wear khakis
+You pick up your khakis and put them on.
+
+> ; ------------------------------------------------------------------------------
+> ; TEST COAT -> DON'T BLOCK LOWER-BODY -> SOMETHING ELSE BLOCKS -> OK!
+> ; ------------------------------------------------------------------------------
+> ; We must check that the blocking items report is correct, and doesn't list the
+> ; 'coat' as being one of them.
+> ; (i.e. the report must match the internal calculations that govern the verb)
+> ;
+> ; Only 'khakis' should be reported as blocking item:
+> wear pantyhose
+In order to wear the white pantyhose you should first remove your khakis.
+
+> ; ------------------------------------------------------------------------------
+> ; TEST COAT -> BLOCK UPPER-BODY -> OK!
+> ; ------------------------------------------------------------------------------
+> ; But should prevent wearing any top_cover.
+> wear black shirt
+You pick up the black shirt. In order to wear the black shirt you should
+first remove the wool coat.
+
+> ; ==============================================================================
+> ; TEST COAT + OTHER TOP COVERS
+> ; ==============================================================================
+> ; Now let's check that library correctly lists multiple items preventing wear
+> ; along with coat.
+> undress
+You remove all the items you are wearing and drop the on the floor.
+
+> wear red shirt
+You pick up the red shirt and put it on.
+
+> wear coat
+You pick up the wool coat and put it on.
+
+> ; ------------------------------------------------------------------------------
+> ; TEST BLOCKED BY: COAT + RED SHIRT -> OK!
+> ; ------------------------------------------------------------------------------
+> ; 'black shirt' should be blocked by both 'coat' and 'red shirt'.
+> wear black shirt
+In order to wear the black shirt you should first remove the red shirt and 
+the wool coat.
+
+> ; 'undershirt' should be blocked by both 'coat' and 'red shirt'.
+> wear undershirt
+You pick up your undershirt. In order to wear your undershirt you should
+first remove the red shirt and the wool coat.
+
+> 
+
+Do you want to RESTART, RESTORE, QUIT or UNDO? 

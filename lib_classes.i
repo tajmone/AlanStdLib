@@ -195,14 +195,18 @@ END THE.
 
 -- TODO: Move somewhere else before merging into master!
 ADD TO EVERY definition_block
-  HAS temp_cnt 0.             --> temporary counter used by the library - ignore.
+  HAS temp_cnt 0.            --> Temporary counter used by the library. (ignore)
+  HAS temp_blocking_worn { clothing }. --> Temporary Set used by the library
+                                       --  to track clothes blocking wear/remove
+                                       --  and listing them in response.(ignore)
 END ADD TO definition_block.
 
 
--------------------------------------------------------------------
+--------------------------------------------------------------------
 -- Now, we define some common attributes for clothing as well as
--- how the verbs 'remove', 'undress' and 'wear' (and their synonyms) behave with this class.
--------------------------------------------------------------------
+-- how the verbs 'remove', 'undress' and 'wear' (and their synonyms)
+-- behave with this class.
+--------------------------------------------------------------------
 
 
 EVERY clothing ISA OBJECT
@@ -317,7 +321,17 @@ EVERY clothing ISA OBJECT
       ELSE SAY check_clothing_sex OF my_game.
 
     DOES ONLY
+    -- >>> devworn >>> added:
+--------------------------------------------------------------------
+-- Now the clothes which are preventing wearing the item are stored
+-- in a set attribute, so they can be listed in the failure message,
+-- instead of listing everything the Hero is wearing.
+--------------------------------------------------------------------
 
+    -- --------------------------------
+    -- Empty the temporary storage set:
+    -- --------------------------------
+    SET temp_blocking_worn OF my_game TO {}.
 
 --------------------------------------------------------------------
 -- 'wear_flag' is a multi-purpose flag used for several purposes in
@@ -363,7 +377,17 @@ EVERY clothing ISA OBJECT
     -- >>> devworn >>> tweaked:
     IF  topcover OF THIS <> 0
     AND topcover OF THIS <= SUM OF topcover IsA CLOTHING, DIRECTLY IN hero, IS donned
-      THEN INCREASE wear_flag OF hero BY 5.
+      THEN
+        INCREASE wear_flag OF hero BY 5.
+        -- --------------------------------------------------
+        -- Track blocking items for the failed action message
+        -- --------------------------------------------------
+        FOR EACH blocking_item IsA CLOTHING, DIRECTLY IN hero, IS donned
+          DO
+            IF topcover OF blocking_item >= topcover OF THIS
+              THEN INCLUDE blocking_item IN temp_blocking_worn OF my_game.
+            END IF.
+        END FOR.
     END IF.
 
 
@@ -378,7 +402,17 @@ EVERY clothing ISA OBJECT
     -- >>> devworn >>> tweaked:
     IF  handscover OF THIS <> 0
     AND handscover OF THIS <= SUM OF handscover IsA CLOTHING, DIRECTLY IN hero, IS donned
-      THEN INCREASE wear_flag OF hero BY 5.
+      THEN
+        INCREASE wear_flag OF hero BY 5.
+        -- --------------------------------------------------
+        -- Track blocking items for the failed action message
+        -- --------------------------------------------------
+        FOR EACH blocking_item IsA CLOTHING, DIRECTLY IN hero, IS donned
+          DO
+            IF handscover OF blocking_item >= handscover OF THIS
+              THEN INCLUDE blocking_item IN temp_blocking_worn OF my_game.
+            END IF.
+        END FOR.
     END IF.
 
 
@@ -389,7 +423,17 @@ EVERY clothing ISA OBJECT
     -- >>> devworn >>> tweaked:
     IF  feetcover OF THIS <> 0
     AND feetcover OF THIS <= SUM OF feetcover IsA CLOTHING, DIRECTLY IN hero, IS donned
-      THEN INCREASE wear_flag OF hero BY 5.
+      THEN
+        INCREASE wear_flag OF hero BY 5.
+        -- --------------------------------------------------
+        -- Track blocking items for the failed action message
+        -- --------------------------------------------------
+        FOR EACH blocking_item IsA CLOTHING, DIRECTLY IN hero, IS donned
+          DO
+            IF feetcover OF blocking_item >= feetcover OF THIS
+              THEN INCLUDE blocking_item IN temp_blocking_worn OF my_game.
+            END IF.
+        END FOR.
     END IF.
 
 
@@ -400,7 +444,17 @@ EVERY clothing ISA OBJECT
     -- >>> devworn >>> tweaked:
     IF  headcover OF THIS <> 0
     AND headcover OF THIS <= SUM OF headcover IsA CLOTHING, DIRECTLY IN hero, IS donned
-      THEN INCREASE wear_flag OF hero BY 5.
+      THEN
+        INCREASE wear_flag OF hero BY 5.
+        -- --------------------------------------------------
+        -- Track blocking items for the failed action message
+        -- --------------------------------------------------
+        FOR EACH blocking_item IsA CLOTHING, DIRECTLY IN hero, IS donned
+          DO
+            IF headcover OF blocking_item >= headcover OF THIS
+              THEN INCLUDE blocking_item IN temp_blocking_worn OF my_game.
+            END IF.
+        END FOR.
     END IF.
 
 
@@ -425,7 +479,7 @@ EVERY clothing ISA OBJECT
 
 
 --------------------------------------------------------------------
--- Now discount any dress/ skirt coverall like clothes as these do
+-- Now discount any dress/skirt/coverall like clothes as these do
 -- not technically affect ability to put on lower body only clothes.
 -- Special clause here excludes the full body coverage 'teddy' type
 -- garment - as a skirt WOULD prevent that from being removed.
@@ -457,7 +511,31 @@ EVERY clothing ISA OBJECT
 
 
     IF botcover OF THIS <> 0 AND botcover OF THIS <= tempcovered OF hero
-      THEN INCREASE wear_flag OF hero BY 5.
+      THEN
+        INCREASE wear_flag OF hero BY 5.
+        -- --------------------------------------------------
+        -- Track blocking items for the failed action message
+        -- --------------------------------------------------
+        -- Here we must handle special case exceptions: 
+
+        -- * Coats don't block wearing lower-body-only garments.
+        -- * Discount any dress/skirt/coverall like clothes:
+        --   * unless THIS is a teddy.
+        -- * If hero is wearing trousers they block dress-type.
+
+        -- @TODO: Finish implementing special cases.                            FIXME!
+
+        FOR EACH blocking_item IsA CLOTHING, DIRECTLY IN hero, IS donned
+          DO DEPENDING ON botcover OF blocking_item
+            = 64 --> coat-like
+              THEN "" -- Do nothing.
+              -- Coats don't block wearing lower-body-only garments.
+            ELSE
+              IF botcover OF blocking_item >= botcover OF THIS
+                THEN INCLUDE blocking_item IN temp_blocking_worn OF my_game.
+              END IF.
+            END DEPEND.
+        END FOR.
     END IF.
 
 
@@ -487,34 +565,60 @@ EVERY clothing ISA OBJECT
         -- "Trying to put" SAY THE THIS. "on isn't very sensible."
 -- <<< original code <<<
 
+        -- >>> devworn >>> improved:
+        -- "$n* Blocking items:"
+        -- FOR EACH blocking_item IsA CLOTHING, IN temp_blocking_worn OF my_game
+        --   DO SAY THE blocking_item.
+        -- END FOR. ".$p"
         -- >>> devworn >>> tweaked:
-        "In order to wear $+1 you should remove something first."
+        "In order to wear $+1 you should first remove"
         -- -----------------
-        -- List worn clothes
+        -- List blocking clothes
         -- -----------------
-        -- >>> devworn >>> TODO: Should list only blocking clothes really!
+        SET my_game:temp_cnt TO COUNT IsA CLOTHING, IN temp_blocking_worn OF my_game.
+        FOR EACH blocking_item IsA CLOTHING, IN temp_blocking_worn OF my_game
+          DO
+            SAY THE blocking_item.
+            DECREASE my_game:temp_cnt.
+            DEPENDING ON my_game:temp_cnt
+              = 1 THEN "and"
+              = 0 THEN "."
+              ELSE ","
+            End Depend.
+        END FOR.
+        -- >>> devworn >>> previous tweaked code:
+        
+        -- The original tweak (below) listed every worn item, like before.
+        -- Currently being replaced by the new code (above), which only lists
+        -- those worn clothes which are preventing wearing the new item.
 
-        SET my_game:temp_cnt TO COUNT IsA CLOTHING, DIRECTLY IN Hero, IS donned.
-        IF  my_game:temp_cnt = 0
-          THEN SAY my_game:hero_worn_else.  --> "You are not wearing anything."
-          ELSE
-            SAY my_game:hero_worn_header.     --> "You are wearing"
-            FOR EACH worn_item IsA CLOTHING, DIRECTLY IN Hero, IS donned
-              DO
-                SAY AN worn_item.
-                DECREASE my_game:temp_cnt.
-                DEPENDING ON my_game:temp_cnt
-                  = 1 THEN "and"
-                  = 0 THEN "."
-                  ELSE ","
-                End Depend.
-            END FOR.
-        END IF.
+        -- -- -----------------
+        -- -- List worn clothes
+        -- -- -----------------
+        -- -- >>> devworn >>> TODO: Should list only blocking clothes really!
+
+        -- SET my_game:temp_cnt TO COUNT IsA CLOTHING, DIRECTLY IN Hero, IS donned.
+        -- IF  my_game:temp_cnt = 0
+        --   THEN SAY my_game:hero_worn_else.  --> "You are not wearing anything."
+        --   ELSE
+        --     SAY my_game:hero_worn_header.     --> "You are wearing"
+        --     FOR EACH worn_item IsA CLOTHING, DIRECTLY IN Hero, IS donned
+        --       DO
+        --         SAY AN worn_item.
+        --         DECREASE my_game:temp_cnt.
+        --         DEPENDING ON my_game:temp_cnt
+        --           = 1 THEN "and"
+        --           = 0 THEN "."
+        --           ELSE ","
+        --         End Depend.
+        --     END FOR.
+        -- END IF.
         -- <<<
       ELSE
         -- -----------------------------
         -- The clothing item can be worn
         -- -----------------------------
+        LOCATE THIS IN hero.
         MAKE THIS donned.
         -- >>> original code >>>
         -- LOCATE THIS IN worn.

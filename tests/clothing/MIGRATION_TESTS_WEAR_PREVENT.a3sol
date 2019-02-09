@@ -1,0 +1,81 @@
+; ******************************************************************************
+; *                                                                            *
+; *                      TEST LISTING ITEMS PREVENTI WEAR                      *
+; *                                                                            *
+; ******************************************************************************
+; The new clothing system will now report the specific items which are preventing
+; wearing a clothing item, instead of listing everything the player is wearing.
+; This script tests that the correct items are being reported -- i.e. that there
+; are no discrepancies between the internal system and the final report.
+north
+north
+inventory
+; ******************************************************************************
+; COMMON CLOTHING
+; ******************************************************************************
+; Here we test the "normal" clothing blocking rules -- i.e. normally a clothing
+; item prevents wearing anything on a layer below it.
+undress
+; ==============================================================================
+; TEST FEET
+; ==============================================================================
+wear sneakers
+; ------------------------------------------------------------------------------
+; TEST SHOES -> BLOCK SOCKS -> OK!
+; ------------------------------------------------------------------------------
+wear socks
+; ==============================================================================
+; TEST LEGS
+; ==============================================================================
+wear khakis
+; ------------------------------------------------------------------------------
+; TEST TROUSERS -> BLOCK PANTYHOSE
+; ------------------------------------------------------------------------------
+wear pantyhose
+; ******************************************************************************
+; SPECIAL CLOTHING EXCEPTIONS
+; ******************************************************************************
+; Special items like skirts, coats, dresses, teddies, etc, are treated as special
+; cases in the internal evaluations of wether they are blocking the action, so
+; we need to check here that they are also treated correctly in the reported
+; blocking items (since the report code uses independent code to handle special
+; items).
+; ==============================================================================
+; TEST COAT (topcover: 64 | botcover: 64)
+; ==============================================================================
+undress
+wear coat
+; ------------------------------------------------------------------------------
+; TEST COAT -> DON'T BLOCK LOWER-BODY -> OK!
+; ------------------------------------------------------------------------------
+; Coats should not prevent wearing lower-body garnments (botcover <64).
+wear khakis
+; ------------------------------------------------------------------------------
+; TEST COAT -> DON'T BLOCK LOWER-BODY -> SOMETHING ELSE BLOCKS -> OK!
+; ------------------------------------------------------------------------------
+; We must check that the blocking items report is correct, and doesn't list the
+; 'coat' as being one of them.
+; (i.e. the report must match the internal calculations that govern the verb)
+;
+; Only 'khakis' should be reported as blocking item:
+wear pantyhose
+; ------------------------------------------------------------------------------
+; TEST COAT -> BLOCK UPPER-BODY -> OK!
+; ------------------------------------------------------------------------------
+; But should prevent wearing any top_cover.
+wear black shirt
+; ==============================================================================
+; TEST COAT + OTHER TOP COVERS
+; ==============================================================================
+; Now let's check that library correctly lists multiple items preventing wear
+; along with coat.
+undress
+wear red shirt
+wear coat
+; ------------------------------------------------------------------------------
+; TEST BLOCKED BY: COAT + RED SHIRT -> OK!
+; ------------------------------------------------------------------------------
+; 'black shirt' should be blocked by both 'coat' and 'red shirt'.
+wear black shirt
+; 'undershirt' should be blocked by both 'coat' and 'red shirt'.
+wear undershirt

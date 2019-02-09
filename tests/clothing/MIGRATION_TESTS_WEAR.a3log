@@ -17,7 +17,7 @@ clothing item.
 Outside Emporium Alani
 You're standing in front of the Giorgio Alani Emporium entrance. Two
 large brass doors await northward your entrance into the sanctuary of
-fashion consumism. 
+fashion consumism.
 
 > ; ******************************************************************************
 > ; *                                                                            *
@@ -45,8 +45,8 @@ personal assistant here.
 The Dressing Room
 The curtains surrounding this room provide you all the privacy you need
 to disrobe yourself and try on clothing. There is a chair, a basket, a
-pair of dungarees, a skirt, a pair of white pantyhose and a pair of jeans 
-here.
+pair of dungarees, a skirt, a pair of white pantyhose, a pair of jeans, a 
+baseball cap, a fedora, a black shirt, a red shirt and a wool coat here.
 
 > inventory
 You are empty-handed. You are wearing your socks, your boxers, your 
@@ -56,24 +56,19 @@ undershirt, your sneakers and your khakis.
 > ; CAN'T WEAR ITEMS
 > ; ==============================================================================
 > wear skirt
-You pick up the skirt. In order to wear the skirt you should remove
-something first. You are wearing your socks, your boxers, your undershirt, 
-your sneakers and your khakis.
+You pick up the skirt. In order to wear the skirt you should first remove
 
 > wear dungarees
 You pick up the dungarees. In order to wear the dungarees you should
-remove something first. You are wearing your socks, your boxers, your 
-undershirt, your sneakers and your khakis.
+first remove
 
 > wear pantyhose
 You pick up the white pantyhose. In order to wear the white pantyhose you
-should remove something first. You are wearing your socks, your boxers, 
-your undershirt, your sneakers and your khakis.
+should first remove your khakis.
 
 > wear jeans
-You pick up the jeans. In order to wear the jeans you should remove
-something first. You are wearing your socks, your boxers, your undershirt, 
-your sneakers and your khakis.
+You pick up the jeans. In order to wear the jeans you should first remove 
+your khakis.
 
 > ; ==============================================================================
 > ; CAN'T REMOVE ITEMS

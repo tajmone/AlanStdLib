@@ -18,6 +18,7 @@ Some notes on the current work to attempt getting rid of `worn` to store Hero's 
     - [Authors Should Now Use `Donned` to Dress Actors](#authors-should-now-use-donned-to-dress-actors)
     - [Listing Inventory](#listing-inventory)
     - [Examining Actors](#examining-actors)
+    - [Failed Wear and Remove Reports \(WIP\)](#failed-wear-and-remove-reports-wip)
 - [The Old Clothing System](#the-old-clothing-system)
     - [Overview of `worn`](#overview-of-worn)
     - [Occurences of `worn` in the Library](#occurences-of-worn-in-the-library)
@@ -50,48 +51,71 @@ This approach should also allow using shared code to handle items worn by both t
 
 Due to `worn` being referenced in many parts of the library code, a well planned multi-steps approach is required in order to avoid breaking the library.
 
-- [x] Document [all occurences of `worn` in the StdLib code][occurences of worn].
-- [x] Add new subset of tests scripts explicitly targetting changes introduced by this dev branch:
-    + [x]  [`tests/clothing/MIGRATION_TESTS.a3sol`][MIGRATION_TESTS.a3sol]
-    + [x]  [`tests/clothing/MIGRATION_TESTS.a3log`][MIGRATION_TESTS.a3log]
-    + [x]  [`tests/clothing/MIGRATION_TESTS_WEAR.a3sol`][MIGRATION_TESTS_WEAR.a3sol]
-    + [x]  [`tests/clothing/MIGRATION_TESTS_WEAR.a3log`][MIGRATION_TESTS_WEAR.a3log]
-    + [x]  [`tests/clothing/MIGRATION_TESTS.bat`][MIGRATION_TESTS.bat] — convenience batch to compile EGA and execute only tests named `MIGRATION_TESTS*.a3sol` (prevents cluttering Git with other logs, and it's faster).
-- [x] Try not using `wearing` — since we might handle clothing without using `wearing` set at all, try not using it if `donned` can be used:
+- [ ] __DOCUMENT DEVLOPMENT__ — annotated in this document the current work:
+    + [x] __OLD CLOTHING SYSTEM__:
+        * [x] Document [all occurences of `worn` in the StdLib code][occurences of worn].
+    + [ ] __NEW CLOTHING SYSTEM__ (WIP).
+- [x] __TEST SUITE__ — Add new subset of tests scripts explicitly targetting changes introduced by this dev branch:
+    + [x]  [`tests/clothing/MIGRATION_TESTS.a3sol`][MIG.s]
+    + [x]  [`tests/clothing/MIGRATION_TESTS.a3log`][MIG.l]
+    + [x]  [`tests/clothing/MIGRATION_TESTS_WEAR.a3sol`][MIG_WR.s]
+    + [x]  [`tests/clothing/MIGRATION_TESTS_WEAR.a3log`][MIG_WR.l]
+    + [x]  [`tests/clothing/MIGRATION_TESTS_WEAR_PREVENT.a3sol`][MIG_WR_PRV.s]
+    + [x]  [`tests/clothing/MIGRATION_TESTS_WEAR_PREVENT.a3log`][MIG_WR_PRV.l]
+    + [x]  [`tests/clothing/MIGRATION_TESTS.bat`][MIG.bat] — convenience batch to compile EGA and execute only tests named `MIGRATION_TESTS*.a3sol` (prevents cluttering Git with other logs, and it's faster).
+- [x] __AVOID USING `WEARING`__ — since we might handle clothing without using `wearing` set at all, try not using it if `donned` can be used:
     + [x] Keep updating the `wearing` set anyhow but try using just `donned` for checks, instead of `wearing` in:
         * [x] The inventory/`i` verb.
         * [x] The `examine` verb on `actor` (DOES AFTER).
         * [x] The `wear`/`remove` verbs.
         * [x] The [`worn_clothing_check` Event][worn event].
-- [ ] Disable handling Hero's worn items via `worn`:
-    + [x] Tweak initialization of `clothing` class:
+- [ ] __GET RID OF `WORN`__ — Disable handling Hero's worn items via `worn`:
+    + [x] Tweak __INITIALIZATION__ of `clothing` class:
         * [x] Remove handling Hero differently.
         * [x] Remove any reference to `worn`.
         * [x] Iterate over all clothing items _directly in_ every actor, and if the item was marked as `donned` by the author then add it to the `wearing` set of the actor.
-    + [x] Tweak [`worn_clothing_check` Event][worn event]:
+    + [x] Tweak [`worn_clothing_check` __EVENT__][worn event]:
         * [x] Remove handling Hero differently.
         * [x] Remove any reference to `worn`.
         * [x] Just ensure that any clothing _directly in_ an actor and `donned` is added to `wearing` set of the actor.
-    + [x] Tweak inventory/`i` verb:
+    + [x] __INVENTORY__ — Tweak inventory/`i` verb:
         * [x] Produce two separate lists for carried and worn items.
         * [x] Use custom loops instead of `LIST`.
         * [x] Ensure correct usage items separators:
             - [x] "`,`" — comma for multiple items from 2nd to 2nd-last.
             - [x] "`and`" — between 2nd-last and last.
             - [x] "`.`" — after last.
-    + [x] Tweak `examine` verb on `actor` (DOES AFTER):
+    + [x] __EXAMINE NPC__ — Tweak `examine` verb on `actor` (DOES AFTER):
         * [x] Produce two separate lists for carried and worn items.
         * [x] Use custom loops instead of `LIST`.
         * [x] Ensure correct usage items separators:
             - [x] "`,`" — comma for multiple items from 2nd to 2nd-last.
             - [x] "`and`" — between 2nd-last and last.
             - [x] "`.`" — after last.
-    + [ ] Tweak `wear` and `remove` verbs in `lib_classes.i`.
+    + [ ] __WEAR & REMOVE__ — Tweak `wear` and `remove` verbs in `lib_classes.i`.
         * [x] Both verbs work as before, and rely only on `donned` to do all the magic!
         * [x] They still add/remove the item to `wearing` of Hero, but they don't use `wearing` in their calculations.
-        * [ ] IMPROVE: When the action fails, instead of listing every worn item, just mention the culprits that are preventing the wear/remove action. (it's more elegant)
+        * [ ] __FAILURE REPORTS__ — When the action fails, instead of listing every worn item, just mention the culprits that are preventing the wear/remove action (it's more elegant):
+            - [ ] `wear` — __one or more worn items prevent wearing__:
+                + [ ] Implement temporary set to store all blocking items and report them:
+                    * [x] All ordinary clothing items.
+                    * [x] Special clothing execptions:
+                        - [x] Coats-like not blocking legsware.
+                        - [ ] Skirt-like execptions.
+                            + [ ] Skirt & teddy special case.
+                        - [ ] Dress/coveralls.
+                + [x] Report only blocking items istead of every worn clothing.
+            - [ ] `remove` — __one or more worn items prevent removing__:
+                + [ ] Implement temporary set to store all blocking items and report them:
+                    * [ ] All ordinary clothing items.
+                    * [ ] Special clothing execptions:
+                        - [ ] Coats-like not blocking legsware.
+                        - [ ] Skirt-like execptions.
+                            + [ ] Skirt & teddy special case?
+                        - [ ] Dress/coveralls.
+                + [ ] Report only blocking items istead of every worn clothing.
     + [ ] Tweak [RunTime messages] in `lib_messages.i`.
-- [ ] Fix all [verbs in `lib_verbs.i` referencing `worn`][worn verbs].
+- [ ] __ALL VERBS__ — Fix all [verbs in `lib_verbs.i` referencing `worn`][worn verbs].
 - [ ] Check that there are no leftover references to `worn` in the library.
 - [ ] Delete definition of `worn` entity.
 
@@ -101,16 +125,20 @@ During the development stages the `worn` entity should be left in the library, t
 
 The clothing tests already present in the test suite should provide enough feedback on the impact that these changes will have on the library behavior. It's better not to commit changed tests transcripts for keeping the original output provides a better comparison to the upstream code behaviour — at least not until the tweaks are deemed as stable and there is a need to fine tuning.
 
-A new subset of tests specifically designed to track and check the ongoing development have been added to this development branch:
+- `tests/clothing/MIGRATION_TESTS*.*`
 
-- [`tests/clothing/MIGRATION_TESTS.a3sol`][MIGRATION_TESTS.a3sol]
-- [`tests/clothing/MIGRATION_TESTS.a3log`][MIGRATION_TESTS.a3log]
-- [`tests/clothing/MIGRATION_TESTS_WEAR.a3sol`][MIGRATION_TESTS_WEAR.a3sol]
-- [`tests/clothing/MIGRATION_TESTS_WEAR.a3log`][MIGRATION_TESTS_WEAR.a3log]
+A new subset of tests has been added in `tests/clothing/`, specifically designed to track and check the ongoing development have been added to this development branch:
+
+|                            commands script / test log                           |                              description                               |
+|---------------------------------------------------------------------------------|------------------------------------------------------------------------|
+| [`MIGRATION_TESTS.a3sol`][MIG.s] / [`.a3log`][MIG.l]                            | Generic test for new clothing system.                                  |
+| [`MIGRATION_TESTS_WEAR.a3sol`][MIG_WR.s] / [`.a3log`][MIG_WR.l]                 | Extended wear/remove clothes tests.                                    |
+| [`MIGRATION_TESTS_WEAR_PREVENT.a3sol`][MIG_WR_PRV.s] / [`.a3log`][MIG_WR_PRV.s] | Tests that prevented wear actions report correctly the blocking items. |
+
 
 With a custom batch script to quickly compile `ega.alan` and run only these subset tests (pattern `MIGRATION_TESTS*.a3sol`) on it, without disturbing the original tests:
 
-- [`tests/clothing/MIGRATION_TESTS.bat`][MIGRATION_TESTS.bat] 
+- [`tests/clothing/MIGRATION_TESTS.bat`][MIG.bat] 
 
 ## Commented Annotations
 
@@ -190,6 +218,19 @@ The inventory/`i` verb has been rewritten to achieve the same results as before.
 ## Examining Actors
 
 Now examining an actor also produces two separate lists for carried and worn items, just like for Hero inventory. The system used is the same as for the inventory/`i` verb, so it relies only on `donned`.
+
+## Failed Wear and Remove Reports (WIP)
+
+The new system will also improve how the `wear` and `remove` verbs report failed actions: instead of listing every worn item, they will now mention only those worn items which the player should remove in order to accomplish the attempted wear/remove which just failed:
+
+> __&gt;__ _wear black shirt_
+> 
+> In order to wear the black shirt you should first remove the red shirt and
+the wool coat.
+
+The new system introduces a temporary set attribute (`my_game:temp_blocking_worn`) which is employed to store the blocking items during the various clothing calculations steps, and then used in the final report when the action fails.
+
+The code that handles including blocking items in the set must follow the same execption rules for special items like coats, skirts, etc., to avoid mentioning the wrong items as blocking.
 
 -------------------------------------------------------------------------------
 
@@ -504,11 +545,13 @@ Various verbs in `libs_verbs.i` also refer to `worn` and will have to be fixed a
 
 <!-- project files -->
 
-[MIGRATION_TESTS.a3log]: ./tests/clothing/MIGRATION_TESTS.a3log "View source"
-[MIGRATION_TESTS.a3sol]: ./tests/clothing/MIGRATION_TESTS.a3sol "View source"
-[MIGRATION_TESTS.bat]: ./tests/clothing/MIGRATION_TESTS.bat "View source"
-[MIGRATION_TESTS_WEAR.a3log]: ./tests/clothing/MIGRATION_TESTS_WEAR.a3log "View source"
-[MIGRATION_TESTS_WEAR.a3sol]: ./tests/clothing/MIGRATION_TESTS_WEAR.a3sol "View source"
+[MIG.l]: ./tests/clothing/MIGRATION_TESTS.a3log "View source"
+[MIG.s]: ./tests/clothing/MIGRATION_TESTS.a3sol "View source"
+[MIG.bat]: ./tests/clothing/MIGRATION_TESTS.bat "View source"
+[MIG_WR.l]: ./tests/clothing/MIGRATION_TESTS_WEAR.a3log "View source"
+[MIG_WR.s]: ./tests/clothing/MIGRATION_TESTS_WEAR.a3sol "View source"
+[MIG_WR_PRV.l]: ./tests/clothing/MIGRATION_TESTS_WEAR_PREVENT.a3log "View source"
+[MIG_WR_PRV.s]: ./tests/clothing/MIGRATION_TESTS_WEAR_PREVENT.a3sol "View source"
 
 
 
