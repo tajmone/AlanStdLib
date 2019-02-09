@@ -186,13 +186,13 @@ END ADD.
 
 
 THE worn ISA ENTITY
-  IS NOT blocked.
+  IS blocked.
   CONTAINER TAKING CLOTHING.
     HEADER SAY hero_worn_header OF my_game.
     ELSE SAY hero_worn_else OF my_game.
     EXTRACT 
-			    CHECK THIS IS NOT blocked
-			    ELSE "You should take off the $o first."
+        CHECK THIS IS NOT blocked
+	   ELSE "You should take off the $o first."
 END THE.
 
 
@@ -651,12 +651,7 @@ ADD TO EVERY ACTOR
 END ADD TO.
 
 
---------------------------------------------------------------------
--- An event checking that clothing acquired and worn by an actor
--- mid-game is recognised to be worn by the actor:
---------------------------------------------------------------------
 
----------
 
 
 
@@ -2111,13 +2106,7 @@ ADD TO EVERY ACTOR
   ELSE
     IF THIS = hero
       THEN "You are empty-handed."
-      ELSE
-        SAY THE THIS.
-        IF THIS IS NOT plural
-          THEN "is"
-          ELSE "are"
-        END IF. "not carrying anything."
-
+      ELSE ""    
     END IF.
 
   EXTRACT
@@ -2188,12 +2177,30 @@ ADD TO EVERY ACTOR
     DOES AFTER
       IF THIS <> hero
         THEN
-          LIST THIS.
+	  FOR EACH cl ISA CLOTHING, IN THIS, IS donned
+	      DO 
+	      LOCATE cl IN npc_worn.
+              LIST THIS.
+	      SAY THE THIS.
+	      
+	      IF THIS IS NOT plural
+                  THEN "is wearing"
+                  ELSE "are wearing."
+              END IF.
+	          LIST npc_worn.
       END IF.
   END VERB examine.
 
 
 END ADD TO.
+
+
+THE npc_worn ISA LISTED_CONTAINER
+CONTAINER
+HEADER 
+   SAY CURRENT ACTOR. "is wearing"
+ELSE ""
+END THE.
 
 
 -- the default dummy clothing object; ignore
@@ -2217,25 +2224,7 @@ END THE.
 EVERY person ISA ACTOR
       CAN talk.
 
-  CONTAINER
-    HEADER
-      SAY THE THIS.
-      IF THIS IS NOT plural
-        THEN "is"
-        ELSE "are"
-      END IF. "carrying"
-    ELSE
-
-      SAY THE THIS.
-      IF THIS IS NOT plural
-        THEN "is"
-        ELSE "are"
-      END IF. "empty-handed."
-
-    EXTRACT
-      CHECK THIS IS compliant
-        ELSE "That seems to belong to"
-        SAY THE THIS. "."
+ 
 
 END EVERY.
 
