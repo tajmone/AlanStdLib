@@ -7169,10 +7169,10 @@ ADD TO EVERY THING
         END IF.
 
     DOES
-   IF obj ISA ACTOR
-         THEN SAY THE obj. "would probably object to that."
+      IF obj ISA ACTOR
+            THEN SAY THE obj. "would probably object to that."
 
-		ELSIF obj ISA OBJECT
+		 ELSIF obj ISA OBJECT
 			THEN 
 				IF obj IN worn       -- to allow items in clothing items to be taken
 					THEN MAKE worn NOT blocked.
@@ -7186,9 +7186,6 @@ ADD TO EVERY THING
 				END IF.
 
 		END IF.
-```
-        -- Objects held by NPCs cannot be taken by the hero by default.
-        -- The hero must *ask for* the object to obtain it.
 
   END VERB take.
 END ADD TO.
