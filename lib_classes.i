@@ -2171,20 +2171,25 @@ ADD TO EVERY ACTOR
 
   VERB examine
     DOES AFTER
+    
       IF THIS <> hero
         THEN
 	  FOR EACH cl ISA CLOTHING, IN THIS, IS donned
 	      DO 
 	      LOCATE cl IN npc_worn.
 	  END FOR.
-              LIST THIS.
-	      SAY THE THIS.
+              
+	      LIST THIS.
 	      
-	      IF THIS IS NOT plural
-                  THEN "is wearing"
-                  ELSE "are wearing"
-              END IF.
+	      IF COUNT ISA CLOTHING, IN npc_worn > 0
+	          THEN
+	            SAY THE THIS.
+	              IF THIS IS NOT plural
+                         THEN "is wearing"
+                         ELSE "are wearing"
+                      END IF.
 	          LIST npc_worn.
+              END IF.
       END IF.
   END VERB examine.
 
