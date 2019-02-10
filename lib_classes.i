@@ -328,10 +328,10 @@ EVERY clothing ISA OBJECT
             IF THIS IS NOT plural
               THEN "is"
               ELSE "are"
-            END IF. "currently worn by"
+            END IF. "currently being worn by"
             FOR EACH ac IsA actor DO
               IF THIS IN ac
-                THEN SAY THE ac.
+                THEN SAY THE ac. "."
               END IF.
             END FOR.
         END IF.
@@ -554,6 +554,7 @@ EVERY clothing ISA OBJECT
               = 16 --> trousers
                 THEN
                   IF botcover OF THIS = 32 --> trousers prevent wearing a skirt
+                  OR botcover OF THIS >= botcover OF THIS --> (normal criteria)
                     THEN INCLUDE blocking_item IN temp_blocking_worn OF my_game.
                   END IF.
               ELSE
