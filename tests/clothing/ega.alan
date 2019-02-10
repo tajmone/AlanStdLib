@@ -403,6 +403,7 @@ END EVERY.
 EVERY cl_underpants IsA proto_underwear.
   NAME underpants.
   HAS botcover 2.
+  IS plural.
   INDEFINITE ARTICLE "a pair of"
 END EVERY.
 -------
@@ -411,6 +412,7 @@ END EVERY.
 EVERY cl_socks IsA clothing.
   NAME socks.
   HAS feetcover 2.
+  IS plural.
   INDEFINITE ARTICLE "a pair of"
 END EVERY.
 
@@ -420,12 +422,14 @@ END EVERY.
 EVERY cl_shoes IsA clothing.
   NAME shoes.
   HAS feetcover 4.
+  IS plural.
   INDEFINITE ARTICLE "a pair of"
 END EVERY.
 
 EVERY cl_boots IsA clothing.
   NAME boots.
   HAS feetcover 4.
+  IS plural.
   INDEFINITE ARTICLE "a pair of"
 END EVERY.
 
@@ -973,8 +977,6 @@ THE black_scarf IsA clothing AT ega_sportswear.
   NAME black scarf.
   HAS ex "A black wool scarf.".
 END THE.
-
-
 
 
 --==============================================================================

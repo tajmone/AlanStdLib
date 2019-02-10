@@ -70,7 +70,7 @@ You remove all the items you are wearing and drop the on the floor.
 > ; TEST FEET
 > ; ==============================================================================
 > wear sneakers
-You pick up your sneakers and put it on.
+You pick up your sneakers and put them on.
 
 > ; ------------------------------------------------------------------------------
 > ; TEST SHOES -> BLOCK SOCKS -> OK!
