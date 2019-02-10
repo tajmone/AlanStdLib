@@ -64,7 +64,7 @@ baseball cap, a fedora, a black shirt, a red shirt and a wool coat here.
 > ; Here we test the "normal" clothing blocking rules -- i.e. normally a clothing
 > ; item prevents wearing anything on a layer below it.
 > undress
-You remove all the items you are wearing and drop the on the floor.
+You strip naked and drop all your clothes on the floor.
 
 > ; ==============================================================================
 > ; TEST FEET
@@ -104,7 +104,7 @@ should first remove your khakis.
 > ; TEST COAT (topcover: 64 | botcover: 64)
 > ; ==============================================================================
 > undress
-You remove all the items you are wearing and drop the on the floor.
+You strip naked and drop all your clothes on the floor.
 
 > wear coat
 You pick up the wool coat and put it on.
@@ -147,7 +147,7 @@ You are not wearing the black shirt.
 > ; Now let's check that library correctly lists multiple items preventing wear
 > ; along with coat.
 > undress
-You remove all the items you are wearing and drop the on the floor.
+You strip naked and drop all your clothes on the floor.
 
 > wear red shirt
 You pick up the red shirt and put it on.
@@ -169,7 +169,7 @@ You pick up your undershirt. In order to wear your undershirt you should
 first remove the red shirt and the wool coat.
 
 > undress
-You remove all the items you are wearing and drop the on the floor.
+You strip naked and drop all your clothes on the floor.
 
 > wear skirt
 You pick up the skirt and put it on.

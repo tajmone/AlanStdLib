@@ -187,7 +187,7 @@ THE dressing_room IsA room.
     DOES ONLY
       IF COUNT IsA CLOTHING, DIRECTLY IN hero, IS donned > 0
         THEN
-          "You remove all the items you are wearing and drop the on the floor."
+          "You strip naked and drop all your clothes on the floor."
           FOR EACH worn_item IsA CLOTHING, DIRECTLY IN Hero, IS donned
             DO
               MAKE worn_item NOT donned.
