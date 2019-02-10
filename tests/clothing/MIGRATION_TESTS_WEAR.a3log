@@ -56,19 +56,19 @@ undershirt, your sneakers and your khakis.
 > ; CAN'T WEAR ITEMS
 > ; ==============================================================================
 > wear skirt
-You pick up the skirt. In order to wear the skirt you should first remove
+You pick up the skirt. In order to wear the skirt you should first remove 
+your khakis.
 
 > wear dungarees
 You pick up the dungarees. In order to wear the dungarees you should
-first remove
+first remove your khakis.
 
 > wear pantyhose
 You pick up the white pantyhose. In order to wear the white pantyhose you
-should first remove your khakis.
+should first remove
 
 > wear jeans
-You pick up the jeans. In order to wear the jeans you should first remove 
-your khakis.
+You pick up the jeans. In order to wear the jeans you should first remove
 
 > ; ==============================================================================
 > ; CAN'T REMOVE ITEMS

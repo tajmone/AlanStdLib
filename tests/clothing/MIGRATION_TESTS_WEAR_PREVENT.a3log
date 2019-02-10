@@ -73,7 +73,7 @@ You remove all the items you are wearing and drop the on the floor.
 You pick up your sneakers and put them on.
 
 > ; ------------------------------------------------------------------------------
-> ; TEST SHOES -> BLOCK SOCKS -> OK!
+> ; TEST SHOES -> BLOCK SOCKS
 > ; ------------------------------------------------------------------------------
 > wear socks
 You pick up your socks. In order to wear your socks you should first
@@ -90,7 +90,7 @@ You pick up your khakis and put them on.
 > ; ------------------------------------------------------------------------------
 > wear pantyhose
 You pick up the white pantyhose. In order to wear the white pantyhose you
-should first remove your khakis.
+should first remove
 
 > ; ******************************************************************************
 > ; SPECIAL CLOTHING EXCEPTIONS
@@ -110,14 +110,14 @@ You remove all the items you are wearing and drop the on the floor.
 You pick up the wool coat and put it on.
 
 > ; ------------------------------------------------------------------------------
-> ; TEST COAT -> DON'T BLOCK LOWER-BODY -> OK!
+> ; TEST COAT -> DON'T BLOCK LOWER-BODY
 > ; ------------------------------------------------------------------------------
 > ; Coats should not prevent wearing lower-body garnments (botcover <64).
 > wear khakis
 You pick up your khakis and put them on.
 
 > ; ------------------------------------------------------------------------------
-> ; TEST COAT -> DON'T BLOCK LOWER-BODY -> SOMETHING ELSE BLOCKS -> OK!
+> ; TEST COAT -> DON'T BLOCK LOWER-BODY -> SOMETHING ELSE BLOCKS
 > ; ------------------------------------------------------------------------------
 > ; We must check that the blocking items report is correct, and doesn't list the
 > ; 'coat' as being one of them.
@@ -125,15 +125,21 @@ You pick up your khakis and put them on.
 > ;
 > ; WEAR BLOCKED BY: 'khakis'
 > wear pantyhose
-In order to wear the white pantyhose you should first remove your khakis.
+In order to wear the white pantyhose you should first remove
 
 > ; ------------------------------------------------------------------------------
-> ; TEST COAT -> BLOCK UPPER-BODY -> OK!
+> ; TEST COAT -> BLOCK UPPER-BODY
 > ; ------------------------------------------------------------------------------
-> ; But should prevent wearing any top_cover.
+> ; But should prevent wearing/removing any top_cover.
+> ; 
+> ; WEAR BLOCKED BY: 'khakis'
 > wear black shirt
 You pick up the black shirt. In order to wear the black shirt you should
 first remove the wool coat.
+
+> ; REMOVE BLOCKED BY: 'khakis'
+> remove black shirt
+You are not wearing the black shirt.
 
 > ; ==============================================================================
 > ; TEST COAT + OTHER TOP COVERS
@@ -150,7 +156,7 @@ You pick up the red shirt and put it on.
 You pick up the wool coat and put it on.
 
 > ; ------------------------------------------------------------------------------
-> ; TEST BLOCKED BY: COAT + RED SHIRT -> OK!
+> ; TEST BLOCKED BY: COAT + RED SHIRT
 > ; ------------------------------------------------------------------------------
 > ; WEAR BLOCKED BY: 'coat' & 'red shirt'
 > wear black shirt
@@ -190,6 +196,43 @@ remove the white pantyhose.
 > remove pantyhose
 You take off the white pantyhose.
 
+> wear boxers
+You put on your boxers.
+
+> wear pantyhose
+You put on the white pantyhose.
+
+> ; REMOVE BLOCKED BY: 'pantyhose' (but not 'skirt'!)
+> remove boxers
+In order to remove your boxers you should first remove the white pantyhose
+.
+
+> ; ------------------------------------------------------------------------------
+> ; TEST SKIRT -> DON'T BLOCK LOWER-BODY -> TROUSERS EXCEPTION
+> ; ------------------------------------------------------------------------------
+> ; Although trousers belong to a lower layer than skirt, wearing them with a skirt
+> ; is prevented out of common sense.
+> ;
+> ; WEAR BLOCKED BY: 'skirt'
+> wear khakis
+You pick up your khakis. In order to wear your khakis you should first
+remove the skirt.
+
+> remove skirt
+You take off the skirt.
+
+> ; ------------------------------------------------------------------------------
+> ; TEST SKIRT -> CAN'T WEAR OVER TROUSERS
+> ; ------------------------------------------------------------------------------
+> ; And it shouldn't be possibile to wear them both even in layered order.
+> ; (ie. wearing trousers first, skirt after)
+> wear khakis
+You put on your khakis.
+
+> ; WEAR BLOCKED BY: 'khakis'
+> wear skirt
+In order to wear the skirt you should first remove your khakis.
+
 > ; ------------------------------------------------------------------------------
 > ; TEST SKIRT -> BLOCK EXCEPTIONS
 > ; ------------------------------------------------------------------------------
@@ -198,15 +241,16 @@ You take off the white pantyhose.
 > ;
 > ; WEAR BLOCKED BY: 'skirt'
 > wear khakis
-You pick up your khakis. In order to wear your khakis you should first
-remove the skirt.
+In order to wear your khakis you should first remove
 
-> ; TEST TEDDY-LIKE -- Union suit/teddy are blocked by skirt because they are
-> ;                    one-piece garnment covering torso and legs.
-> ;
+> ; TEST TEDDY-LIKE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> ;                 Union suit/teddy are blocked by skirt because they are a
+> ;                 one-piece garnment covering torso and legs at once.
+> ;                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 > ; WEAR BLOCKED BY: 'skirt'
 > wear union suit
-In order to wear the union suit you should first remove the skirt.
+In order to wear the union suit you should first remove the white
+pantyhose.
 
 > 
 

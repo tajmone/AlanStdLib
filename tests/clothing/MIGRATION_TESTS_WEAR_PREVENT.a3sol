@@ -23,7 +23,7 @@ undress
 ; ==============================================================================
 wear sneakers
 ; ------------------------------------------------------------------------------
-; TEST SHOES -> BLOCK SOCKS -> OK!
+; TEST SHOES -> BLOCK SOCKS
 ; ------------------------------------------------------------------------------
 wear socks
 ; ==============================================================================
@@ -48,12 +48,12 @@ wear pantyhose
 undress
 wear coat
 ; ------------------------------------------------------------------------------
-; TEST COAT -> DON'T BLOCK LOWER-BODY -> OK!
+; TEST COAT -> DON'T BLOCK LOWER-BODY
 ; ------------------------------------------------------------------------------
 ; Coats should not prevent wearing lower-body garnments (botcover <64).
 wear khakis
 ; ------------------------------------------------------------------------------
-; TEST COAT -> DON'T BLOCK LOWER-BODY -> SOMETHING ELSE BLOCKS -> OK!
+; TEST COAT -> DON'T BLOCK LOWER-BODY -> SOMETHING ELSE BLOCKS
 ; ------------------------------------------------------------------------------
 ; We must check that the blocking items report is correct, and doesn't list the
 ; 'coat' as being one of them.
@@ -62,10 +62,14 @@ wear khakis
 ; WEAR BLOCKED BY: 'khakis'
 wear pantyhose
 ; ------------------------------------------------------------------------------
-; TEST COAT -> BLOCK UPPER-BODY -> OK!
+; TEST COAT -> BLOCK UPPER-BODY
 ; ------------------------------------------------------------------------------
-; But should prevent wearing any top_cover.
+; But should prevent wearing/removing any top_cover.
+; 
+; WEAR BLOCKED BY: 'khakis'
 wear black shirt
+; REMOVE BLOCKED BY: 'khakis'
+remove black shirt
 ; ==============================================================================
 ; TEST COAT + OTHER TOP COVERS
 ; ==============================================================================
@@ -75,7 +79,7 @@ undress
 wear red shirt
 wear coat
 ; ------------------------------------------------------------------------------
-; TEST BLOCKED BY: COAT + RED SHIRT -> OK!
+; TEST BLOCKED BY: COAT + RED SHIRT
 ; ------------------------------------------------------------------------------
 ; WEAR BLOCKED BY: 'coat' & 'red shirt'
 wear black shirt
@@ -98,16 +102,35 @@ wear pantyhose
 wear boxers
 ; REMOVE YES: 'pantyhose'
 remove pantyhose
+wear boxers
+wear pantyhose
+; REMOVE BLOCKED BY: 'pantyhose' (but not 'skirt'!)
+remove boxers
 ; ------------------------------------------------------------------------------
-; TEST SKIRT -> BLOCK EXCEPTIONS
+; TEST SKIRT -> DON'T BLOCK LOWER-BODY -> TROUSERS EXCEPTION
 ; ------------------------------------------------------------------------------
-; TEST TROUSERS -- Although trousers belong to a lower layer than skirts, they
-; are blocked nonetheless because it wouldn't make sense to wear both at once.
+; Although trousers belong to a lower layer than skirt, wearing them with a skirt
+; is prevented out of common sense.
 ;
 ; WEAR BLOCKED BY: 'skirt'
 wear khakis
-; TEST TEDDY-LIKE -- Union suit/teddy are blocked by skirt because they are
-;                    one-piece garnment covering torso and legs.
-;
+remove skirt
+; ------------------------------------------------------------------------------
+; TEST SKIRT -> CAN'T WEAR OVER TROUSERS
+; ------------------------------------------------------------------------------
+; And it shouldn't be possibile to wear them both even in layered order.
+; (ie. wearing trousers first, skirt after)
+wear khakis
+; WEAR BLOCKED BY: 'khakis'
+wear skirt
+; ------------------------------------------------------------------------------
+; TEST WEARING -> ALREADY WORN
+; ------------------------------------------------------------------------------
+; We're already wearing the khakis
+wear khakis
+; TEST TEDDY-LIKE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+;                 Union suit/teddy are blocked by skirt because they are a
+;                 one-piece garnment covering torso and legs at once.
+;                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ; WEAR BLOCKED BY: 'skirt'
 wear union suit

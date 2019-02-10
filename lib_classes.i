@@ -528,12 +528,18 @@ EVERY clothing ISA OBJECT
               
               = 32 --> dress/skirt/coverall like
                 THEN
-                  IF botcover OF THIS < 16  --> item's layer is below trousers
+                  IF  botcover OF THIS < 16 --> item's layer is below trousers
                   AND botcover OF THIS <> 4 --> item is not a teddy
                     THEN "" -- Do nothing.
                          -- Skirt-like don't block wearing lower-body-only garments
                          -- of this type.
                     ELSE INCLUDE blocking_item IN temp_blocking_worn OF my_game.
+                  END IF.
+
+              = 16 --> trousers
+                THEN
+                  IF botcover OF THIS = 32 --> trousers prevent wearing a skirt
+                    THEN INCLUDE blocking_item IN temp_blocking_worn OF my_game.
                   END IF.
               ELSE
                 IF botcover OF blocking_item >= botcover OF THIS
@@ -837,9 +843,9 @@ EVERY clothing ISA OBJECT
                 THEN
                   -- -----------------------------------------------------
                   -- We don't check for trousers here!
-                  -- If they are worn a skirt won't prevent removing them.
+                  -- They shouldn't be wearable together with a skirt.
                   -- -----------------------------------------------------
-                  IF botcover OF THIS <> 4 --> item is not a teddy
+                  IF botcover OF THIS <> 4  --> item is not a teddy
                     THEN "" -- Do nothing.
                          -- Skirt-like don't block removing lower-body-only
                          --  garments of this type.
