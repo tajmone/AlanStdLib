@@ -21,18 +21,22 @@ undress
 ; ==============================================================================
 ; TEST FEET
 ; ==============================================================================
+; WEAR YES: 'sneakers'
 wear sneakers
 ; ------------------------------------------------------------------------------
 ; TEST SHOES -> BLOCK SOCKS
 ; ------------------------------------------------------------------------------
+; WEAR BLOCKED BY: 'sneakers'
 wear socks
 ; ==============================================================================
 ; TEST LEGS
 ; ==============================================================================
+; WEAR YES: 'khakis'
 wear khakis
 ; ------------------------------------------------------------------------------
 ; TEST TROUSERS -> BLOCK PANTYHOSE
 ; ------------------------------------------------------------------------------
+; WEAR BLOCKED BY: 'khakis'
 wear pantyhose
 ; ******************************************************************************
 ; SPECIAL CLOTHING EXCEPTIONS
@@ -46,11 +50,14 @@ wear pantyhose
 ; TEST COAT (topcover: 64 | botcover: 64)
 ; ==============================================================================
 undress
+wear undershirt
 wear coat
 ; ------------------------------------------------------------------------------
 ; TEST COAT -> DON'T BLOCK LOWER-BODY
 ; ------------------------------------------------------------------------------
 ; Coats should not prevent wearing lower-body garnments (botcover <64).
+; 
+; WEAR YES: 'khakis'
 wear khakis
 ; ------------------------------------------------------------------------------
 ; TEST COAT -> DON'T BLOCK LOWER-BODY -> SOMETHING ELSE BLOCKS
@@ -66,10 +73,10 @@ wear pantyhose
 ; ------------------------------------------------------------------------------
 ; But should prevent wearing/removing any top_cover.
 ; 
-; WEAR BLOCKED BY: 'khakis'
+; WEAR BLOCKED BY: 'coat'
 wear black shirt
-; REMOVE BLOCKED BY: 'khakis'
-remove black shirt
+; REMOVE BLOCKED BY: 'coat'
+remove undershirt
 ; ==============================================================================
 ; TEST COAT + OTHER TOP COVERS
 ; ==============================================================================
@@ -118,19 +125,44 @@ remove skirt
 ; ------------------------------------------------------------------------------
 ; TEST SKIRT -> CAN'T WEAR OVER TROUSERS
 ; ------------------------------------------------------------------------------
-; And it shouldn't be possibile to wear them both even in layered order.
-; (ie. wearing trousers first, skirt after)
+; And it shouldn't be possibile to wear both of them in layered order either
+; (ie. wearing trousers first, skirt after):
 wear khakis
 ; WEAR BLOCKED BY: 'khakis'
 wear skirt
-; ------------------------------------------------------------------------------
-; TEST WEARING -> ALREADY WORN
-; ------------------------------------------------------------------------------
-; We're already wearing the khakis
-wear khakis
 ; TEST TEDDY-LIKE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;                 Union suit/teddy are blocked by skirt because they are a
 ;                 one-piece garnment covering torso and legs at once.
 ;                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-; WEAR BLOCKED BY: 'skirt'
+; WEAR BLOCKED BY: 'skirt' & 'pantyhose'
 wear union suit
+; ** NOTE: +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+;          | Pantyhose SHOULDN'T prevent wearing teddy/union-suit, for in real
+;          | life they belong to a lower layer. But the Clothing Table defines:
+;          | 
+;          |    pantyhose -> botcover -> 8  
+;          |    teddy     -> botcover -> 4  
+;          | 
+;          | So this is not an error introduced by new clothing system -- it was
+;          | there all along.
+;          +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+south
+inventory
+; ==============================================================================
+; TEST WEARING ITEMS ALREADY WORN/OR WORN BY OTHERS, AND REMOVING UNWORN ITEMS
+; ==============================================================================
+; ------------------------------------------------------------------------------
+; TEST WEARING -> ALREADY WORN
+; ------------------------------------------------------------------------------
+wear khakis
+; ------------------------------------------------------------------------------
+; TEST WEARING -> WORN BY NPC
+; ------------------------------------------------------------------------------
+wear boots
+wear uniform
+; ------------------------------------------------------------------------------
+; TEST REMOVING -> UNWORN
+; ------------------------------------------------------------------------------
+; Skirt is being carried, not worn:
+remove skirt
+remove boots

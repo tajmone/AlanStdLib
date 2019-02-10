@@ -69,12 +69,14 @@ You strip naked and drop all your clothes on the floor.
 > ; ==============================================================================
 > ; TEST FEET
 > ; ==============================================================================
+> ; WEAR YES: 'sneakers'
 > wear sneakers
 You pick up your sneakers and put them on.
 
 > ; ------------------------------------------------------------------------------
 > ; TEST SHOES -> BLOCK SOCKS
 > ; ------------------------------------------------------------------------------
+> ; WEAR BLOCKED BY: 'sneakers'
 > wear socks
 You pick up your socks. In order to wear your socks you should first
 remove your sneakers.
@@ -82,12 +84,14 @@ remove your sneakers.
 > ; ==============================================================================
 > ; TEST LEGS
 > ; ==============================================================================
+> ; WEAR YES: 'khakis'
 > wear khakis
 You pick up your khakis and put them on.
 
 > ; ------------------------------------------------------------------------------
 > ; TEST TROUSERS -> BLOCK PANTYHOSE
 > ; ------------------------------------------------------------------------------
+> ; WEAR BLOCKED BY: 'khakis'
 > wear pantyhose
 You pick up the white pantyhose. In order to wear the white pantyhose you
 should first remove your khakis.
@@ -106,6 +110,9 @@ should first remove your khakis.
 > undress
 You strip naked and drop all your clothes on the floor.
 
+> wear undershirt
+You pick up your undershirt and put it on.
+
 > wear coat
 You pick up the wool coat and put it on.
 
@@ -113,6 +120,8 @@ You pick up the wool coat and put it on.
 > ; TEST COAT -> DON'T BLOCK LOWER-BODY
 > ; ------------------------------------------------------------------------------
 > ; Coats should not prevent wearing lower-body garnments (botcover <64).
+> ; 
+> ; WEAR YES: 'khakis'
 > wear khakis
 You pick up your khakis and put them on.
 
@@ -132,14 +141,14 @@ In order to wear the white pantyhose you should first remove your khakis.
 > ; ------------------------------------------------------------------------------
 > ; But should prevent wearing/removing any top_cover.
 > ; 
-> ; WEAR BLOCKED BY: 'khakis'
+> ; WEAR BLOCKED BY: 'coat'
 > wear black shirt
 You pick up the black shirt. In order to wear the black shirt you should
 first remove the wool coat.
 
-> ; REMOVE BLOCKED BY: 'khakis'
-> remove black shirt
-You are not wearing the black shirt.
+> ; REMOVE BLOCKED BY: 'coat'
+> remove undershirt
+In order to remove your undershirt you should first remove the wool coat.
 
 > ; ==============================================================================
 > ; TEST COAT + OTHER TOP COVERS
@@ -224,8 +233,8 @@ You take off the skirt.
 > ; ------------------------------------------------------------------------------
 > ; TEST SKIRT -> CAN'T WEAR OVER TROUSERS
 > ; ------------------------------------------------------------------------------
-> ; And it shouldn't be possibile to wear them both even in layered order.
-> ; (ie. wearing trousers first, skirt after)
+> ; And it shouldn't be possibile to wear both of them in layered order either
+> ; (ie. wearing trousers first, skirt after):
 > wear khakis
 You put on your khakis.
 
@@ -233,21 +242,65 @@ You put on your khakis.
 > wear skirt
 In order to wear the skirt you should first remove your khakis.
 
-> ; ------------------------------------------------------------------------------
-> ; TEST WEARING -> ALREADY WORN
-> ; ------------------------------------------------------------------------------
-> ; We're already wearing the khakis
-> wear khakis
-You are already wearing your khakis.
-
 > ; TEST TEDDY-LIKE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 > ;                 Union suit/teddy are blocked by skirt because they are a
 > ;                 one-piece garnment covering torso and legs at once.
 > ;                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> ; WEAR BLOCKED BY: 'skirt'
+> ; WEAR BLOCKED BY: 'skirt' & 'pantyhose'
 > wear union suit
 In order to wear the union suit you should first remove the white
 pantyhose and your khakis.
+
+> ; ** NOTE: +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> ;          | Pantyhose SHOULDN'T prevent wearing teddy/union-suit, for in real
+> ;          | life they belong to a lower layer. But the Clothing Table defines:
+> ;          | 
+> ;          |    pantyhose -> botcover -> 8  
+> ;          |    teddy     -> botcover -> 4  
+> ;          | 
+> ;          | So this is not an error introduced by new clothing system -- it was
+> ;          | there all along.
+> ;          +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> south
+Emporium Alani Main Hall
+This luxurious hall is the crossroad to the various clothing departments
+of the emporium. Two large brass doors lead the way south, out of the
+fashion temple and back into the world of mortal souls.The assistant
+comes running into the room, all the way from the mensware dept., where
+you left her.
+
+> inventory
+You're carrying a skirt, a black shirt, a union suit, your socks and your 
+undershirt. You are wearing a pair of white pantyhose, your boxers and 
+your khakis.
+
+> ; ==============================================================================
+> ; TEST WEARING ITEMS ALREADY WORN/OR WORN BY OTHERS, AND REMOVING UNWORN ITEMS
+> ; ==============================================================================
+> ; ------------------------------------------------------------------------------
+> ; TEST WEARING -> ALREADY WORN
+> ; ------------------------------------------------------------------------------
+> wear khakis
+You are already wearing your khakis.
+
+> ; ------------------------------------------------------------------------------
+> ; TEST WEARING -> WORN BY NPC
+> ; ------------------------------------------------------------------------------
+> wear boots
+The fashion boots are currently being worn by the assistant.
+
+> wear uniform
+The uniform is currently being worn by the assistant.
+
+> ; ------------------------------------------------------------------------------
+> ; TEST REMOVING -> UNWORN
+> ; ------------------------------------------------------------------------------
+> ; Skirt is being carried, not worn:
+> remove skirt
+You are not wearing the skirt.
+
+> remove boots
+You are not wearing the fashion boots.
 
 > 
 
