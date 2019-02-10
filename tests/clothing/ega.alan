@@ -498,6 +498,31 @@ EVERY proto_dress IsA clothing.
   HAS botcover 32.
 END EVERY.
 
+--==============================================================================
+-- TEDDY/UNION SUIT
+--==============================================================================
+
+EVERY proto_teddy IsA clothing.
+  HAS topcover 4.
+  HAS botcover 4.
+END EVERY.
+
+-- TEDDY (women): one-piece garnment worn above underwear and below pantihose,
+--                trousers, skirts, etc. It's loose fitting, no sleeves, and
+--                the lower part is usually like shorts above the knee.
+EVERY cl_teddy IsA proto_teddy.
+  NAME teddy.
+  NAME camiknicker.
+END EVERY.
+
+-- UNION SUIT (men): one-piece garnment worn above underwear and below trousers,
+--                   similar to teddy but for men. It's tight fitting, long
+--                   legs and sleeves, and made of thick material to protect
+--                   from the cold.
+EVERY cl_union_suit IsA proto_teddy.
+  NAME union suit.
+  NAME union.
+END EVERY.
 
 --==============================================================================
 -- COAT
@@ -870,6 +895,28 @@ END THE.
 THE tshirt IsA cl_tshirt AT ega_menswear.
   
 END THE.
+
+THE union_suit IsA cl_union_suit AT ega_menswear.
+  HAS ex "It's a one-piece men garnment covering legs and torso, to be worn on
+          top of underwear and below trousers and shirts. It's tight fitting.".
+  
+END THE.
+
+--=============================================================================
+--\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+--------------------------------------------------------------------------------
+-- Womensware Department Clothing
+-------------------------------------------------------------------------------
+--//////////////////////////////////////////////////////////////////////////////
+--=============================================================================
+
+THE teddy IsA cl_teddy AT ega_womenswear.
+  HAS ex "It's a one-piece womean garnment covering the torso and crotch,
+          to be worn on top of underwear and below pantiehose, trousers and
+          skirts. It's loose fitting, no sleeves, and the lower part is well
+          above the knees.".
+      
+END THE teddy.
 
 --=============================================================================
 --\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
