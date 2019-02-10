@@ -65,10 +65,36 @@ first remove your khakis.
 
 > wear pantyhose
 You pick up the white pantyhose. In order to wear the white pantyhose you
-should first remove
+should first remove your khakis.
 
 > wear jeans
-You pick up the jeans. In order to wear the jeans you should first remove
+You pick up the jeans. In order to wear the jeans you should first remove 
+your khakis.
+
+> ; ------------------------------------------------------------------------------
+> ; CAN'T WEAR ITEMS ALREADY WORN
+> ; ------------------------------------------------------------------------------
+> wear khakis
+You are already wearing your khakis.
+
+> south
+Emporium Alani Main Hall
+This luxurious hall is the crossroad to the various clothing departments
+of the emporium. Two large brass doors lead the way south, out of the
+fashion temple and back into the world of mortal souls.There is your
+personal assistant here.
+
+> ; ------------------------------------------------------------------------------
+> ; CAN'T WEAR ITEMS WORN BY NPC
+> ; ------------------------------------------------------------------------------
+> wear boots
+The fashion boots are currently being worn by the assistant.
+
+> north
+The Dressing Room
+The curtains surrounding this room provide you all the privacy you need
+to disrobe yourself and try on clothing. There is a chair, a basket, a 
+baseball cap, a fedora, a black shirt, a red shirt and a wool coat here.
 
 > ; ==============================================================================
 > ; CAN'T REMOVE ITEMS
@@ -90,6 +116,15 @@ In order to remove your boxers you should first remove your khakis.
 DONNED: Yes 
 IN WORN: No. 
 IN WEARING OF: | hero
+
+> ; ------------------------------------------------------------------------------
+> ; CAN'T REMOVE UNWORN ITEMS
+> ; ------------------------------------------------------------------------------
+> remove coat
+You are not wearing the wool coat.
+
+> remove boots
+You can't see any boots here.
 
 > ; ==============================================================================
 > ; REMOVE ITEMS
