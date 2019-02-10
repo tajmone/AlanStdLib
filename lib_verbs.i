@@ -8789,8 +8789,15 @@ ADD TO EVERY OBJECT
   VERB wear
     CHECK my_game CAN wear
       ELSE SAY restricted_response OF my_game.
-    AND obj NOT IN worn
-      ELSE SAY check_obj_not_in_worn1 OF my_game.
+ -- >>> devworn >>> tweaked:
+ --     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ --     Checks for already worned items have been moved
+ --     to the 'wear' VERB on the 'clothing' class.  
+ --     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ -- >>> original code >>>
+ -- AND obj NOT IN worn
+ --   ELSE SAY check_obj_not_in_worn1 OF my_game.
+ -- <<< original code <<<
     AND obj IS takeable
       ELSE SAY check_obj_takeable OF my_game.
     AND CURRENT LOCATION IS lit

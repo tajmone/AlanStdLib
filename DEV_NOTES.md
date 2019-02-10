@@ -95,7 +95,11 @@ Due to `worn` being referenced in many parts of the library code, a well planned
     + [ ] __WEAR & REMOVE__ — Tweak `wear` and `remove` verbs in `lib_classes.i`.
         * [x] Both verbs work as before, and rely only on `donned` to do all the magic!
         * [x] They still add/remove the item to `wearing` of Hero, but they don't use `wearing` in their calculations.
-        * [ ] __FAILURE REPORTS__ — When the action fails, instead of listing every worn item, just mention the culprits that are preventing the wear/remove action (it's more elegant):
+        * [x] `wear`:
+            - [x] Added CHECK to prevent action on `donned` items (regardless of who's donning it):
+                + [x] If donned item is in Hero, print `check_obj_not_in_worn1` message.
+                + [x] Otherwise iterate all actors until found who's wearing it, and report "\[the item\] is/are currently worn by \[the actor\]."
+        * [x] __FAILURE REPORTS__ — When the action fails, instead of listing every worn item, just mention the culprits that are preventing the wear/remove action (it's more elegant):
             - [x] `wear` — __one or more worn items prevent wearing__:
                 + [x] Implement temporary set to store all blocking items and report them:
                     * [x] All ordinary clothing items.
@@ -116,7 +120,16 @@ Due to `worn` being referenced in many parts of the library code, a well planned
                         - [x] Dress/coveralls.
                 + [x] Report only blocking items istead of every worn clothing.
     + [ ] Tweak [RunTime messages] in `lib_messages.i`.
-- [ ] __ALL VERBS__ — Fix all [verbs in `lib_verbs.i` referencing `worn`][worn verbs].
+- [ ] __ALL VERBS__ — Fix all [verbs in `lib_verbs.i` referencing `worn`][worn verbs]:
+    + [ ] `attack` (481)
+    + [ ] `attack_with` (557)
+    + [ ] `drop` (1964)
+    + [x] inventory/`i` (3385)
+    + [ ] `kick` (3550)
+    + [ ] `shoot` (6314)
+    + [ ] `shoot_with` (6393)
+    + [ ] `take` (7178)
+    + [x] `wear` (8743) — removed checks for already worn items (now handled in `wear` of `clothing`).
 - [ ] Check that there are no leftover references to `worn` in the library.
 - [ ] Delete definition of `worn` entity.
 
@@ -385,7 +398,7 @@ Various verbs in `libs_verbs.i` also refer to `worn` and will have to be fixed a
 - [ ] `shoot` (6314)
 - [ ] `shoot_with` (6393)
 - [ ] `take` (7178)
-- [ ] `wear` (8743)
+- [x] `wear` (8743)
 
 #### attack
 

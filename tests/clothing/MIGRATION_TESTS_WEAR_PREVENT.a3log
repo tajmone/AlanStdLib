@@ -17,7 +17,7 @@ clothing item.
 Outside Emporium Alani
 You're standing in front of the Giorgio Alani Emporium entrance. Two
 large brass doors await northward your entrance into the sanctuary of
-fashion consumism.
+fashion consumism. 
 
 > ; ******************************************************************************
 > ; *                                                                            *
@@ -234,14 +234,11 @@ You put on your khakis.
 In order to wear the skirt you should first remove your khakis.
 
 > ; ------------------------------------------------------------------------------
-> ; TEST SKIRT -> BLOCK EXCEPTIONS
+> ; TEST WEARING -> ALREADY WORN
 > ; ------------------------------------------------------------------------------
-> ; TEST TROUSERS -- Although trousers belong to a lower layer than skirts, they
-> ; are blocked nonetheless because it wouldn't make sense to wear both at once.
-> ;
-> ; WEAR BLOCKED BY: 'skirt'
+> ; We're already wearing the khakis
 > wear khakis
-In order to wear your khakis you should first remove
+You are already wearing your khakis.
 
 > ; TEST TEDDY-LIKE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 > ;                 Union suit/teddy are blocked by skirt because they are a

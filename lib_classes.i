@@ -319,7 +319,22 @@ EVERY clothing ISA OBJECT
   VERB wear
     CHECK sex OF THIS = sex OF hero OR sex OF THIS = 0
       ELSE SAY check_clothing_sex OF my_game.
-
+    -- >>> devworn >>> added:
+    AND THIS IS NOT donned
+      ELSE
+        IF THIS IN hero
+          THEN SAY check_obj_not_in_worn1 OF my_game.
+          ELSE "$+1"
+            IF THIS IS NOT plural
+              THEN "is"
+              ELSE "are"
+            END IF. "currently worn by"
+            FOR EACH ac IsA actor DO
+              IF THIS IN ac
+                THEN SAY THE ac.
+              END IF.
+            END FOR.
+        END IF.
     DOES ONLY
     -- >>> devworn >>> added:
 --------------------------------------------------------------------
