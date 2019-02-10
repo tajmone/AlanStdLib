@@ -480,13 +480,16 @@ EVERY clothing ISA OBJECT
 
 --------------------------------------------------------------------
 -- Now discount any dress/skirt/coverall like clothes as these do
--- not technically affect ability to put on lower body only clothes.
+-- not technically affect ability to put on lower body only clothes
+-- (excluding trousers, which won't make sense with a skirt).
 -- Special clause here excludes the full body coverage 'teddy' type
 -- garment - as a skirt WOULD prevent that from being removed.
 -- ( dress/coat garments automatically prevent this by virtue of
 -- having higher 'topcover' settings than the teddy )
 --------------------------------------------------------------------
 
+    -- The item being worn must have botcover <= 8 (excludes trousers)
+    -- and not be a teddy (botcover 4)
 
     IF tempcovered OF hero >31 AND botcover OF THIS < 16 AND botcover OF THIS <> 4
       THEN SET tempcovered OF hero TO tempcovered OF hero -32.
@@ -530,6 +533,17 @@ EVERY clothing ISA OBJECT
             = 64 --> coat-like
               THEN "" -- Do nothing.
               -- Coats don't block wearing lower-body-only garments.
+            
+            = 32 --> dress/skirt/coverall like
+              THEN
+                IF botcover OF THIS < 16  --> item's layer is below trousers
+                AND botcover OF THIS <> 4 --> item is not a teddy
+                  THEN "" -- Do nothing.
+                       -- Skirt-like don't block wearing lower-body-only garments
+                       -- of this type.
+                  ELSE INCLUDE blocking_item IN temp_blocking_worn OF my_game.
+                       "** BLOCKING SKIRT-LIKE **"
+                END IF.
             ELSE
               IF botcover OF blocking_item >= botcover OF THIS
                 THEN INCLUDE blocking_item IN temp_blocking_worn OF my_game.

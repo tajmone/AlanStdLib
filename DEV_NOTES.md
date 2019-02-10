@@ -96,14 +96,14 @@ Due to `worn` being referenced in many parts of the library code, a well planned
         * [x] Both verbs work as before, and rely only on `donned` to do all the magic!
         * [x] They still add/remove the item to `wearing` of Hero, but they don't use `wearing` in their calculations.
         * [ ] __FAILURE REPORTS__ — When the action fails, instead of listing every worn item, just mention the culprits that are preventing the wear/remove action (it's more elegant):
-            - [ ] `wear` — __one or more worn items prevent wearing__:
-                + [ ] Implement temporary set to store all blocking items and report them:
+            - [x] `wear` — __one or more worn items prevent wearing__:
+                + [x] Implement temporary set to store all blocking items and report them:
                     * [x] All ordinary clothing items.
                     * [x] Special clothing execptions:
                         - [x] Coats-like not blocking legsware.
-                        - [ ] Skirt-like execptions.
-                            + [ ] Skirt & teddy special case.
-                        - [ ] Dress/coveralls.
+                        - [x] Skirt-like execptions.
+                            + [x] Skirt & teddy special case.
+                        - [x] Dress/coveralls.
                 + [x] Report only blocking items istead of every worn clothing.
             - [ ] `remove` — __one or more worn items prevent removing__:
                 + [ ] Implement temporary set to store all blocking items and report them:

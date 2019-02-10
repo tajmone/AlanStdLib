@@ -8,8 +8,10 @@
 ; This script tests that the correct items are being reported -- i.e. that there
 ; are no discrepancies between the internal system and the final report.
 north
-north
 inventory
+east
+take union suit
+northwest
 ; ******************************************************************************
 ; COMMON CLOTHING
 ; ******************************************************************************
@@ -57,7 +59,7 @@ wear khakis
 ; 'coat' as being one of them.
 ; (i.e. the report must match the internal calculations that govern the verb)
 ;
-; Only 'khakis' should be reported as blocking item:
+; WEAR BLOCKED BY: 'khakis'
 wear pantyhose
 ; ------------------------------------------------------------------------------
 ; TEST COAT -> BLOCK UPPER-BODY -> OK!
@@ -75,7 +77,37 @@ wear coat
 ; ------------------------------------------------------------------------------
 ; TEST BLOCKED BY: COAT + RED SHIRT -> OK!
 ; ------------------------------------------------------------------------------
-; 'black shirt' should be blocked by both 'coat' and 'red shirt'.
+; WEAR BLOCKED BY: 'coat' & 'red shirt'
 wear black shirt
-; 'undershirt' should be blocked by both 'coat' and 'red shirt'.
+; WEAR BLOCKED BY: 'coat' & 'red shirt'
 wear undershirt
+undress
+wear skirt
+; ==============================================================================
+; TEST SKIRT (botcover: 32)
+; ==============================================================================
+; Skirts shouldn't prevent wearing lower-only garnment with botcover <= 8 (which
+; excludes trousers), except for teddy like garments (eg. a 'union suit') which
+; are one-piece garnments covering torso and legs.
+; ------------------------------------------------------------------------------
+; TEST SKIRT -> DON'T BLOCK LOWER-BODY
+; ------------------------------------------------------------------------------
+; WEAR YES: 'pantyhose'
+wear pantyhose
+; WEAR BLOCKED BY: 'pantyhose' (but not 'skirt'!)
+wear boxers
+; REMOVE YES: 'pantyhose'
+remove pantyhose
+; ------------------------------------------------------------------------------
+; TEST SKIRT -> BLOCK EXCEPTIONS
+; ------------------------------------------------------------------------------
+; TEST TROUSERS -- Although trousers belong to a lower layer than skirts, they
+; are blocked nonetheless because it wouldn't make sense to wear both at once.
+;
+; WEAR BLOCKED BY: 'skirt'
+wear khakis
+; TEST TEDDY-LIKE -- Union suit/teddy are blocked by skirt because they are
+;                    one-piece garnment covering torso and legs.
+;
+; WEAR BLOCKED BY: 'skirt'
+wear union suit

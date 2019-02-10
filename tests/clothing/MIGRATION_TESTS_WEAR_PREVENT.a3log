@@ -37,16 +37,26 @@ of the emporium. Two large brass doors lead the way south, out of the
 fashion temple and back into the world of mortal souls.There is your
 personal assistant here.
 
-> north
+> inventory
+You are empty-handed. You are wearing your socks, your boxers, your 
+undershirt, your sneakers and your khakis.
+
+> east
+Mensware Department
+Everything a man would ever dream wearing can be found here. There is a 
+T-shirt and a union suit here. 
+
+The assistant follows you.
+
+> take union suit
+Taken.
+
+> northwest
 The Dressing Room
 The curtains surrounding this room provide you all the privacy you need
 to disrobe yourself and try on clothing. There is a chair, a basket, a
 pair of dungarees, a skirt, a pair of white pantyhose, a pair of jeans, a 
 baseball cap, a fedora, a black shirt, a red shirt and a wool coat here.
-
-> inventory
-You are empty-handed. You are wearing your socks, your boxers, your 
-undershirt, your sneakers and your khakis.
 
 > ; ******************************************************************************
 > ; COMMON CLOTHING
@@ -113,7 +123,7 @@ You pick up your khakis and put them on.
 > ; 'coat' as being one of them.
 > ; (i.e. the report must match the internal calculations that govern the verb)
 > ;
-> ; Only 'khakis' should be reported as blocking item:
+> ; WEAR BLOCKED BY: 'khakis'
 > wear pantyhose
 In order to wear the white pantyhose you should first remove your khakis.
 
@@ -142,15 +152,62 @@ You pick up the wool coat and put it on.
 > ; ------------------------------------------------------------------------------
 > ; TEST BLOCKED BY: COAT + RED SHIRT -> OK!
 > ; ------------------------------------------------------------------------------
-> ; 'black shirt' should be blocked by both 'coat' and 'red shirt'.
+> ; WEAR BLOCKED BY: 'coat' & 'red shirt'
 > wear black shirt
 In order to wear the black shirt you should first remove the red shirt and 
 the wool coat.
 
-> ; 'undershirt' should be blocked by both 'coat' and 'red shirt'.
+> ; WEAR BLOCKED BY: 'coat' & 'red shirt'
 > wear undershirt
 You pick up your undershirt. In order to wear your undershirt you should
 first remove the red shirt and the wool coat.
+
+> undress
+You remove all the items you are wearing and drop the on the floor.
+
+> wear skirt
+You pick up the skirt and put it on.
+
+> ; ==============================================================================
+> ; TEST SKIRT (botcover: 32)
+> ; ==============================================================================
+> ; Skirts shouldn't prevent wearing lower-only garnment with botcover <= 8 (which
+> ; excludes trousers), except for teddy like garments (eg. a 'union suit') which
+> ; are one-piece garnments covering torso and legs.
+> ; ------------------------------------------------------------------------------
+> ; TEST SKIRT -> DON'T BLOCK LOWER-BODY
+> ; ------------------------------------------------------------------------------
+> ; WEAR YES: 'pantyhose'
+> wear pantyhose
+You put on the white pantyhose.
+
+> ; WEAR BLOCKED BY: 'pantyhose' (but not 'skirt'!)
+> wear boxers
+You pick up your boxers. In order to wear your boxers you should first
+remove the white pantyhose.
+
+> ; REMOVE YES: 'pantyhose'
+> remove pantyhose
+You take off the white pantyhose.
+
+> ; ------------------------------------------------------------------------------
+> ; TEST SKIRT -> BLOCK EXCEPTIONS
+> ; ------------------------------------------------------------------------------
+> ; TEST TROUSERS -- Although trousers belong to a lower layer than skirts, they
+> ; are blocked nonetheless because it wouldn't make sense to wear both at once.
+> ;
+> ; WEAR BLOCKED BY: 'skirt'
+> wear khakis
+** BLOCKING SKIRT-LIKE ** You pick up your khakis. In order to wear your 
+khakis you should first remove the skirt.
+
+> ; TEST TEDDY-LIKE -- Union suit/teddy are blocked by skirt because they are
+> ;                    one-piece garnment covering torso and legs.
+> ;
+> ; WEAR BLOCKED BY: 'skirt'
+> wear union suit
+** BLOCKING SKIRT-LIKE ** In order to wear the union suit you should
+first remove the skirt.
 
 > 
 
