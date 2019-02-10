@@ -198,16 +198,15 @@ You take off the white pantyhose.
 > ;
 > ; WEAR BLOCKED BY: 'skirt'
 > wear khakis
-** BLOCKING SKIRT-LIKE ** You pick up your khakis. In order to wear your 
-khakis you should first remove the skirt.
+You pick up your khakis. In order to wear your khakis you should first
+remove the skirt.
 
 > ; TEST TEDDY-LIKE -- Union suit/teddy are blocked by skirt because they are
 > ;                    one-piece garnment covering torso and legs.
 > ;
 > ; WEAR BLOCKED BY: 'skirt'
 > wear union suit
-** BLOCKING SKIRT-LIKE ** In order to wear the union suit you should
-first remove the skirt.
+In order to wear the union suit you should first remove the skirt.
 
 > 
 

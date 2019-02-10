@@ -18,7 +18,7 @@ Some notes on the current work to attempt getting rid of `worn` to store Hero's 
     - [Authors Should Now Use `Donned` to Dress Actors](#authors-should-now-use-donned-to-dress-actors)
     - [Listing Inventory](#listing-inventory)
     - [Examining Actors](#examining-actors)
-    - [Failed Wear and Remove Reports \(WIP\)](#failed-wear-and-remove-reports-wip)
+    - [Failed Wear and Remove Reports](#failed-wear-and-remove-reports)
 - [The Old Clothing System](#the-old-clothing-system)
     - [Overview of `worn`](#overview-of-worn)
     - [Occurences of `worn` in the Library](#occurences-of-worn-in-the-library)
@@ -102,18 +102,19 @@ Due to `worn` being referenced in many parts of the library code, a well planned
                     * [x] Special clothing execptions:
                         - [x] Coats-like not blocking legsware.
                         - [x] Skirt-like execptions.
+                            + [x] Skirt & trousers special case.
                             + [x] Skirt & teddy special case.
                         - [x] Dress/coveralls.
                 + [x] Report only blocking items istead of every worn clothing.
-            - [ ] `remove` — __one or more worn items prevent removing__:
-                + [ ] Implement temporary set to store all blocking items and report them:
-                    * [ ] All ordinary clothing items.
-                    * [ ] Special clothing execptions:
-                        - [ ] Coats-like not blocking legsware.
-                        - [ ] Skirt-like execptions.
-                            + [ ] Skirt & teddy special case?
-                        - [ ] Dress/coveralls.
-                + [ ] Report only blocking items istead of every worn clothing.
+            - [x] `remove` — __one or more worn items prevent removing__:
+                + [x] Implement temporary set to store all blocking items and report them:
+                    * [x] All ordinary clothing items.
+                    * [x] Special clothing execptions:
+                        - [x] Coats-like not blocking legsware.
+                        - [x] Skirt-like execptions.
+                            + [x] Skirt & teddy special case.
+                        - [x] Dress/coveralls.
+                + [x] Report only blocking items istead of every worn clothing.
     + [ ] Tweak [RunTime messages] in `lib_messages.i`.
 - [ ] __ALL VERBS__ — Fix all [verbs in `lib_verbs.i` referencing `worn`][worn verbs].
 - [ ] Check that there are no leftover references to `worn` in the library.
@@ -219,7 +220,7 @@ The inventory/`i` verb has been rewritten to achieve the same results as before.
 
 Now examining an actor also produces two separate lists for carried and worn items, just like for Hero inventory. The system used is the same as for the inventory/`i` verb, so it relies only on `donned`.
 
-## Failed Wear and Remove Reports (WIP)
+## Failed Wear and Remove Reports
 
 The new system will also improve how the `wear` and `remove` verbs report failed actions: instead of listing every worn item, they will now mention only those worn items which the player should remove in order to accomplish the attempted wear/remove which just failed:
 

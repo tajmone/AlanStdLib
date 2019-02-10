@@ -74,9 +74,7 @@ your khakis.
 > ; CAN'T REMOVE ITEMS
 > ; ==============================================================================
 > remove socks
-In order to remove your socks you should remove something first. You are
-wearing your socks, your boxers, your undershirt, your sneakers and your 
-khakis.
+In order to remove your socks you should first remove your sneakers.
 
 > DBG socks
 'socks' VALUES: | feetcover: 2 | 
@@ -85,9 +83,7 @@ IN WORN: No.
 IN WEARING OF: | hero
 
 > remove boxers
-In order to remove your boxers you should remove something first. You are
-wearing your socks, your boxers, your undershirt, your sneakers and your 
-khakis.
+In order to remove your boxers you should first remove your khakis.
 
 > DBG boxers
 'boxers' VALUES: | botcover: 2 | 
