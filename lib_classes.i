@@ -2181,12 +2181,16 @@ ADD TO EVERY ACTOR
     DOES AFTER
       IF THIS <> hero
         THEN
+-- >>> dev-clothing: TODO >>> ACTOR EXAMINE VERB
+--                            Use custom loops to produce separate list of
+--                            carried and worn items. 
+
           LIST THIS.
       END IF.
   END VERB examine.
 
 
-END ADD TO.
+END ADD TO ACTOR.
 
 
 -- the default dummy clothing object; ignore

@@ -1,0 +1,67 @@
+
+
+Emporium Giorgio Alani 
+An adventure to test clothing. 
+(C) 2018 by Tristano Ajmone 
+Programmed with the ALAN Interactive Fiction Language v3.0beta6 build 1866
+.
+Standard Library v2.1 
+Version 1 
+All rights reserved. 
+
+Type EXITS to view the list of exits of a room. 
+Use the DBG command (DGB <ITEM NAME>) to show the coverage values of any
+clothing item.
+
+
+Outside Emporium Alani
+You're standing in front of the Giorgio Alani Emporium entrance. Two
+large brass doors await northward your entrance into the sanctuary of
+fashion consumism. 
+
+> ; ******************************************************************************
+> ; *                                                                            *
+> ; *                        TEST CLOTHING INITIALIZATION                        *
+> ; *                                                                            *
+> ; ******************************************************************************
+> ; We must check that with the new system all clothing items are initialized
+> ; correctly.
+> ; 
+> ; Now authors only need to create a clothing instance directly in the wearing
+> ; actor and set it as `IS donned`; the library will take care of the rest.
+> ; ==============================================================================
+> ; HERO'S CLOTHING
+> ; ==============================================================================
+> inventory
+You are empty-handed. You are wearing your undershirt, your sneakers, your 
+khakis, your boxers and your socks.
+
+> ; ------------------------------------------------------------------------------
+> ; NESTED CLOTHES
+> ; ------------------------------------------------------------------------------
+> x khakis
+A pair of khaki beige cotton pants. Inside the khakis pockets there are 
+your kippah and your wallet.
+
+> x kippah
+It's your kippah. You always carry it around with you.
+
+> ; ==============================================================================
+> ; NPCS' CLOTHING
+> ; ==============================================================================
+> north
+As you move toward the doors they automagically slide open before you.
+
+Emporium Alani Main Hall
+This luxurious hall is the crossroad to the various clothing departments
+of the emporium. Two large brass doors lead the way south, out of the
+fashion temple and back into the world of mortal souls. There is your
+personal assistant here.
+
+> x assistant
+She's your personal shopping assistant. The assistant is carrying a pair
+of fashion boots (being worn) and a uniform (being worn).
+
+> 
+
+Do you want to RESTART, RESTORE, QUIT or UNDO? 
