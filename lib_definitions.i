@@ -83,8 +83,19 @@ ADD TO EVERY THING
 
   CAN NOT talk.
 
+-- >>> dev-clothing: ADDED >>> THING: 'donned' attribute.
+--      The 'donned' attribute was moved from 'clothing' class to 'thing'.
 
-
+  IS NOT donned.
+    -- (for 'clothing' instances) it's not worn by any actor.
+    -- -------------------------------------------------------------------------
+    -- NOTE: Authors can also use this attribute to implement non-clothing type
+    --       of wearables (eg. devices). The library ensures that any verbs
+    --       which could remove a thing from an actor also set the thing as 
+    --       'NOT donned', in case authors are using this attribute outside of
+    --       the 'clothing' class context.
+    -- -------------------------------------------------------------------------
+-- <<< dev-clothing <<< 
 
 -- We still define that plural nouns are preceded by "some" (and not by "a" or "an"):
 

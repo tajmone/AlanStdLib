@@ -95,6 +95,8 @@ Here are the various tasks list for shifting to the new clothing system, largely
 
 - [x] __SOURCE ANNOTATIONS__ — Mark all places in the library sources that need to be tweaked.
 - [ ] __ADOPT BUILD 1870__ — A bug was recently found that prevented using `DIRECTLY IN` inside nested loops. It was fixed in [developer snapshot 1870], so the StdLib _must_ adopt the new build in this work.
+    + [x] Use Alan 3.0 beta6 build 1870 to carry out tests.
+    + [ ] Update Alan version in READMEs.
     + [ ] Update Alan version references in all adventures sources.
 
 [developer snapshot 1870]: https://www.alanif.se/download-alan-v3/development-snapshots/development-snapshots/build1870
@@ -104,16 +106,29 @@ Here are the various tasks list for shifting to the new clothing system, largely
 - [x] Create `tests/clothing/DEV.bat` script to run tests only with solution files with name pattern `DEV_*.a3sol`.
 - [ ] Add tests to track tweaked clothing features.
 - [ ] __EGA__ — Tweak `ega.alan` test adventure to reflect changes in the library code and/or provide better testing material:
+    + [ ] __DBG VERB__ — Tweak it to work with the new clothing system and attributes.
+    + [x] __UNDRESS VERB__ — Tweak it to work with new system (no use of `worn` or `wearing`).
+    + [x] __WORN CLOTHES__ — Adapt code relating to worn items:
+        * [x] __HERO__: Locate item `IN hero` instead of `worn`.
+        * [x] __ALL ACTORS__: Set item as `donned`.
+
+
 
 ## Dispose of `worn` and `wearing`
 
 Before actually removing the `worn` entity and the `wearing` set from the library code, and use instead just the `donned` boolean attribute (which will be renamed to `worn`) any references to them (in VERBs, EVENTs, etc.) must be subsituted with the new system. This will require a gradual approach, starting with the `clothing` class initialization and the `wear` and `remove` verbs, and then dealing with the `i` (inventory) verb, and then adapting every other verb that references `worn` and `wearing`.
 
-- [ ] __MOVE `donned` ON `thing`__ — The `donned` attribute must be made available on the `thing` class, not just on `clothing`, fro two reasons:
+- [x] __MOVE `donned` ON `thing`__ — The `donned` attribute must be made available on the `thing` class, not just on `clothing`, fro two reasons:
     1. Allow to carry out checks in syntaxes of verbs that might affect worn items.
     1. Enable authors to implement non-clothing wearables (eg. wearable `device`s like VR goggles).
 - [ ] __CLOTHING INITIALIZATION__ — Tweak initialization of `clothing`:
-    + [ ] Fix code referencing `worn` and `wearing`.
+    + [x] Comment out the code that iterates every ACTOR to see if the clothing instance is in its  `wearing` set in order to make it `donned` and, in case of the Hero, move it to `worn`. None of this is any longer necessary, for a clothing items only needs to be DIRECTLY IN an ACTOR and `IS donned` for it to be worn by the actor.
+    + [x] Suppress scheduling the `worn_clothing_check` EVENT. That's no longer required.
+- [ ] __EVENT `worn_clothing_check`__:
+    + [x] Commented out the whole event for it's no longer strictly required.
+    + [ ] Now that the loop bug was fixed in Alan, we could use the event to check that any clothing item `INDIRECTLY IN HERO` is set to `NOT donned`. Although this should never happen due to Library verbs (which will now handle carefully the `donned` attribute in _any_ transferred thing), chances are that authors-created verbs in an adventure might not be handling these subtle cases correctly, and this event might help them.
+    
+        > __NOTE__ — I haven't implement such checks in the Italian library, partly due to the bug, partly because I didn't see it as strictly necessary; still, all clothing tests passed without problems.
 
 
 ## Adapt Verbs

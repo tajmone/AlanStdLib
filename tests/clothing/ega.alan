@@ -183,12 +183,19 @@ THE dressing_room IsA room.
      SOUTHWEST to Womenswear,
      WEST to Sportswear, and
      NORTHWEST to Workswear.".
+-- >>> dev-clothing: TWEAKED >>> EGA: VERB undress
   VERB undress -- Allow undressing action when in Dressing Room:
     DOES ONLY
--- >>> dev-clothing: FIXME >>> EGA: VERB undress
-      IF COUNT DIRECTLY IN worn, ISA CLOTHING > 0
-        THEN EMPTY worn IN hero.
+     -- IF COUNT DIRECTLY IN worn, ISA CLOTHING > 0
+      --   THEN EMPTY worn IN hero.
+      IF COUNT IsA clothing, DIRECTLY IN hero, IS donned > 0
+         THEN
           "You remove all the items you were wearing."
+          FOR EACH worncl IsA clothing, DIRECTLY IN Hero, IS donned
+            DO
+              MAKE worncl NOT donned.
+              LOCATE worncl AT CURRENT LOCATION.
+          END FOR.
         ELSE "You're not wearing anything you can remove."
       END IF.
   END VERB undress.  
@@ -714,11 +721,11 @@ THE personal_assistant IsA female AT ega_hall.
     -- ---------------------------------------------------------
     -- Turn every clothing IN assistant into an item worn by her
     -- ---------------------------------------------------------
--- >>> dev-clothing: FIXME >>> EGA: clothing INITIALIZE
+-- >>> dev-clothing: TWEAKED >>> EGA: clothing INITIALIZE (don't use 'wearing')
     FOR EACH cl IsA clothing, IN THIS
       DO
         MAKE cl donned.
-        INCLUDE cl IN wearing OF THIS.
+        -- INCLUDE cl IN wearing OF THIS.
     END FOR.
 END THE personal_assistant.
 
@@ -910,10 +917,10 @@ END THE.
 --     have same ARTICLE and place them IN WORN, and slim down code here.
 -- [ ] Order of creation matters: items will be listed in inverse order.
 
--- >>> dev-clothing: FIXME >>> EGA: Hero clothing (uses 'worn')
+-- >>> dev-clothing: TWEAKED >>> EGA: Hero clothing (don't use 'worn')
 
-
-THE hero_socks IsA cl_socks IN worn.
+THE hero_socks IsA cl_socks IN hero.
+  IS donned.
   NAME socks.
   NAME my white socks.
   INDEFINITE ARTICLE "your"
@@ -923,7 +930,8 @@ THE hero_socks IsA cl_socks IN worn.
      The right sock has a hole big enough for your toe to pop out.".
 END THE hero_socks.
 
-THE hero_boxers IsA cl_underpants IN worn.
+THE hero_boxers IsA cl_underpants IN hero.
+  IS donned.
   NAME boxers.
   NAME my white boxers.
   INDEFINITE ARTICLE "your"
@@ -931,7 +939,8 @@ THE hero_boxers IsA cl_underpants IN worn.
   HAS ex "Just your boxer shorts (the loose type), white and plain.".
 END THE hero_boxers.
 
-THE hero_undershirt IsA cl_undershirt IN worn.
+THE hero_undershirt IsA cl_undershirt IN hero.
+  IS donned.
   NAME undershirt.
   NAME my white undershirt.
   INDEFINITE ARTICLE "your"
@@ -939,7 +948,8 @@ THE hero_undershirt IsA cl_undershirt IN worn.
   HAS ex "A plain white T-shaped undershirt, a few stains here and there.".
 END THE.
 
-THE hero_shoes IsA cl_shoes IN worn.
+THE hero_shoes IsA cl_shoes IN hero.
+  IS donned.
   NAME sneakers.
   NAME my black converse sneakers.
   INDEFINITE ARTICLE "your"
@@ -952,7 +962,8 @@ END THE.
 --------------------------------------------------------------------------------
 
 
-THE hero_trousers IsA proto_trousers IN worn.
+THE hero_trousers IsA proto_trousers IN hero.
+  IS donned.
   NAME khakis.
   NAME my khakis.
   NAME khaki pants.
