@@ -525,9 +525,11 @@ EVERY definition_block ISA LOCATION
 
   HAS check_obj_in_worn "You are not wearing $+1.".                 -- remove, take_off ('classes.i')
   HAS check_obj_not_in_worn1 "You are already wearing $+1.".            -- put_on, wear ('classes.i')
-      HAS check_obj_not_in_worn2 "It doesn't make sense to $v something you're wearing.". -- attack, attack_with, kick, shoot, shoot_with
+  HAS check_obj_not_in_worn2 "It doesn't make sense to $v something you're wearing.". -- attack, attack_with, kick, shoot, shoot_with
   HAS check_obj_not_in_worn3 "You'll have to take off $+1 first.".        -- drop
 
+  HAS check_obj1_not_worn_by_NPC_sg "Currently $+1 is worn by".  -- wear
+  HAS check_obj1_not_worn_by_NPC_pl "Currently $+1 are worn by".  -- wear
 
   -- c) checking location states
   ------------------------------

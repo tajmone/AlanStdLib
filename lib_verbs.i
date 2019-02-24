@@ -8754,9 +8754,11 @@ ADD TO EVERY OBJECT
   VERB wear
     CHECK my_game CAN wear
       ELSE SAY restricted_response OF my_game.
--- >>> dev-clothing: FIXME >>> VERB wear
-    AND obj NOT IN worn
-      ELSE SAY check_obj_not_in_worn1 OF my_game.
+-- >>> dev-clothing: DELETED >>> VERB wear
+--                   These CHECKS have been moved to 'wear' on 'clothing'
+-- AND obj NOT IN worn
+--   ELSE SAY check_obj_not_in_worn1 OF my_game.
+-- <<< dev-clothing <<<
     AND obj IS takeable
       ELSE SAY check_obj_takeable OF my_game.
     AND CURRENT LOCATION IS lit

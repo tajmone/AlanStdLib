@@ -18,8 +18,10 @@ This temporary document annotates all the tasks of the development stages to fix
     - [Dedicated Tests](#dedicated-tests)
 - [Tasks List](#tasks-list)
     - [Tests](#tests)
+    - [Clothing Attributes](#clothing-attributes)
     - [Dispose of `worn` and `wearing`](#dispose-of-worn-and-wearing)
     - [Adapt Verbs](#adapt-verbs)
+        - [New Verb Messages](#new-verb-messages)
         - [`wear` and `remove`](#wear-and-remove)
         - [Inventory and Examine Actor](#inventory-and-examine-actor)
         - [Verbs Referencing `worn`](#verbs-referencing-worn)
@@ -66,9 +68,9 @@ The following list resumes the overall steps required to implement the new syste
 - [ ] Ensure that nested clothes are never considered as being worn.
 - [ ] List separately carried and worn items by actors, for both Hero (via 'inventory') and NPCs (via 'examine actor').
 - [ ] When the verbs `wear`/`remove` fail, report only the blocking items (instead of the full list of worn items).
-- [ ] Remove hard-coded handling of special clothes like coats and skirts, and allow authors to implement those via some new (optional) clothing attributes: `blockslegs` and `twopieces`.
+- [ ] Remove hard-coded handling of special clothes like coats and skirts, and allow authors to implement those via some new (optional) clothing attributes: `blockslegs` and `twopiecess`.
 - [ ] Allow authors to free number clothing layers, instead of imposing exponential layering (2, 4, 8, 16, 32, 64).
-- [ ] Add new clothing attribute `facecover` to allow handling goggles, beards, masks, etc., independently from `headcover`.
+- [x] Add new clothing attribute `facecover` to allow handling goggles, beards, masks, etc., independently from `headcover`.
 - [ ] Establish some rules on how the library should handle verbs that might interact with a worn clothing item (including implicit taking), then enforce them in the library vers, and provide clear guidelines for authors so that they might create custom verbs that comply to these guidelines and won't interfere with worn clothing.
 
 
@@ -112,6 +114,13 @@ Here are the various tasks list for shifting to the new clothing system, largely
         * [x] __HERO__: Locate item `IN hero` instead of `worn`.
         * [x] __ALL ACTORS__: Set item as `donned`.
 
+## Clothing Attributes
+
+Add new attributes on `clothing` class:
+
+- [x] `IS blockslegs` — i.e. prevents wearing/removing legsware from layers below. Skirts and coats are `NOT blockslegs`, for they don't prevent wearing/removing underware or other legswear which doesn't form a single-piece clothing with the torso (eg. a teddy, which would be blocked).
+- [x] `IS NOT twopieces` — used for skirts/coats-like checks, if the item being worn/removed `IS twopieces` (eg. a bikini) it will be allowable to do so. Useful when implementing a two-pieces item as a single clothing, eg. a bikin which is worn/removed in a single action.
+- [x] `facecover` — to allow wearing masks, beards, goggles without using up `headcover`.
 
 
 ## Dispose of `worn` and `wearing`
@@ -135,13 +144,35 @@ Before actually removing the `worn` entity and the `wearing` set from the librar
 
 Many verbs need to be adapted to work with the new system, for various reasons. Some verbs will appear in multiple tasks lists in this section, because each list tracks a specific set of tweaks, which might be independent of other types of changes.
 
+### New Verb Messages
+
+The new system required the introduction of some new `my_game` string attributes for verb responses.
+
+|            attribute            |             string            |
+|---------------------------------|-------------------------------|
+| `check_obj1_not_worn_by_NPC_sg` | `"Currently $+1 is worn by"`  |
+| `check_obj1_not_worn_by_NPC_pl` | `"Currently $+1 are worn by"` |
+
 
 ### `wear` and `remove`
 
 Obviously, changes to the `wear` and `remove` verbs in `lib_classes.i` are central to the new clothings system, so we'll assign to them a task list of its own.
 
-- [ ] `wear`
-- [ ] `remove`
+- [ ] __TEMP ATTRIBUTES__ — add new attributes on `definition_block`, for internal usage:
+    + [x] `temp_cnt` (integer), used for listing carried/worn items.
+    + [x] `temp_clothes { clothing }` used to track clothes preventing wear/remove actions.
+    + [ ] Delete `ACTOR:wear_flag` (no longer needed).
+    + [ ] Delete `ACTOR:tempcovered` (no longer needed).
+- [ ] __VERB `wear`__:
+    + [x] __NON EXPONENTIAL LAYERS__ — Allow free arbitrary assignment of layers values.
+    + [x] __FACE COVER VALUE__ — introduce checks for `facecover`.
+    + [x] __SKIRT & COATS__ — no longer hardcoded layers, use `blockslegs` and `twopiece` instead.
+    + [x] __FAILURE REPORT__ — list only blocking items.
+- [ ] __VERB `remove`__:
+    + [ ] __NON EXPONENTIAL LAYERS__ — Allow free arbitrary assignment of layers values.
+    + [ ] __FACE COVER VALUE__ — introduce checks for `facecover`.
+    + [ ] __SKIRT & COATS__ — no longer hardcoded layers, use `blockslegs` and `twopiece` instead.
+    + [ ] __FAILURE REPORT__ — list only blocking items.
 
 
 ### Inventory and Examine Actor
