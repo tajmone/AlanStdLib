@@ -492,6 +492,7 @@ ADD TO EVERY THING
       ELSE SAY check_obj_not_hero1 OF my_game.
     AND target NOT IN hero
       ELSE SAY check_obj_not_in_hero1 OF my_game.
+-- >>> dev-clothing: FIXME >>> VERB attack
     AND target NOT IN worn
       ELSE SAY check_obj_not_in_worn2 OF my_game.
     AND CURRENT LOCATION IS lit
@@ -571,6 +572,7 @@ ADD TO EVERY THING
         ELSE SAY check_obj_not_hero1 OF my_game.
       AND target NOT IN hero
         ELSE SAY check_obj_not_in_hero1 OF my_game.
+-- >>> dev-clothing: FIXME >>> VERB attack_with
       AND target NOT IN worn
         ELSE SAY check_obj_not_in_worn2 OF my_game.
       AND CURRENT LOCATION IS lit
@@ -1967,6 +1969,7 @@ ADD TO EVERY OBJECT
       ELSE SAY restricted_response OF my_game.
     AND obj IN hero
       ELSE
+-- >>> dev-clothing: FIXME >>> VERB drop
         IF obj IN worn
           THEN SAY check_obj_not_in_worn3 OF my_game.
           ELSE SAY check_obj_in_hero OF my_game.
@@ -3389,6 +3392,7 @@ VERB i
   DOES
     LIST hero.
 
+-- >>> dev-clothing: FIXME >>> VERB i (inventory)
     IF COUNT DIRECTLY IN worn > 0   -- See the file 'classes.i', subclass 'clothing'.
       THEN LIST worn.     -- This code will list what the hero is wearing.
     END IF.
@@ -3561,6 +3565,7 @@ ADD TO EVERY THING
       ELSE SAY check_obj_not_hero1 OF my_game.
     AND target NOT IN hero
       ELSE SAY check_obj_not_in_hero1 OF my_game.
+-- >>> dev-clothing: FIXME >>> VERB kick
     AND target NOT IN worn
       ELSE SAY check_obj_not_in_worn2 OF my_game.
     AND CURRENT LOCATION IS lit
@@ -6327,6 +6332,7 @@ ADD TO EVERY THING
       ELSE SAY check_current_loc_lit OF my_game.
     AND target NOT IN hero
       ELSE SAY check_obj_not_in_hero1 OF my_game.
+-- >>> dev-clothing: FIXME >>> VERB shoot
     AND target NOT IN worn
       ELSE SAY check_obj_not_in_worn2 OF my_game.
     AND target IS NOT distant
@@ -6408,6 +6414,7 @@ ADD TO EVERY THING
         ELSE SAY check_current_loc_lit OF my_game.
       AND target NOT IN hero
         ELSE SAY check_obj_not_in_hero1 OF my_game.
+-- >>> dev-clothing: FIXME >>> VERB shoot_with
       AND target NOT IN worn
         ELSE SAY check_obj_not_in_worn2 OF my_game.
       AND target IS NOT distant
@@ -7175,6 +7182,7 @@ ADD TO EVERY THING
       -- allow for example a dog to be picked up, or a bird to be taken out of
       -- a cage, etc.
 
+-- >>> dev-clothing: FIXME >>> VERB take
       ELSIF obj ISA OBJECT
         THEN IF obj DIRECTLY IN worn
             THEN LOCATE obj IN hero.
@@ -8453,6 +8461,8 @@ VERB undress
     ELSE SAY check_current_loc_lit OF my_game.
   DOES "You don't feel like undressing is a good idea right now."
 
+-- >>> dev-clothing: FIXME >>> Commented Code-Example
+
       -- To make it work, use the following lines instead:
       -- IF COUNT DIRECTLY IN worn, ISA CLOTHING > 0
       --   THEN EMPTY worn IN hero.
@@ -8744,6 +8754,7 @@ ADD TO EVERY OBJECT
   VERB wear
     CHECK my_game CAN wear
       ELSE SAY restricted_response OF my_game.
+-- >>> dev-clothing: FIXME >>> VERB wear
     AND obj NOT IN worn
       ELSE SAY check_obj_not_in_worn1 OF my_game.
     AND obj IS takeable

@@ -46,6 +46,7 @@ MESSAGE
 
         IF parameter1 IS donned
           THEN
+-- >>> dev-clothing: FIXME >>> MESSAGES referencing worn
             IF parameter1 NOT IN worn
               THEN "(being worn)"
             END IF.
@@ -60,6 +61,7 @@ MESSAGE
 
         IF parameter1 IS donned
           THEN
+-- >>> dev-clothing: FIXME >>> MESSAGES referencing worn
             IF parameter1 NOT IN worn
               THEN "(being worn)"
             END IF.
@@ -76,6 +78,7 @@ MESSAGE
 
         IF parameter1 IS donned
           THEN
+-- >>> dev-clothing: FIXME >>> MESSAGES referencing worn
             IF parameter1 NOT IN worn
               THEN "(being worn)"
             END IF.

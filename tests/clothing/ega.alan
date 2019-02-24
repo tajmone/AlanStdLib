@@ -185,6 +185,7 @@ THE dressing_room IsA room.
      NORTHWEST to Workswear.".
   VERB undress -- Allow undressing action when in Dressing Room:
     DOES ONLY
+-- >>> dev-clothing: FIXME >>> EGA: VERB undress
       IF COUNT DIRECTLY IN worn, ISA CLOTHING > 0
         THEN EMPTY worn IN hero.
           "You remove all the items you were wearing."
@@ -551,6 +552,7 @@ ADD TO EVERY clothing
       -- Show if in Hero's worn
       -------------------------
       "$nIN WORN:"
+-- >>> dev-clothing: FIXME >>> EGA: VERB dbg
       IF obj IN worn
         THEN "Yes"
         ELSE "No."
@@ -712,6 +714,7 @@ THE personal_assistant IsA female AT ega_hall.
     -- ---------------------------------------------------------
     -- Turn every clothing IN assistant into an item worn by her
     -- ---------------------------------------------------------
+-- >>> dev-clothing: FIXME >>> EGA: clothing INITIALIZE
     FOR EACH cl IsA clothing, IN THIS
       DO
         MAKE cl donned.
@@ -906,6 +909,9 @@ END THE.
 -- [ ] Could use an 'owned' attribute to allow INITIALIZE all hero clothing to
 --     have same ARTICLE and place them IN WORN, and slim down code here.
 -- [ ] Order of creation matters: items will be listed in inverse order.
+
+-- >>> dev-clothing: FIXME >>> EGA: Hero clothing (uses 'worn')
+
 
 THE hero_socks IsA cl_socks IN worn.
   NAME socks.

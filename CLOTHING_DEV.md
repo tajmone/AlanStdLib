@@ -16,6 +16,9 @@ This temporary document annotates all the tasks of the development stages to fix
     - [Keep Original Code](#keep-original-code)
     - [Dedicated Tests](#dedicated-tests)
 - [Tasks List](#tasks-list)
+    - [Tests](#tests)
+    - [Adapt Verbs](#adapt-verbs)
+        - [Verbs Referencing `worn`](#verbs-referencing-worn)
 
 <!-- /MarkdownTOC -->
 
@@ -55,12 +58,40 @@ At a later stage, when the clothing code revision work is complete, I'll start t
 
 Here are the various tasks list for shifting to the new clothing system, largely based on the same work done for the Italian version of the StdLib.
 
-- [ ] __SOURCE ANNOTATIONS__ — Mark all places in the library sources that need to be tweaked.
-- [ ] __TESTS__:
-    + [ ] Create `tests/clothing/DEV.bat` script to run tests only with solution files with name pattern `DEV_*.a3sol`.
-    + [ ] Add tests to track tweaked clothing features.
-    + [ ] __EGA__ — Tweak `ega.alan` test adventure to reflect changes in the library code and/or provide better testing material:
+- [x] __SOURCE ANNOTATIONS__ — Mark all places in the library sources that need to be tweaked.
+- [ ] __ADOPT BUILD 1870__ — A bug was recently found that prevented using `DIRECTLY IN` inside nested loops. It was fixed in [developer snapshot 1870], so the StdLib _must_ adopt the new build in this work.
+    + [ ] Update Alan version references in all adventures sources.
 
+[developer snapshot 1870]: https://www.alanif.se/download-alan-v3/development-snapshots/development-snapshots/build1870
+
+## Tests
+
+- [ ] Create `tests/clothing/DEV.bat` script to run tests only with solution files with name pattern `DEV_*.a3sol`.
+- [ ] Add tests to track tweaked clothing features.
+- [ ] __EGA__ — Tweak `ega.alan` test adventure to reflect changes in the library code and/or provide better testing material:
+
+## Adapt Verbs
+
+Obviously, changes to the `wear` and `remove` verbs in `lib_classes.i` are central to the new clothings system, so we'll assign to them a task list of its own.
+
+- [ ] `wear`
+- [ ] `remove`
+
+
+### Verbs Referencing `worn`
+
+These general verbs must also be adapted for they contain references to the `worn` entity.
+
+- [ ] `lib_verbs.i`:
+    + [ ] `attack_with`
+    + [ ] `attack`
+    + [ ] `drop`
+    + [ ] `i` (inventory)
+    + [ ] `kick`
+    + [ ] `shoot_with`
+    + [ ] `shoot`
+    + [ ] `take`
+    + [ ] `wear`
 
 <!-----------------------------------------------------------------------------
                                REFERENCE LINKS                                

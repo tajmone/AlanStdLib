@@ -184,6 +184,10 @@ END ADD.
 -- An entity is present everywhere and thus the hero's clothing is always accessible.
 -- This container is only used internally in the library; ignore.
 
+-- >>> dev-clothing: TODO >>> Delete worn ENTITY
+--                            When no more references to 'worn' are present in
+--                            the library, this definition should be commented
+--                            out (first) and then deleted (before merging).
 
 THE worn ISA ENTITY
   CONTAINER TAKING CLOTHING.
@@ -207,6 +211,12 @@ EVERY clothing ISA OBJECT
 
   IS sex 0.
 
+-- >>> dev-clothing: TODO >>> clothing attributes
+--        The new system will add some new attributes to the clothing class:
+--          * 'facecover'
+--          * 'blockslegs'
+--          * 'twopiece'
+
   IS headcover 0.
   IS handscover 0.
   IS feetcover 0.
@@ -219,6 +229,7 @@ EVERY clothing ISA OBJECT
 
   INITIALIZE
 
+-- >>> dev-clothing: TODO >>> FIX clothing INITIALIZE
 
     -- the set attribute 'IS wearing' is defined to work for both the hero
     -- and NPCs:
@@ -288,6 +299,7 @@ EVERY clothing ISA OBJECT
   END VERB examine.
 
 
+-- >>> dev-clothing: TODO >>> VERB wear
 
     VERB wear
 
@@ -471,6 +483,7 @@ EVERY clothing ISA OBJECT
 
 END VERB wear.
 
+-- >>> dev-clothing: TODO >>> VERB remove
 
 
 VERB remove
@@ -606,6 +619,13 @@ END ADD TO.
 -- An event checking that clothing acquired and worn by an actor
 -- mid-game is recognised to be worn by the actor:
 --------------------------------------------------------------------
+
+-- >>> dev-clothing: TODO >>> worn_clothing_check EVENT
+--      This event must be commented out. It should no longer be required.
+--
+--      BUG NOTE: A bug recently came up relating to nested loops using DIRECTLY.
+--                It was fixed in Build 1870, so adopting the new dev snapshot
+--                in the StdLib is crucial!
 
 
 EVENT worn_clothing_check
