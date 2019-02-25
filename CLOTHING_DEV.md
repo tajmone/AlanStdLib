@@ -98,12 +98,11 @@ At a later stage, when the clothing code revision work is complete, I'll start t
 Here are the various tasks list for shifting to the new clothing system, largely based on the same work done for the Italian version of the StdLib.
 
 - [x] __SOURCE ANNOTATIONS__ — Mark all places in the library sources that need to be tweaked.
-- [ ] __ADOPT BUILD 1870__ — A bug was recently found that prevented using `DIRECTLY IN` inside nested loops. It was fixed in [developer snapshot 1870], so the StdLib _must_ adopt the new build in this work.
-    + [x] Use Alan 3.0 beta6 build 1870 to carry out tests.
-    + [ ] Update Alan version in READMEs.
-    + [ ] Update Alan version references in all adventures sources.
+- [x] __ADOPT BUILD 1875__ — A bug was recently found that prevented using `DIRECTLY IN` inside nested loops. It was fixed in [developer snapshot 1870], so the StdLib _must_ adopt the lastest build currently available in this work.
+    + [x] Use [Alan 3.0 beta6 build 1875][developer snapshot 1875] to carry out tests.
+    + [x] Update Alan version in READMEs.
+    + [x] Update Alan version references in all adventures sources.
 
-[developer snapshot 1870]: https://www.alanif.se/download-alan-v3/development-snapshots/development-snapshots/build1870
 
 ## Tests
 
@@ -236,5 +235,9 @@ These general verbs must also be adapted for they contain references to the `wor
 [DEV_wear_remove.a3log]: ./tests/clothing/DEV_wear_remove.a3log "View source"
 [DEV_wear_remove.a3sol]: ./tests/clothing/DEV_wear_remove.a3sol "View source"
 
+<!-- Alan Builds -->
+
+[developer snapshot 1870]: https://www.alanif.se/download-alan-v3/development-snapshots/development-snapshots/build1870
+[developer snapshot 1875]: https://www.alanif.se/download-alan-v3/development-snapshots/development-snapshots/build1875
 
 <!-- EOF -->
