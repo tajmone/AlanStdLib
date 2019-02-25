@@ -18,6 +18,7 @@ This temporary document annotates all the tasks of the development stages to fix
     - [Dedicated Tests](#dedicated-tests)
 - [Tasks List](#tasks-list)
     - [Tests](#tests)
+        - [Debug Module](#debug-module)
     - [Clothing Attributes](#clothing-attributes)
     - [Dispose of `worn` and `wearing`](#dispose-of-worn-and-wearing)
     - [Adapt Verbs](#adapt-verbs)
@@ -121,13 +122,27 @@ Here are the various tasks list for shifting to the new clothing system, largely
     + [x] __FIX SPECIAL CLOTHES__ — Use new `blockslegs`, `twopieces` and `facecover` attributes in existing clothes:
         * [x] skirt (`NOT blockslegs`)
         * [x] dress (`NOT blockslegs`)
-        * [x] balaclava
-        * [x] sky goggles
+        * [x] balaclava (use `facecover` + `headcover`)
+        * [x] sky goggles (use `facecover`)
     + [x] __NEW CLOTHES__ — Add more clothing items for testing:
         * [x] coat
         * [x] bikini
         * [x] shirts: black and red
         * [x] ski helmet
+    + [ ] __REDEFINE LAYERS__ — redesign the clothing layers numbering, dropping the old exponential system based on the Clothing Table, and adopt a new arbitrary system based on the needs of EGA.
+
+### Debug Module
+
+Create a separate debugging module `tests/inc_debug.i` that can be used by all test adventures and move there the custom debug verbs from EGA (and other adventures):
+
+- [ ] Create `tests/inc_debug.i`:
+    + [ ] Move here `DBG` verb from EGA and rename it `DBG_CLOTHES`
+    + [ ] Add new debug verbs:
+        * [ ] `DBG_COMPLIANCE <ACTOR>` — to show compliance status of actors.
+        * [ ] a verb to toggle actors compliance (eg 'subjugate').
+- [ ] Include the new debug module in all other test adventures:
+    + [ ] `house/house.alan`
+    + [ ] ... more ...
 
 ## Clothing Attributes
 
