@@ -10,9 +10,7 @@
 ; actor and set it as `IS donned`; the library will take care of the rest.
 ; 
 ; ** WARNING ** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;               Currently the verbs 'i', 'wear' and 'remove' have not been fixed
-;               to work with the new system, so they will not work as expected!
-;               Also, the DBG verb still reports a clothing item status regarding
+;               The DBG verb still reports a clothing item status regarding
 ;               the 'worn' entity and the 'wearing' set, which are now no longer
 ;               handled by the library at initialize time, so the report values
 ;               are no longer significant for the tests (except to track verbs

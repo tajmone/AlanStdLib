@@ -355,6 +355,8 @@ END THE ega_free2.
 --   (1) Prototypes -- 'proto_' prefix.
 --   (2) General purpose classes -- 'cl_' prefix.
 
+-- >>> dev-clothing: FIXME >>> Clothing Table
+
 -- The Clothing Table
 --+--------------------------+----------+----------+-----------+------------+
 --| Clothing     | Headcover | Topcover | Botcover | Feetcover | Handscover |
@@ -379,6 +381,9 @@ END THE ega_free2.
 --==============================================================================
 -- HEADWEAR
 --==============================================================================
+-- Hats will cover layer 2 of the head, layer 1 being reserved for balaclavas
+-- which are in direct skin contact and can be worn underneath hats, helmets, etc..
+
 EVERY proto_headwear IsA clothing.
   HAS headcover 2.
 END EVERY.
@@ -450,7 +455,7 @@ END EVERY.
 
 EVERY proto_skirt IsA clothing.
   NAME skirt.
-  HAS botcover 32.
+  HAS botcover 32. NOT blockslegs. --> Skirts don't prevent wearing lower legswear!
 END EVERY.
 
 EVERY proto_trousers IsA clothing.
@@ -493,9 +498,18 @@ END EVERY.
 EVERY proto_dress IsA clothing.
   NAME dress.
   HAS topcover 8.
-  HAS botcover 32.
+  HAS botcover 32. NOT blockslegs. --> Skirts don't prevent wearing lower legswear!
 END EVERY.
 
+--==============================================================================
+-- COATS
+--==============================================================================
+
+EVERY cl_coat IsA clothing.
+  NAME coat.
+  HAS topcover 64.
+  HAS botcover 64. NOT blockslegs. --> Coats don't prevent wearing lower legswear!
+END EVERY.
 
 --==============================================================================
 -- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -533,6 +547,10 @@ ADD TO EVERY clothing
           IF obj:headcover > 0
             THEN "| headcover:" SAY obj:headcover.
           END IF.
+-- >>> dev-clothing: TWEAKED >>> EGA: VERB dbg
+          IF obj:facecover > 0
+            THEN "| facecover:" SAY obj:facecover.
+          END IF.
           IF obj:topcover > 0
             THEN "| topcover:" SAY obj:topcover.
           END IF.
@@ -545,6 +563,13 @@ ADD TO EVERY clothing
           IF obj:handscover > 0
             THEN "| handscover:" SAY obj:handscover.
           END IF.
+-- >>> dev-clothing: TWEAKED >>> EGA: VERB dbg
+          IF obj IS NOT blockslegs
+            THEN "| NOT blockslegs"
+          END IF.
+          IF obj IS twopieces
+            THEN "| IS twopieces"
+          END IF.
           "|"
       END IF.
       ------------------------
@@ -555,25 +580,27 @@ ADD TO EVERY clothing
         THEN "Yes"
         ELSE "No."
       END IF.
-      -------------------------
-      -- Show if in Hero's worn
-      -------------------------
-      "$nIN WORN:"
--- >>> dev-clothing: FIXME >>> EGA: VERB dbg
-      IF obj IN worn
-        THEN "Yes"
-        ELSE "No."
-      END IF.
-      -----------------------------------------------
-      -- Show in which actors' wearing set is present
-      -----------------------------------------------
-      "$nIN WEARING OF:"
-      FOR EACH ac IsA ACTOR
-        DO
-          IF obj IN wearing OF ac
-            THEN "| " SAY ac.
-          END IF.
-      END FOR.
+-- >>> dev-clothing: TWEAKED >>> EGA: VERB dbg
+-- >>> original code >>>
+      -- -------------------------
+      -- -- Show if in Hero's worn
+      -- -------------------------
+      -- "$nIN WORN:"
+      -- IF obj IN worn
+      --   THEN "Yes"
+      --   ELSE "No."
+      -- END IF.
+      -- -----------------------------------------------
+      -- -- Show in which actors' wearing set is present
+      -- -----------------------------------------------
+      -- "$nIN WEARING OF:"
+      -- FOR EACH ac IsA ACTOR
+      --   DO
+      --     IF obj IN wearing OF ac
+      --       THEN "| " SAY ac.
+      --     END IF.
+      -- END FOR.
+-- <<< original code <<<
   END VERB dbg.
 END ADD TO clothing.
 
@@ -825,8 +852,22 @@ END THE.
 --=============================================================================
 
 THE tshirt IsA cl_tshirt AT ega_menswear.
-  
 END THE.
+
+THE black_shirt IsA cl_tshirt AT ega_menswear.
+  NAME black shirt.
+END THE.
+
+THE red_shirt IsA cl_tshirt AT ega_menswear.
+  NAME red shirt.
+END THE.
+
+THE man_coat IsA cl_coat AT ega_menswear.
+  NAME 'men''s coat'.
+  NAME men man coat.
+END THE.
+
+
 
 --=============================================================================
 --\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -836,8 +877,11 @@ END THE.
 --//////////////////////////////////////////////////////////////////////////////
 --=============================================================================
 
+-- A balaclava covers both face and head, and it's in direct skin contact.
+
 THE balaclava IsA clothing AT ega_sportswear.
-  HAS headcover 2.
+  HAS headcover 1.
+  HAS facecover 1.
   HAS ex
     "It's a cotton balaclava for winter sports. Basically, a head hood with holes
      for the eyes and mouth, like the ones used in robberies.".
@@ -846,12 +890,38 @@ END THE.
 THE ski_goggles IsA clothing AT ega_sportswear.
   NAME ski goggles.
   IS plural.
-  HAS headcover 4.
+  HAS facecover 2.
   INDEFINITE ARTICLE "a pair of"
   HAS ex
     "A pair of goggles for skiing, with an elastic band to hold them in place.
      Its front B-shaped single lens has a special coating adaptative to light.".
 END THE.
+
+--------------------------------------------------------------------------------
+-- One-Piece Swimsuit
+--------------------------------------------------------------------------------
+-- The one-piece swimsuit is like a teddy for it covers both legs and torso in
+-- a single piece; so it's useful for testing skirts.
+
+THE onepiece_swimsuit IsA clothing AT ega_sportswear.
+  NAME swimsuit.
+  HAS topcover 2.
+  HAS botcover 2.
+  HAS ex "A one-piece swimsuit, for women swimmers.".
+END THE.
+
+--------------------------------------------------------------------------------
+-- Bikini (two pieces leg + torso)
+--------------------------------------------------------------------------------
+-- The bikini is a special item for it covers both legs and torso but in two
+-- separate pieces, although it's treated as a single item. 
+
+THE bikini IsA clothing AT ega_sportswear.
+  HAS topcover 2.
+  HAS botcover 2. IS twopieces. --> legs and torso are covered separately
+  HAS ex "A two-piece swimsuit, for women.".
+END THE.
+
 
 --==============================================================================
 -- VALUELESS ITEMS (ORNAMENTALS)

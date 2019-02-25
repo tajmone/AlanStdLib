@@ -87,6 +87,7 @@ I'll add a separate subset of tests in the `tests/clothing/` folder, using the `
     + [`ega.alan`][ega.alan] — "Emporium Alani" adventure for clothing tests.
     + [`DEV.bat`][DEV.bat] — execute a subset of tests dedicated to development:
         * [`DEV_init.a3log`][DEV_init.a3log]/[`.a3sol`][DEV_init.a3sol] — test clothing initialization.
+        * [`DEV_skirts.a3log`][DEV_skirts.a3log]/[`.a3sol`][DEV_skirts.a3sol] — test special clothes: skirts, coats, bikinis, etc..
 
 At a later stage, when the clothing code revision work is complete, I'll start to run the original tests too, to confirm that the original problems are solved. In some cases, this will require adpating the original commands scripts to the new system or the tweaks done to the EGA adventure in the meantime. Before merging into `master` branch, the separate tests can either be stripped of the `DEV_` prefix and preserved, or just deleted if redundant.
 
@@ -108,11 +109,24 @@ Here are the various tasks list for shifting to the new clothing system, largely
 - [x] Create `tests/clothing/DEV.bat` script to run tests only with solution files with name pattern `DEV_*.a3sol`.
 - [ ] Add tests to track tweaked clothing features.
 - [ ] __EGA__ — Tweak `ega.alan` test adventure to reflect changes in the library code and/or provide better testing material:
-    + [ ] __DBG VERB__ — Tweak it to work with the new clothing system and attributes.
+    + [ ] __DBG VERB__ — Tweak it to work with the new clothing system and attributes:
+        * [x] `facecover`
+        * [x] `blockslegs`
+        * [x] `twopieces`
+        * [x] Don't show `worn` and `wearing` info.
     + [x] __UNDRESS VERB__ — Tweak it to work with new system (no use of `worn` or `wearing`).
     + [x] __WORN CLOTHES__ — Adapt code relating to worn items:
         * [x] __HERO__: Locate item `IN hero` instead of `worn`.
         * [x] __ALL ACTORS__: Set item as `donned`.
+    + [x] __FIX SPECIAL CLOTHES__ — Use new `blockslegs`, `twopieces` and `facecover` attributes in existing clothes:
+        * [x] skirt (`NOT blockslegs`)
+        * [x] dress (`NOT blockslegs`)
+        * [x] balaclava
+        * [x] sky goggles
+    + [x] __NEW CLOTHES__ — Add more clothing items for testing:
+        * [x] coat
+        * [x] bikini
+        * [x] shirts: black and red.
 
 ## Clothing Attributes
 
@@ -215,6 +229,8 @@ These general verbs must also be adapted for they contain references to the `wor
 [DEV.bat]: ./tests/clothing/DEV.bat "View source"
 [DEV_init.a3log]: ./tests/clothing/DEV_init.a3log "View source"
 [DEV_init.a3sol]: ./tests/clothing/DEV_init.a3sol "View source"
+[DEV_skirts.a3log]: ./tests/clothing/DEV_skirts.a3log "View source"
+[DEV_skirts.a3sol]: ./tests/clothing/DEV_skirts.a3sol "View source"
 
 
 <!-- EOF -->

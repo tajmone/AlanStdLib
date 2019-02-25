@@ -31,9 +31,7 @@ fashion consumism.
 > ; actor and set it as `IS donned`; the library will take care of the rest.
 > ; 
 > ; ** WARNING ** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> ;               Currently the verbs 'i', 'wear' and 'remove' have not been fixed
-> ;               to work with the new system, so they will not work as expected!
-> ;               Also, the DBG verb still reports a clothing item status regarding
+> ;               The DBG verb still reports a clothing item status regarding
 > ;               the 'worn' entity and the 'wearing' set, which are now no longer
 > ;               handled by the library at initialize time, so the report values
 > ;               are no longer significant for the tests (except to track verbs
@@ -49,33 +47,23 @@ worn).
 > ; /// CHECK ITEMS ARE DONNED: (OK!) ///
 > DBG boxers
 'boxers' VALUES: | botcover: 2 | 
-DONNED: Yes 
-IN WORN: No. 
-IN WEARING OF:
+DONNED: Yes
 
 > DBG khakis
 'khakis' VALUES: | botcover: 16 | 
-DONNED: Yes 
-IN WORN: No. 
-IN WEARING OF:
+DONNED: Yes
 
 > DBG sneakers
 'sneakers' VALUES: | feetcover: 4 | 
-DONNED: Yes 
-IN WORN: No. 
-IN WEARING OF:
+DONNED: Yes
 
 > DBG socks
 'socks' VALUES: | feetcover: 2 | 
-DONNED: Yes 
-IN WORN: No. 
-IN WEARING OF:
+DONNED: Yes
 
 > DBG undershirt
 'undershirt' VALUES: | topcover: 2 | 
-DONNED: Yes 
-IN WORN: No. 
-IN WEARING OF:
+DONNED: Yes
 
 > ; ------------------------------------------------------------------------------
 > ; NESTED CLOTHES
@@ -90,9 +78,7 @@ It's your kippah. You always carry it around with you.
 > ; /// CHECK NESTED ITEM IS NOT DONNED: (OK!) ///
 > DBG kippah
 'kippah' VALUES: (none) 
-DONNED: No. 
-IN WORN: No. 
-IN WEARING OF:
+DONNED: No.
 
 > ; ==============================================================================
 > ; NPCS' CLOTHING
@@ -112,15 +98,11 @@ of fashion boots (being worn) and a uniform (being worn).
 
 > DBG boots
 'fashion boots' VALUES: | feetcover: 4 | 
-DONNED: Yes 
-IN WORN: No. 
-IN WEARING OF:
+DONNED: Yes
 
 > DBG uniform
-'uniform' VALUES: | topcover: 8 | botcover: 32 | 
-DONNED: Yes 
-IN WORN: No. 
-IN WEARING OF:
+'uniform' VALUES: | topcover: 8 | botcover: 32 | NOT blockslegs | 
+DONNED: Yes
 
 > 
 
