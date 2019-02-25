@@ -379,7 +379,7 @@ END THE ega_free2.
 --+--------------------------+----------+----------+-----------+------------+
 
 --==============================================================================
--- HEADWEAR
+-- HEADWEAR & FACEWEAR
 --==============================================================================
 -- Hats will cover layer 2 of the head, layer 1 being reserved for balaclavas
 -- which are in direct skin contact and can be worn underneath hats, helmets, etc..
@@ -391,6 +391,7 @@ END EVERY.
 EVERY cl_hat IsA proto_headwear.
   NAME hat.
 END EVERY.
+
 --==============================================================================
 -- UNDERWEAR
 --==============================================================================
@@ -539,8 +540,8 @@ ADD TO EVERY clothing
       -- Show coverage values (non-zero only)
       ---------------------------------------
       "'$1' VALUES:"
-      IF obj:headcover = 0 AND obj:topcover = 0 AND obj:botcover = 0
-      AND obj:feetcover = 0 AND obj:handscover = 0
+      IF obj:headcover = 0 AND obj:facecover = 0 AND obj:topcover = 0
+      AND obj:botcover = 0 AND obj:feetcover = 0 AND obj:handscover = 0
         THEN
           "(none)"
         ELSE
@@ -877,6 +878,14 @@ END THE.
 --//////////////////////////////////////////////////////////////////////////////
 --=============================================================================
 
+
+
+--==============================================================================
+--------------------------------------------------------------------------------
+-- Winter Sports Gear 
+--------------------------------------------------------------------------------
+--==============================================================================
+
 -- A balaclava covers both face and head, and it's in direct skin contact.
 
 THE balaclava IsA clothing AT ega_sportswear.
@@ -896,6 +905,23 @@ THE ski_goggles IsA clothing AT ega_sportswear.
     "A pair of goggles for skiing, with an elastic band to hold them in place.
      Its front B-shaped single lens has a special coating adaptative to light.".
 END THE.
+
+THE ski_helmet IsA clothing AT ega_sportswear.
+  NAME ski helmet.
+  HAS headcover 2.
+  HAS ex
+    "It's a hard plastic helmet covering head and ears, with soft padding inside.
+     A chinstrap allows securing it firmly in place.".
+END THE.
+
+
+
+--==============================================================================
+--------------------------------------------------------------------------------
+-- Swimming Gear 
+--------------------------------------------------------------------------------
+--==============================================================================
+
 
 --------------------------------------------------------------------------------
 -- One-Piece Swimsuit

@@ -87,7 +87,8 @@ I'll add a separate subset of tests in the `tests/clothing/` folder, using the `
     + [`ega.alan`][ega.alan] — "Emporium Alani" adventure for clothing tests.
     + [`DEV.bat`][DEV.bat] — execute a subset of tests dedicated to development:
         * [`DEV_init.a3log`][DEV_init.a3log]/[`.a3sol`][DEV_init.a3sol] — test clothing initialization.
-        * [`DEV_skirts.a3log`][DEV_skirts.a3log]/[`.a3sol`][DEV_skirts.a3sol] — test special clothes: skirts, coats, bikinis, etc..
+        * [`DEV_skirts.a3log`][DEV_skirts.a3log]/[`.a3sol`][DEV_skirts.a3sol] — test special clothes: skirts, coats, bikinis, etc.
+        * [`DEV_wear_remove.a3log`][DEV_wear_remove.a3log]/[`.a3sol`][DEV_wear_remove.a3sol] — general purpose tests for `wear`/`remove`.
 
 At a later stage, when the clothing code revision work is complete, I'll start to run the original tests too, to confirm that the original problems are solved. In some cases, this will require adpating the original commands scripts to the new system or the tweaks done to the EGA adventure in the meantime. Before merging into `master` branch, the separate tests can either be stripped of the `DEV_` prefix and preserved, or just deleted if redundant.
 
@@ -126,7 +127,8 @@ Here are the various tasks list for shifting to the new clothing system, largely
     + [x] __NEW CLOTHES__ — Add more clothing items for testing:
         * [x] coat
         * [x] bikini
-        * [x] shirts: black and red.
+        * [x] shirts: black and red
+        * [x] ski helmet
 
 ## Clothing Attributes
 
@@ -231,6 +233,8 @@ These general verbs must also be adapted for they contain references to the `wor
 [DEV_init.a3sol]: ./tests/clothing/DEV_init.a3sol "View source"
 [DEV_skirts.a3log]: ./tests/clothing/DEV_skirts.a3log "View source"
 [DEV_skirts.a3sol]: ./tests/clothing/DEV_skirts.a3sol "View source"
+[DEV_wear_remove.a3log]: ./tests/clothing/DEV_wear_remove.a3log "View source"
+[DEV_wear_remove.a3sol]: ./tests/clothing/DEV_wear_remove.a3sol "View source"
 
 
 <!-- EOF -->

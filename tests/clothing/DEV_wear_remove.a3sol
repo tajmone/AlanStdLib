@@ -1,0 +1,66 @@
+; ******************************************************************************
+; *                                                                            *
+; *                             TEST WEAR & REMOVE                             *
+; *                                                                            *
+; ******************************************************************************
+; General purpose tests for 'wear' and 'remove' verbs. Checks that layered order
+; and 'donned' status are being handled correctly.
+; ******************************************************************************
+; TEST BODY AREAS
+; ******************************************************************************
+; We need to test how our custom layering system implemented in EGA adventure
+; is working out. It's both a demo of the library potential uses as well as
+; a test that everything is working as expected.
+north
+west
+north
+; Let's collect some clothes:
+take balaclava
+take helmet
+take goggles
+; and take them to the dressing room, where we can quickly 'undress'
+east
+; ==============================================================================
+; HEAD AND FACE
+; ==============================================================================
+; We have various face and head wearable items here.
+; ------------------------------------------------------------------------------
+; BALACLAVA
+; ------------------------------------------------------------------------------
+; The balaclava cover both face and head, occupying the lowest layer (direct
+; skin contact) to allow wearing hats and goggles over it...
+x balaclava
+DBG it
+wear it
+; /// VERIFY -> IS DONNED (OK!)
+DBG it
+; ------------------------------------------------------------------------------
+; BALACLAVA & GOGGLES
+; ------------------------------------------------------------------------------
+x goggles
+DBG it
+wear it
+; /// VERIFY -> IS DONNED (OK!)
+DBG it
+; /// REMOVE -> NO -> BLOCKERS: GOGGLES (OK!) ///
+remove balaclava
+; ------------------------------------------------------------------------------
+; BALACLAVA + SKI HELMET
+; ------------------------------------------------------------------------------
+x helmet
+DBG it
+wear it
+; /// REMOVE -> NO -> BLOCKERS: GOGGLES & HELMET (OK!) ///
+remove balaclava
+remove goggles
+; /// REMOVE -> NO -> BLOCKERS: HELMET (OK!) ///
+remove balaclava
+undress
+; ------------------------------------------------------------------------------
+; TEST BALACLAVA OVER GOGGLES & HELMET
+; ------------------------------------------------------------------------------
+; The balaclava shouldn't be wearable on top of the helmet or the goggles...
+wear helmet
+wear goggles
+; /// WEAR -> NO -> BLOCKERS: GOGGLES & HELMET (OK!) ///
+wear balaclava
