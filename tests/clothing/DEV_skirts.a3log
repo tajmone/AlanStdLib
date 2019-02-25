@@ -48,7 +48,7 @@ As you move toward the doors they automagically slide open before you.
 Emporium Alani Main Hall
 This luxurious hall is the crossroad to the various clothing departments
 of the emporium. Two large brass doors lead the way south, out of the
-fashion temple and back into the world of mortal souls. There is your
+fashion temple and back into the world of mortal souls.There is your
 personal assistant here.
 
 > east
@@ -112,7 +112,7 @@ You remove all the items you were wearing.
 > ; ==============================================================================
 > DBG_CLOTHES skirt
 'skirt' VALUES: | botcover: 32 | NOT blockslegs | 
-DONNED: No.
+DONNED: No
 
 > ; ------------------------------------------------------------------------------
 > ; W/ SKIRT -> WEAR/REMOVE-> PANTYHOSE
@@ -121,7 +121,7 @@ DONNED: No.
 > ; garnments which don't cover also the torso in a single piece.
 > DBG_CLOTHES pantyhose
 'white pantyhose' VALUES: | botcover: 8 | 
-DONNED: No.
+DONNED: No
 
 > wear skirt
 You pick up the skirt and put it on.
@@ -141,7 +141,7 @@ You take off the white pantyhose.
 > ; and torso in a single clothing piece, like a one-piece swimsuit or a teddy.
 > DBG_CLOTHES swimsuit
 'swimsuit' VALUES: | topcover: 2 | botcover: 2 | 
-DONNED: No.
+DONNED: No
 
 > ; /// WEAR -> NO (OK!) ///
 > wear swimsuit
@@ -173,7 +173,7 @@ You take off the swimsuit.
 > ; piece are disjointed.
 > DBG_CLOTHES bikini
 'bikini' VALUES: | topcover: 2 | botcover: 2 | IS twopieces | 
-DONNED: No.
+DONNED: No
 
 > wear skirt
 You put on the skirt.
@@ -193,11 +193,11 @@ You take off the bikini.
 > ; a higher layer (the blocker is not the skirt but the top garnment).
 > DBG_CLOTHES black shirt
 'black shirt' VALUES: | topcover: 8 | 
-DONNED: No.
+DONNED: No
 
 > DBG_CLOTHES bikini
 'bikini' VALUES: | topcover: 2 | botcover: 2 | IS twopieces | 
-DONNED: No.
+DONNED: No
 
 > wear skirt
 You are already wearing the skirt.

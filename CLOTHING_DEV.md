@@ -140,8 +140,9 @@ Create a separate debugging module `tests/inc_debug.i` that can be used by all t
         * [x] Change use of `DBG` verb into `DBG_CLOTHES` in all commands scripts
       inside `tests/clothing/` folder.
     + [ ] Add new debug verbs:
-        * [ ] `DBG_COMPLIANCE <ACTOR>` — to show compliance status of actors.
-        * [ ] a verb to toggle actors compliance (eg 'subjugate').
+        * [x] `DBG_INV <ACTOR>` to list all objects carried/worn by an actor (via `LIST` command).
+        * [x] `DBG_COMP <ACTOR>` — to show compliance status of actors.
+        * [x] Verb `subjugate` to toggle actors compliance.
 - [ ] Include the new debug module in all other test adventures:
     + [x] `tests/clothing/ega.alan`
     + [ ] `tests/house/house.alan`

@@ -15,15 +15,58 @@
 -- are helpful to provide quick "debug" information about the state of various
 -- library classes, as well as some special verbs to alter their state.
 
+--------------------------------------------------------------------------------
+-- Debugging Verbs
+--------------------------------------------------------------------------------
+
+-- These are the debugging verbs added to any adventure by this module:
+
+-- +-----------------------+-------------------------------------------------+
+-- |         syntax        |                   description                   |
+-- |-----------------------|-------------------------------------------------|
+-- | `dbg_clothes (obj)*!` | Shows info about a clothing item.               |
+-- | `dbg_comp (act)*!`    | Shows compliance state of actors.               |
+-- | `dbg_inv (act)*!`     | Show contents of an actor using `LIST` command. |
+-- +-----------------------+-------------------------------------------------+
+
+--------------------------------------------------------------------------------
+-- Helper Verbs
+--------------------------------------------------------------------------------
+
+-- These are the helper verbs added to any adventure by the debug module:
+
+-- +-----------------------+------------------------------------------+
+-- |         syntax        |               description                |
+-- |-----------------------|------------------------------------------|
+-- | `subjugate (act)*`    | Toggles the compliancy state of an actor |
+-- +-----------------------+------------------------------------------+
+
 
 --==============================================================================
--- DEBUG CLOTHING VALUES
+-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+--* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+--------------------------------------------------------------------------------
+--
+-- DEBUGGING VERBS 
+--
+--------------------------------------------------------------------------------
+--* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 --==============================================================================
+
+
+--==============================================================================
+--------------------------------------------------------------------------------
+-- DBG_CLOTHES <CLOTHING>
+--------------------------------------------------------------------------------
+--==============================================================================
+-- DEBUGS CLOTHING VALUES
+-- 
 -- A helper verb to check the coverage values of individual clothing items.
 
-SYNTAX dbg_clothes = dbg_clothes (obj)
+SYNTAX dbg_clothes = dbg_clothes (obj)*!
   WHERE obj IsA clothing
-    ELSE "This verb can only be used with clothing items."
+    ELSE "This command can only be used on clothing items."
 
 ADD TO EVERY clothing
   VERB dbg_clothes
@@ -67,12 +110,103 @@ ADD TO EVERY clothing
       -- Show if donned or not
       ------------------------
       "$nDONNED:"
-      IF obj:donned
-        THEN "Yes"
-        ELSE "No."
+      IF obj IS NOT donned
+        THEN "No"
+        ELSE "Yes"
+          -------------------------------
+          -- Show who's the wearing actor
+          -------------------------------
+          FOR EACH ac IsA ACTOR
+            DO
+              IF obj IN ac
+                THEN "($$by" SAY ac. "$$)"
+              END IF.
+          END FOR.
       END IF.
   END VERB dbg_clothes.
 END ADD TO clothing.
 
+
+--==============================================================================
+--------------------------------------------------------------------------------
+-- DBG_COMP <ACTOR>
+--------------------------------------------------------------------------------
+--==============================================================================
+-- The verb 'DBG_COMP <ACTOR>' will show the compliance state of an actor.
+
+SYNTAX dbg_comp = dbg_comp (act)*!
+  WHERE act IsA actor
+    ELSE "This command can only be used on actors."
+
+ADD TO EVERY actor
+  VERB dbg_comp
+    DOES
+      "| $+1 | COMPLIANT:"
+      IF THIS IS compliant
+        THEN "Yes"
+        ELSE "No"
+      END IF. "|"
+  END VERB dbg_comp.  
+END ADD TO actor.
+
+
+--==============================================================================
+--------------------------------------------------------------------------------
+-- DBG_INV <ACTOR>
+--------------------------------------------------------------------------------
+--==============================================================================
+-- The verb 'DBG_INV <ACTOR>' will print out the inventory of an actor by using
+-- the LIST instruction. Useful to check how worn items are handled by LIST,
+-- since authors might use LIST in their own adventures. 
+
+SYNTAX dbg_inv = dbg_inv (act)*!
+  WHERE act IsA actor
+    ELSE "This command can only be used on actors."
+
+ADD TO EVERY actor
+  VERB dbg_inv
+    DOES LIST THIS.
+  END VERB dbg_inv.  
+END ADD TO actor.
+
+
+--==============================================================================
+-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+--* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+--------------------------------------------------------------------------------
+--
+-- HELPER VERBS 
+--
+--------------------------------------------------------------------------------
+--* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+--==============================================================================
+
+
+--==============================================================================
+--------------------------------------------------------------------------------
+-- SUBJUGATE <ACTOR>
+--------------------------------------------------------------------------------
+--==============================================================================
+-- The verb 'SUBJUGATE <ACTOR>' will toggle the compliancy state of an actor.
+
+SYNTAX subjugate = subjugate (act)*
+  WHERE act IsA actor
+    ELSE "This command can only be used on actors."
+
+ADD TO EVERY actor
+  VERB subjugate
+    DOES
+      "Using your mental powers you"
+      IF THIS IS compliant
+        THEN
+          "free $+1 from the state of enforced compliancy."
+          MAKE THIS NOT compliant.
+        ELSE
+          "force $+1 to become compliant."
+          MAKE THIS compliant.
+      END IF.
+  END VERB subjugate.  
+END ADD TO actor.
 
 --/// EOF ///--

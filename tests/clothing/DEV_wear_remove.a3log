@@ -38,7 +38,7 @@ As you move toward the doors they automagically slide open before you.
 Emporium Alani Main Hall
 This luxurious hall is the crossroad to the various clothing departments
 of the emporium. Two large brass doors lead the way south, out of the
-fashion temple and back into the world of mortal souls. There is your
+fashion temple and back into the world of mortal souls.There is your
 personal assistant here.
 
 > west
@@ -90,7 +90,7 @@ holes for the eyes and mouth, like the ones used in robberies.
 
 > DBG_CLOTHES it
 'balaclava' VALUES: | headcover: 1 | facecover: 1 | 
-DONNED: No.
+DONNED: No
 
 > wear it
 You put on the balaclava.
@@ -98,7 +98,7 @@ You put on the balaclava.
 > ; /// VERIFY -> IS DONNED (OK!)
 > DBG_CLOTHES it
 'balaclava' VALUES: | headcover: 1 | facecover: 1 | 
-DONNED: Yes
+DONNED: Yes (by hero)
 
 > ; ------------------------------------------------------------------------------
 > ; BALACLAVA & GOGGLES
@@ -109,7 +109,7 @@ Its front B-shaped single lens has a special coating adaptative to light.
 
 > DBG_CLOTHES it
 'ski goggles' VALUES: | facecover: 2 | 
-DONNED: No.
+DONNED: No
 
 > wear it
 You put on the ski goggles.
@@ -117,7 +117,7 @@ You put on the ski goggles.
 > ; /// VERIFY -> IS DONNED (OK!)
 > DBG_CLOTHES it
 'ski goggles' VALUES: | facecover: 2 | 
-DONNED: Yes
+DONNED: Yes (by hero)
 
 > ; /// REMOVE -> NO -> BLOCKERS: GOGGLES (OK!) ///
 > remove balaclava
@@ -133,7 +133,7 @@ inside. A chinstrap allows securing it firmly in place.
 
 > DBG_CLOTHES it
 'ski helmet' VALUES: | headcover: 2 | 
-DONNED: No.
+DONNED: No
 
 > wear it
 You put on the ski helmet.
