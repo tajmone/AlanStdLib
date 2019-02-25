@@ -16,8 +16,8 @@ north
 inventory
 examine boxers
 ; NOTE: boxers are currently bing worn by hero!
-dbg boxers
+DBG_CLOTHES boxers
 give boxers to assistant
 ; Now comes the crash (using 3.0beta6):
-dbg boxers
+DBG_CLOTHES boxers
 examine assistant

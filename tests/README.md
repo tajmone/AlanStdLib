@@ -17,6 +17,7 @@ Contributed by [Tristano Ajmone] to the Alan Standard Library.
 <!-- MarkdownTOC autolink="true" bracket="round" autoanchor="false" lowercase="only_ascii" uri_encoding="true" levels="1,2,3" -->
 
 - [Contents](#contents)
+    - [Extra Modules](#extra-modules)
     - [Type1 Tests: Single Adventure, Multiple Tests](#type1-tests-single-adventure-multiple-tests)
         - [Files Naming Convention](#files-naming-convention)
         - [Tests Features](#tests-features)
@@ -52,6 +53,13 @@ Execution of all tests is controlled by a single batch script:
 
 - [`RUNTESTS.bat`][RUNTESTS]
 
+## Extra Modules
+
+This folder also contains some extra modules that the test adventures can include for shared functionality:
+
+- [`inc_debug.i`][inc_debug] — some "debugging verbs" and helpers.
+
+For more information, see [`DEBUG_MODULE.md`][DEBUG_MODULE].
 
 ## Type1 Tests: Single Adventure, Multiple Tests
 
@@ -280,7 +288,9 @@ SOFTWARE.
 
 [ISO-8859-1]: https://en.wikipedia.org/wiki/ISO/IEC_8859-1 "Read Wikipedia's page on ISO-8859-1"
 
-<!-- PORJECT FILES -->
+<!-- PROJECT FILES -->
+
+[DEBUG_MODULE]: ./DEBUG_MODULE.md  "Read document"
 
 [RUNTESTS]: ./RUNTESTS.bat  "View the batch file source"
 
@@ -290,6 +300,7 @@ SOFTWARE.
 
 [house.alan]: ./house/house.alan "View adventure source code"
 [ega.alan]:   ./clothing/ega.alan "View adventure source code"
+[inc_debug]: ./inc_debug.i "View module source code"
 
 
 [Unlicense]: ./UNLICENSE    "View the full text of the Unlicense terms"

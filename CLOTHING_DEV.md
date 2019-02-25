@@ -110,7 +110,7 @@ Here are the various tasks list for shifting to the new clothing system, largely
 - [x] Create `tests/clothing/DEV.bat` script to run tests only with solution files with name pattern `DEV_*.a3sol`.
 - [ ] Add tests to track tweaked clothing features.
 - [ ] __EGA__ — Tweak `ega.alan` test adventure to reflect changes in the library code and/or provide better testing material:
-    + [ ] __DBG VERB__ — Tweak it to work with the new clothing system and attributes:
+    + [x] __DBG VERB__ — Tweak it to work with the new clothing system and attributes (verb now moved to `tests/inc_debug.i`):
         * [x] `facecover`
         * [x] `blockslegs`
         * [x] `twopieces`
@@ -135,13 +135,16 @@ Here are the various tasks list for shifting to the new clothing system, largely
 
 Create a separate debugging module `tests/inc_debug.i` that can be used by all test adventures and move there the custom debug verbs from EGA (and other adventures):
 
-- [ ] Create `tests/inc_debug.i`:
-    + [ ] Move here `DBG` verb from EGA and rename it `DBG_CLOTHES`
+- [x] Create `tests/inc_debug.i`:
+    + [x] Move here `DBG` verb from EGA and rename it `DBG_CLOTHES`
+        * [x] Change use of `DBG` verb into `DBG_CLOTHES` in all commands scripts
+      inside `tests/clothing/` folder.
     + [ ] Add new debug verbs:
         * [ ] `DBG_COMPLIANCE <ACTOR>` — to show compliance status of actors.
         * [ ] a verb to toggle actors compliance (eg 'subjugate').
 - [ ] Include the new debug module in all other test adventures:
-    + [ ] `house/house.alan`
+    + [x] `tests/clothing/ega.alan`
+    + [ ] `tests/house/house.alan`
     + [ ] ... more ...
 
 ## Clothing Attributes

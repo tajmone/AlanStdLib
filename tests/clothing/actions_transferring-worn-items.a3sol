@@ -25,7 +25,7 @@ examine basket
 ; NOTE: boxers are currently bing worn by hero, underneath trousers (khakis)!
 inventory
 examine boxers
-DBG boxers
+DBG_CLOTHES boxers
 put boxers in basket
 ; ** ERROR!!! ** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;                The boxers are worn by Hero, underneath his trousers, so he
@@ -33,7 +33,7 @@ put boxers in basket
 ;                REMOVING trousers AND THEN boxers!
 ;                This breaks right through the whole logic of layered clothing!
 ;                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-DBG boxers
+DBG_CLOTHES boxers
 ; ** ERROR!!! ** The boxers are still considered donned and worn by Hero:
 examine basket
 west
@@ -43,10 +43,10 @@ west
 ; The Hero can acquire clothes worn by NPCs in different ways (get, ask, etc.),
 ; some of which might require the NPC to be compliant, other not.
 examine assistant
-dbg boots
+DBG_CLOTHES boots
 take assistant boots
 ask assistant for boots
-dbg boots
+DBG_CLOTHES boots
 ; ** ERROR!!! ** The boots are still 'donned' and in 'wearing' of assistant :
 wear boots
 ; ** ERROR!!! ** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -9,33 +9,27 @@
 ; Now authors only need to create a clothing instance directly in the wearing
 ; actor and set it as `IS donned`; the library will take care of the rest.
 ; 
-; ** WARNING ** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;               The DBG verb still reports a clothing item status regarding
-;               the 'worn' entity and the 'wearing' set, which are now no longer
-;               handled by the library at initialize time, so the report values
-;               are no longer significant for the tests (except to track verbs
-;               which might still be handling them, which they shouldn't).
 ; ==============================================================================
 ; HERO'S CLOTHING
 ; ==============================================================================
 inventory
 ; /// CHECK ITEMS ARE DONNED: (OK!) ///
-DBG boxers
-DBG khakis
-DBG sneakers
-DBG socks
-DBG undershirt
+DBG_CLOTHES boxers
+DBG_CLOTHES khakis
+DBG_CLOTHES sneakers
+DBG_CLOTHES socks
+DBG_CLOTHES undershirt
 ; ------------------------------------------------------------------------------
 ; NESTED CLOTHES
 ; ------------------------------------------------------------------------------
 x khakis
 x kippah
 ; /// CHECK NESTED ITEM IS NOT DONNED: (OK!) ///
-DBG kippah
+DBG_CLOTHES kippah
 ; ==============================================================================
 ; NPCS' CLOTHING
 ; ==============================================================================
 north
 x assistant
-DBG boots
-DBG uniform
+DBG_CLOTHES boots
+DBG_CLOTHES uniform

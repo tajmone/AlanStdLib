@@ -18,10 +18,10 @@
 ; TROUSERS POCKETS
 ; ==============================================================================
 examine khakis
-DBG khakis
+DBG_CLOTHES khakis
 ; Inside the trousers (pocket) we have kippah, which is a wearable item.
 examine kippah
-DBG kippah
+DBG_CLOTHES kippah
 ; ** ERROR! ** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;              The kippah shouldn't be accounted as being worn, but just carried.
 ;              The library needs to check at initialize time that only clothes

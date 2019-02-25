@@ -3,7 +3,7 @@
 Emporium Giorgio Alani 
 An adventure to test clothing. 
 (C) 2018 by Tristano Ajmone 
-Programmed with the ALAN Interactive Fiction Language v3.0beta6 build 1866
+Programmed with the ALAN Interactive Fiction Language v3.0beta6 build 1875
 .
 Standard Library v2.1 
 Version 1 
@@ -30,12 +30,6 @@ fashion consumism.
 > ; Now authors only need to create a clothing instance directly in the wearing
 > ; actor and set it as `IS donned`; the library will take care of the rest.
 > ; 
-> ; ** WARNING ** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> ;               The DBG verb still reports a clothing item status regarding
-> ;               the 'worn' entity and the 'wearing' set, which are now no longer
-> ;               handled by the library at initialize time, so the report values
-> ;               are no longer significant for the tests (except to track verbs
-> ;               which might still be handling them, which they shouldn't).
 > ; ==============================================================================
 > ; HERO'S CLOTHING
 > ; ==============================================================================
@@ -45,23 +39,23 @@ your khakis (being worn), your boxers (being worn) and your socks (being
 worn).
 
 > ; /// CHECK ITEMS ARE DONNED: (OK!) ///
-> DBG boxers
+> DBG_CLOTHES boxers
 'boxers' VALUES: | botcover: 2 | 
 DONNED: Yes
 
-> DBG khakis
+> DBG_CLOTHES khakis
 'khakis' VALUES: | botcover: 16 | 
 DONNED: Yes
 
-> DBG sneakers
+> DBG_CLOTHES sneakers
 'sneakers' VALUES: | feetcover: 4 | 
 DONNED: Yes
 
-> DBG socks
+> DBG_CLOTHES socks
 'socks' VALUES: | feetcover: 2 | 
 DONNED: Yes
 
-> DBG undershirt
+> DBG_CLOTHES undershirt
 'undershirt' VALUES: | topcover: 2 | 
 DONNED: Yes
 
@@ -76,7 +70,7 @@ your kippah and your wallet.
 It's your kippah. You always carry it around with you.
 
 > ; /// CHECK NESTED ITEM IS NOT DONNED: (OK!) ///
-> DBG kippah
+> DBG_CLOTHES kippah
 'kippah' VALUES: (none) 
 DONNED: No.
 
@@ -89,18 +83,18 @@ As you move toward the doors they automagically slide open before you.
 Emporium Alani Main Hall
 This luxurious hall is the crossroad to the various clothing departments
 of the emporium. Two large brass doors lead the way south, out of the
-fashion temple and back into the world of mortal souls. There is your
+fashion temple and back into the world of mortal souls.There is your
 personal assistant here.
 
 > x assistant
 She's your personal shopping assistant. The assistant is carrying a pair
 of fashion boots (being worn) and a uniform (being worn).
 
-> DBG boots
+> DBG_CLOTHES boots
 'fashion boots' VALUES: | feetcover: 4 | 
 DONNED: Yes
 
-> DBG uniform
+> DBG_CLOTHES uniform
 'uniform' VALUES: | topcover: 8 | botcover: 32 | NOT blockslegs | 
 DONNED: Yes
 

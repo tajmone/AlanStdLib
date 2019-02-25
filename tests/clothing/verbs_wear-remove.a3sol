@@ -12,13 +12,13 @@ north
 ; TEST 'remove'
 ; ==============================================================================
 inventory
-DBG boxers
+DBG_CLOTHES boxers
 remove khakis
 remove boxers
-DBG boxers
+DBG_CLOTHES boxers
 ; ==============================================================================
 ; TEST 'wear'
 ; ==============================================================================
-DBG jeans
+DBG_CLOTHES jeans
 wear jeans
-DBG jeans
+DBG_CLOTHES jeans

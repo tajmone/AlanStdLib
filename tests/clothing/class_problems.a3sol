@@ -13,10 +13,10 @@ north
 ; Here we must test how the library handles clothing items inside other clothes,
 ; and that wearing the latter doesn't affect the former.
 examine khakis
-DBG khakis
+DBG_CLOTHES khakis
 ; Inside the trousers (pocket) we have kippah, which is a wearable item.
 examine kippah
-DBG kippah
+DBG_CLOTHES kippah
 ; ** ERROR! ** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;              The kippah shouldn't be accounted as being worn, but just carried.
 ;              The library needs to check at initialize time that only clothes
@@ -25,10 +25,10 @@ DBG kippah
 ; ==============================================================================
 ; DEBUG CLOTHES VALUES
 ; ==============================================================================
-dbg skirt
-dbg jeans
-dbg dungarees
-dbg pantyhose
+DBG_CLOTHES skirt
+DBG_CLOTHES jeans
+DBG_CLOTHES dungarees
+DBG_CLOTHES pantyhose
 ; ==============================================================================
 ; TEST SKIRT
 ; ==============================================================================

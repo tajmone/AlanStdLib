@@ -11,10 +11,10 @@ north
 ; SPORTS GEAR
 ; ==============================================================================
 examine balaclava
-dbg balaclava
+DBG_CLOTHES balaclava
 ; These goggles have headcover=4, so they can be worn over the balaclava:
 examine ski goggles
-dbg ski goggles
+DBG_CLOTHES ski goggles
 ; ** NOTE ** The problem here is that these will conflict with other headgear,
 ;            like hats, for there isn't a distinction between the face area and
 ;            the head.
@@ -35,7 +35,7 @@ wear balaclava
 ; Some small items, like watches, necklaces, etc., might be created without any
 ; coverage values at all, so they can be freely worn reagardless of other items.
 examine watch
-dbg watch
+DBG_CLOTHES watch
 wear it
 inv
 ; ------------------------------------------------------------------------------
@@ -44,11 +44,11 @@ inv
 ; This might provide a quick solution that works in most cases, but it prevents
 ; checking that multiple items of the same type are being worn at once.
 examine white scarf
-dbg white scarf
+DBG_CLOTHES white scarf
 examine blue scarf
-dbg blue scarf
+DBG_CLOTHES blue scarf
 examine black scarf
-dbg black scarf
+DBG_CLOTHES black scarf
 ; WEAR MULTIPLE SCARFS:
 wear white scarf
 wear blue scarf

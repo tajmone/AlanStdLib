@@ -36,13 +36,13 @@ undress
 ; ==============================================================================
 ; TEST SKIRT
 ; ==============================================================================
-DBG skirt
+DBG_CLOTHES skirt
 ; ------------------------------------------------------------------------------
 ; W/ SKIRT -> WEAR/REMOVE-> PANTYHOSE
 ; ------------------------------------------------------------------------------
 ; A worn skirt should not prevent wearing pantyhose and other lower legs-only
 ; garnments which don't cover also the torso in a single piece.
-DBG pantyhose
+DBG_CLOTHES pantyhose
 wear skirt
 ; /// WEAR -> YES (OK!) ///
 wear pantyhose
@@ -53,7 +53,7 @@ remove pantyhose
 ; ------------------------------------------------------------------------------
 ; A worn skirt should prevent wearing lower-body garnments which cover both legs
 ; and torso in a single clothing piece, like a one-piece swimsuit or a teddy.
-DBG swimsuit
+DBG_CLOTHES swimsuit
 ; /// WEAR -> NO (OK!) ///
 wear swimsuit
 remove skirt
@@ -68,7 +68,7 @@ remove swimsuit
 ; ------------------------------------------------------------------------------
 ; A worn skirt should not prevent wearing a bikini because its upper and lower
 ; piece are disjointed.
-DBG bikini
+DBG_CLOTHES bikini
 wear skirt
 ; /// WEAR -> YES (OK!) ///
 wear bikini
@@ -79,8 +79,8 @@ remove bikini
 ; ------------------------------------------------------------------------------
 ; But a bikini shouldn't be wearable if also wearing a torso garnment occupying
 ; a higher layer (the blocker is not the skirt but the top garnment).
-DBG black shirt
-DBG bikini
+DBG_CLOTHES black shirt
+DBG_CLOTHES bikini
 wear skirt
 wear black shirt
 ; /// WEAR -> NO -> BLOCKER: SHIRT (OK!) ///

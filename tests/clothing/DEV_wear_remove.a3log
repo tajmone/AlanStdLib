@@ -3,7 +3,7 @@
 Emporium Giorgio Alani 
 An adventure to test clothing. 
 (C) 2018 by Tristano Ajmone 
-Programmed with the ALAN Interactive Fiction Language v3.0beta6 build 1866
+Programmed with the ALAN Interactive Fiction Language v3.0beta6 build 1875
 .
 Standard Library v2.1 
 Version 1 
@@ -17,7 +17,7 @@ clothing item.
 Outside Emporium Alani
 You're standing in front of the Giorgio Alani Emporium entrance. Two
 large brass doors await northward your entrance into the sanctuary of
-fashion consumism. 
+fashion consumism.
 
 > ; ******************************************************************************
 > ; *                                                                            *
@@ -88,7 +88,7 @@ here.
 It's a cotton balaclava for winter sports. Basically, a head hood with
 holes for the eyes and mouth, like the ones used in robberies.
 
-> DBG it
+> DBG_CLOTHES it
 'balaclava' VALUES: | headcover: 1 | facecover: 1 | 
 DONNED: No.
 
@@ -96,7 +96,7 @@ DONNED: No.
 You put on the balaclava.
 
 > ; /// VERIFY -> IS DONNED (OK!)
-> DBG it
+> DBG_CLOTHES it
 'balaclava' VALUES: | headcover: 1 | facecover: 1 | 
 DONNED: Yes
 
@@ -107,7 +107,7 @@ DONNED: Yes
 A pair of goggles for skiing, with an elastic band to hold them in place.
 Its front B-shaped single lens has a special coating adaptative to light.
 
-> DBG it
+> DBG_CLOTHES it
 'ski goggles' VALUES: | facecover: 2 | 
 DONNED: No.
 
@@ -115,7 +115,7 @@ DONNED: No.
 You put on the ski goggles.
 
 > ; /// VERIFY -> IS DONNED (OK!)
-> DBG it
+> DBG_CLOTHES it
 'ski goggles' VALUES: | facecover: 2 | 
 DONNED: Yes
 
@@ -131,7 +131,7 @@ In order to remove the balaclava you should first take off the ski goggles
 It's a hard plastic helmet covering head and ears, with soft padding
 inside. A chinstrap allows securing it firmly in place.
 
-> DBG it
+> DBG_CLOTHES it
 'ski helmet' VALUES: | headcover: 2 | 
 DONNED: No.
 

@@ -30,25 +30,25 @@ east
 ; The balaclava cover both face and head, occupying the lowest layer (direct
 ; skin contact) to allow wearing hats and goggles over it...
 x balaclava
-DBG it
+DBG_CLOTHES it
 wear it
 ; /// VERIFY -> IS DONNED (OK!)
-DBG it
+DBG_CLOTHES it
 ; ------------------------------------------------------------------------------
 ; BALACLAVA & GOGGLES
 ; ------------------------------------------------------------------------------
 x goggles
-DBG it
+DBG_CLOTHES it
 wear it
 ; /// VERIFY -> IS DONNED (OK!)
-DBG it
+DBG_CLOTHES it
 ; /// REMOVE -> NO -> BLOCKERS: GOGGLES (OK!) ///
 remove balaclava
 ; ------------------------------------------------------------------------------
 ; BALACLAVA + SKI HELMET
 ; ------------------------------------------------------------------------------
 x helmet
-DBG it
+DBG_CLOTHES it
 wear it
 ; /// REMOVE -> NO -> BLOCKERS: GOGGLES & HELMET (OK!) ///
 remove balaclava
