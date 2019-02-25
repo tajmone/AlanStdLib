@@ -657,125 +657,216 @@ EVERY clothing ISA OBJECT
     -- END IF.
 -- <<< original code <<<
 
-END VERB wear.
-
--- >>> dev-clothing: TODO >>> VERB remove
+  END VERB wear.
 
 
-VERB remove
-  CHECK THIS IN worn
-    ELSE SAY check_obj_in_worn OF my_game.
-  AND CURRENT LOCATION IS lit
-    ELSE SAY check_current_loc_lit OF my_game.
+-- >>> dev-clothing: TWEAKED >>> VERB remove
 
-  DOES ONLY
+  VERB remove
+    CHECK THIS DIRECTLY IN hero AND THIS IS donned
+      ELSE SAY my_game:check_obj_in_worn.
+ -- >>> original code >>>
+ -- CHECK THIS IN worn
+ --   ELSE SAY check_obj_in_worn OF my_game.
+ -- <<< original code <<<
+    AND CURRENT LOCATION IS lit
+      ELSE SAY check_current_loc_lit OF my_game.
 
-  SET wear_flag OF hero TO 0.
+    DOES ONLY
+      --------------------------------------------------------------------
+      -- Clothes which prevent the action are stored in a temporary set in
+      -- order to list all blocking items in the verb failure response.
+      --------------------------------------------------------------------
 
+      -- --------------------
+      -- Empty temporary set:
+      -- --------------------
+      SET my_game:temp_clothes TO {}.
+      -- -----------------------------------------------------------------------
+      -- Check if the item being removed is subjected to ordered layering
+      -- -----------------------------------------------------------------------
+      IF  THIS:headcover
+        + THIS:facecover
+        + THIS:topcover
+        + THIS:botcover
+        + THIS:feetcover
+        + THIS:handscover <> 0
+        THEN
+          -- -------------------------------------------------------------------
+          -- Every worn clothing with a layer value equal or greater than the
+          -- value of the item we're trying to remove it's a blocking item which
+          -- prevents the action.
+          -- -------------------------------------------------------------------
+          FOR EACH item IsA clothing, DIRECTLY IN hero, IS donned
+            DO
+              IF THIS:headcover  <> 0 AND THIS:headcover  < item:headcover
+                THEN INCLUDE item IN my_game:temp_clothes.
+              END IF.
+              IF THIS:facecover  <> 0 AND THIS:facecover  < item:facecover
+                THEN INCLUDE item IN my_game:temp_clothes.
+              END IF.
+              IF THIS:topcover   <> 0 AND THIS:topcover   < item:topcover
+                THEN INCLUDE item IN my_game:temp_clothes.
+             END IF.
+              IF THIS:botcover   <> 0 AND THIS:botcover   < item:botcover
+                THEN
+                  -- -----------------------------------------------------------
+                  -- Carry out special checks for 'NOT blockslegs'
+                  -- -----------------------------------------------------------
+                  IF item:blockslegs
+                  -- If the item standing in the way is a leg-blocker, prevent:
+                    THEN INCLUDE item IN my_game:temp_clothes.
+                  -- Otherwise, it must be a skirt or a coat.
+                  -- Check that item we're trying to wear is not a single-piece
+                  -- covering both legs and torso.
+                  ELSIF THIS:topcover <> 0 AND THIS IS NOT twopieces
+                    THEN INCLUDE item IN my_game:temp_clothes.
+                  END IF.
+              END IF.
+              IF THIS:feetcover  <> 0 AND THIS:feetcover  < item:feetcover
+                THEN INCLUDE item IN my_game:temp_clothes.
+              END IF.
+              IF THIS:handscover <> 0 AND THIS:handscover < item:handscover
+                THEN INCLUDE item IN my_game:temp_clothes.
+              END IF.
+          END FOR.
+      END IF.
 
---------------------------------------------------------------------
--- Check the total 'topcover' of items worn. Because of the number
--- sequence used, by dividing the sum of the worn attributes by two
--- and then comparing the result to the individual 'topcover' of the
--- obj in question, ( the former can only ever be greater than the
--- latter if an article of clothing is worn that goes over 'obj' )
--- it's easy to tell if the obj ought to be removable. A temporary
--- attribute is used here because it needs to be manipulated. Once
--- again 'wear_flag' is used to indicate the results.
---------------------------------------------------------------------
-
-
-  SET tempcovered OF hero TO SUM OF topcover DIRECTLY IN worn /2.
-  IF topcover OF THIS <> 0 AND topcover OF THIS < tempcovered OF hero
-    THEN
-    INCREASE wear_flag OF hero BY 1.
-  END IF.
-
-
---------------------------------------------------------------------
--- Perform a similar test for other attributes.
---------------------------------------------------------------------
-
-
-  SET tempcovered OF hero TO SUM OF handscover DIRECTLY IN worn /2.
-  IF handscover OF THIS <> 0 AND handscover OF THIS < tempcovered OF hero
-    THEN
-      INCREASE wear_flag OF hero BY 1.
-  END IF.
-
-
-  SET tempcovered OF hero TO SUM OF feetcover DIRECTLY IN worn /2.
-  IF feetcover OF THIS <> 0 AND feetcover OF THIS < tempcovered OF hero
-    THEN
-      INCREASE wear_flag OF hero BY 1.
-  END IF.
-
-
-  SET tempcovered OF hero TO SUM OF headcover DIRECTLY IN worn /2.
-  IF headcover OF THIS <> 0 AND headcover OF THIS < tempcovered OF hero
-    THEN
-      INCREASE wear_flag OF hero BY 1.
-  END IF.
-
-
---------------------------------------------------------------------
--- botcover is a special case - first discount any coatlike clothes
--- as these do not affect ability to take off other lower garments.
---------------------------------------------------------------------
-
-
-  SET tempcovered OF hero TO SUM OF botcover DIRECTLY IN worn.
-  IF tempcovered OF hero >63
-    THEN
-      SET tempcovered OF hero TO tempcovered OF hero -64.
-  END IF.
-
-
---------------------------------------------------------------------
--- Now discount any dress/ skirt coverall like clothes as these do
--- not affect ability to take off other lower garments. The 'teddy'
--- type garment is expressly NOT included in the exclusion here.
---------------------------------------------------------------------
-
-
-  IF tempcovered OF hero >31 and botcover OF THIS <>4
-    THEN
-      SET tempcovered OF hero TO tempcovered OF hero -32.
-  END IF.
+-- >>> original code >>>
+--   SET wear_flag OF hero TO 0.
 
 
---------------------------------------------------------------------
--- Now process the manipulated value just as was done for the others
---------------------------------------------------------------------
+-- --------------------------------------------------------------------
+-- -- Check the total 'topcover' of items worn. Because of the number
+-- -- sequence used, by dividing the sum of the worn attributes by two
+-- -- and then comparing the result to the individual 'topcover' of the
+-- -- obj in question, ( the former can only ever be greater than the
+-- -- latter if an article of clothing is worn that goes over 'obj' )
+-- -- it's easy to tell if the obj ought to be removable. A temporary
+-- -- attribute is used here because it needs to be manipulated. Once
+-- -- again 'wear_flag' is used to indicate the results.
+-- --------------------------------------------------------------------
 
 
-  SET tempcovered OF hero TO tempcovered OF hero /2.
-  IF botcover OF THIS <> 0 AND botcover OF THIS < tempcovered OF hero
-    THEN
-      INCREASE wear_flag OF hero BY 1.
-  END IF.
+--   SET tempcovered OF hero TO SUM OF topcover DIRECTLY IN worn /2.
+--   IF topcover OF THIS <> 0 AND topcover OF THIS < tempcovered OF hero
+--     THEN
+--     INCREASE wear_flag OF hero BY 1.
+--   END IF.
 
 
---------------------------------------------------------------------
--- Depending on the value of 'wear_flag' print and process the obj
--- as needed. If 'wear_flag' is NOT 0 then the clothes cannot be
--- removed.
---------------------------------------------------------------------
+-- --------------------------------------------------------------------
+-- -- Perform a similar test for other attributes.
+-- --------------------------------------------------------------------
 
 
-  IF wear_flag OF hero > 0
-    THEN
-      LIST worn.
-      "Trying to take" SAY THE THIS. "off isn't very sensible."
-    ELSE
-      LOCATE THIS IN hero.
-      "You take off" SAY THE THIS. "."
-      EXCLUDE THIS FROM wearing OF hero.
-      MAKE THIS NOT donned.
-  END IF.
-END VERB remove.
+--   SET tempcovered OF hero TO SUM OF handscover DIRECTLY IN worn /2.
+--   IF handscover OF THIS <> 0 AND handscover OF THIS < tempcovered OF hero
+--     THEN
+--       INCREASE wear_flag OF hero BY 1.
+--   END IF.
 
 
+--   SET tempcovered OF hero TO SUM OF feetcover DIRECTLY IN worn /2.
+--   IF feetcover OF THIS <> 0 AND feetcover OF THIS < tempcovered OF hero
+--     THEN
+--       INCREASE wear_flag OF hero BY 1.
+--   END IF.
+
+
+--   SET tempcovered OF hero TO SUM OF headcover DIRECTLY IN worn /2.
+--   IF headcover OF THIS <> 0 AND headcover OF THIS < tempcovered OF hero
+--     THEN
+--       INCREASE wear_flag OF hero BY 1.
+--   END IF.
+
+
+-- --------------------------------------------------------------------
+-- -- botcover is a special case - first discount any coatlike clothes
+-- -- as these do not affect ability to take off other lower garments.
+-- --------------------------------------------------------------------
+
+
+--   SET tempcovered OF hero TO SUM OF botcover DIRECTLY IN worn.
+--   IF tempcovered OF hero >63
+--     THEN
+--       SET tempcovered OF hero TO tempcovered OF hero -64.
+--   END IF.
+
+
+-- --------------------------------------------------------------------
+-- -- Now discount any dress/ skirt coverall like clothes as these do
+-- -- not affect ability to take off other lower garments. The 'teddy'
+-- -- type garment is expressly NOT included in the exclusion here.
+-- --------------------------------------------------------------------
+
+
+--   IF tempcovered OF hero >31 and botcover OF THIS <>4
+--     THEN
+--       SET tempcovered OF hero TO tempcovered OF hero -32.
+--   END IF.
+
+
+-- --------------------------------------------------------------------
+-- -- Now process the manipulated value just as was done for the others
+-- --------------------------------------------------------------------
+
+
+--   SET tempcovered OF hero TO tempcovered OF hero /2.
+--   IF botcover OF THIS <> 0 AND botcover OF THIS < tempcovered OF hero
+--     THEN
+--       INCREASE wear_flag OF hero BY 1.
+--   END IF.
+-- <<< original code <<<
+
+      --========================================================================
+      -- Outcome of the remove action...
+      --========================================================================
+
+      SET my_game:temp_cnt TO COUNT IsA clothing, IN my_game:temp_clothes.
+      IF my_game:temp_cnt <> 0
+        THEN
+          -- ------------------------------------
+          -- It's not possible to remove the item
+          -- ------------------------------------
+          "In order to remove $+1 you should first take off"
+          FOR EACH blocking_item IsA clothing, IN my_game:temp_clothes
+            DO
+              SAY THE blocking_item.
+              DECREASE my_game:temp_cnt.
+              DEPENDING ON my_game:temp_cnt
+                = 1 THEN "and"
+                = 0 THEN "."
+                ELSE ","
+              END DEPEND.
+          END FOR.
+        ELSE
+          -- --------------------------------
+          -- It's possible to remove the item
+          -- --------------------------------
+          "You take off $+1."
+          LOCATE THIS IN hero.
+          MAKE THIS NOT donned.
+      END IF.
+-- >>> original code >>>
+-- --------------------------------------------------------------------
+-- -- Depending on the value of 'wear_flag' print and process the obj
+-- -- as needed. If 'wear_flag' is NOT 0 then the clothes cannot be
+-- -- removed.
+-- --------------------------------------------------------------------
+--
+--   IF wear_flag OF hero > 0
+--     THEN
+--       LIST worn.
+--       "Trying to take" SAY THE THIS. "off isn't very sensible."
+--     ELSE
+--       LOCATE THIS IN hero.
+--       "You take off" SAY THE THIS. "."
+--       EXCLUDE THIS FROM wearing OF hero.
+--       MAKE THIS NOT donned.
+--   END IF.
+-- <<< original code <<<
+  END VERB remove.
 END EVERY.
 
 

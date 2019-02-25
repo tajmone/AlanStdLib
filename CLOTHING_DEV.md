@@ -67,9 +67,9 @@ The following list resumes the overall steps required to implement the new syste
 - [ ] Dispose of the `worn` entity and the `wearing` set, and use instead just the `donned` boolean attribute (which shall ultimately be renamed to `worn`).
 - [ ] Ensure that nested clothes are never considered as being worn.
 - [ ] List separately carried and worn items by actors, for both Hero (via 'inventory') and NPCs (via 'examine actor').
-- [ ] When the verbs `wear`/`remove` fail, report only the blocking items (instead of the full list of worn items).
-- [ ] Remove hard-coded handling of special clothes like coats and skirts, and allow authors to implement those via some new (optional) clothing attributes: `blockslegs` and `twopiecess`.
-- [ ] Allow authors to free number clothing layers, instead of imposing exponential layering (2, 4, 8, 16, 32, 64).
+- [x] When the verbs `wear`/`remove` fail, report only the blocking items (instead of the full list of worn items).
+- [x] Remove hard-coded handling of special clothes like coats and skirts, and allow authors to implement those via some new (optional) clothing attributes: `blockslegs` and `twopiecess`.
+- [x] Allow authors to free number clothing layers, instead of imposing exponential layering (2, 4, 8, 16, 32, 64).
 - [x] Add new clothing attribute `facecover` to allow handling goggles, beards, masks, etc., independently from `headcover`.
 - [ ] Establish some rules on how the library should handle verbs that might interact with a worn clothing item (including implicit taking), then enforce them in the library vers, and provide clear guidelines for authors so that they might create custom verbs that comply to these guidelines and won't interfere with worn clothing.
 
@@ -163,16 +163,16 @@ Obviously, changes to the `wear` and `remove` verbs in `lib_classes.i` are centr
     + [x] `temp_clothes { clothing }` used to track clothes preventing wear/remove actions.
     + [ ] Delete `ACTOR:wear_flag` (no longer needed).
     + [ ] Delete `ACTOR:tempcovered` (no longer needed).
-- [ ] __VERB `wear`__:
+- [x] __VERB `wear`__:
     + [x] __NON EXPONENTIAL LAYERS__ — Allow free arbitrary assignment of layers values.
     + [x] __FACE COVER VALUE__ — introduce checks for `facecover`.
     + [x] __SKIRT & COATS__ — no longer hardcoded layers, use `blockslegs` and `twopiece` instead.
     + [x] __FAILURE REPORT__ — list only blocking items.
-- [ ] __VERB `remove`__:
-    + [ ] __NON EXPONENTIAL LAYERS__ — Allow free arbitrary assignment of layers values.
-    + [ ] __FACE COVER VALUE__ — introduce checks for `facecover`.
-    + [ ] __SKIRT & COATS__ — no longer hardcoded layers, use `blockslegs` and `twopiece` instead.
-    + [ ] __FAILURE REPORT__ — list only blocking items.
+- [x] __VERB `remove`__:
+    + [x] __NON EXPONENTIAL LAYERS__ — Allow free arbitrary assignment of layers values.
+    + [x] __FACE COVER VALUE__ — introduce checks for `facecover`.
+    + [x] __SKIRT & COATS__ — no longer hardcoded layers, use `blockslegs` and `twopiece` instead.
+    + [x] __FAILURE REPORT__ — list only blocking items.
 
 
 ### Inventory and Examine Actor
