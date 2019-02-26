@@ -43,48 +43,33 @@ MESSAGE
       THEN
         -- the following snippet adds "(being worn)" after all
         -- pieces of clothing worn by an NPC, at 'x [actor]'
-
+-- >>> dev-clothing: TWEAKED >>> MESSAGES referencing worn
         IF parameter1 IS donned
-          THEN
--- >>> dev-clothing: FIXME >>> MESSAGES referencing worn
-            IF parameter1 NOT IN worn
-              THEN "(being worn)"
-            END IF.
+          THEN "(being worn)"
         END IF.
     END IF.
     "$$,"
-      CONTAINS_AND: "$01"
+  CONTAINS_AND: "$01"
     IF parameter1 ISA CLOTHING
       THEN
         -- the following snippet adds "(being worn)" after all
         -- pieces of clothing worn by an NPC, after 'x [actor]'
-
+-- >>> dev-clothing: TWEAKED >>> MESSAGES referencing worn
         IF parameter1 IS donned
-          THEN
--- >>> dev-clothing: FIXME >>> MESSAGES referencing worn
-            IF parameter1 NOT IN worn
-              THEN "(being worn)"
-            END IF.
+          THEN "(being worn)"
         END IF.
-    END IF.
-
-    "and"
-
+    END IF. "and"
   CONTAINS_END: "$01"
     IF parameter1 ISA CLOTHING
       THEN
         -- the following snippet adds "(being worn)" after all
         -- pieces of clothing worn by an NPC, after 'x [actor]'
-
+-- >>> dev-clothing: TWEAKED >>> MESSAGES referencing worn
         IF parameter1 IS donned
-          THEN
--- >>> dev-clothing: FIXME >>> MESSAGES referencing worn
-            IF parameter1 NOT IN worn
-              THEN "(being worn)"
-            END IF.
+          THEN "(being worn)"
         END IF.
-    END IF.
-    "."
+    END IF. "."
+
   EMPTY_HANDED:
     IF parameter1 IS NOT plural
       THEN "$+1 is empty-handed."
@@ -92,7 +77,7 @@ MESSAGE
     END IF.
 
   HAVE_SCORED: "You have scored $1 points out of $2."
-      IMPOSSIBLE_WITH: "That's impossible with $+1."
+  IMPOSSIBLE_WITH: "That's impossible with $+1."
   IS_EMPTY:
     IF parameter1 IS NOT plural
       THEN "$+1 is empty."

@@ -91,3 +91,12 @@ give socks to assistant
 ; CARRIED: 3 | WORN: 0
 ; ------------------------------------------------------------------------------
 examine assistant
+; ******************************************************************************
+; LIST HERO/PNG
+; ******************************************************************************
+; Test LIST again...
+;
+; ** NOTE ** Some items are still reported as being worn because the `ask` verb
+;            hasn't yet been adapated to the new system!
+DBG_INV me
+DBG_INV assistant

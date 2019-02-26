@@ -123,7 +123,7 @@ As you move toward the doors they automagically slide open before you.
 Emporium Alani Main Hall
 This luxurious hall is the crossroad to the various clothing departments
 of the emporium. Two large brass doors lead the way south, out of the
-fashion temple and back into the world of mortal souls. There is your
+fashion temple and back into the world of mortal souls.There is your
 personal assistant here.
 
 > ; ------------------------------------------------------------------------------
@@ -181,6 +181,20 @@ You give your socks to the assistant.
 > examine assistant
 She's your personal shopping assistant. The assistant is carrying your 
 socks, your boxers and your sneakers.
+
+> ; ******************************************************************************
+> ; LIST HERO/PNG
+> ; ******************************************************************************
+> ; Test LIST again...
+> ;
+> ; ** NOTE ** Some items are still reported as being worn because the `ask` verb
+> ;            hasn't yet been adapated to the new system!
+> DBG_INV me
+You are carrying your undershirt, your khakis, a pair of fashion boots 
+(being worn) and a uniform (being worn).
+
+> DBG_INV assistant
+The assistant is carrying your sneakers, your boxers and your socks.
 
 > 
 

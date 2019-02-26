@@ -243,10 +243,10 @@ When taking inventory or examining actors, the library should produce two separa
 
 The various library-defined runtime MESSAGES must also be tweaked now that the `worn` entity will be removed:
 
-- [ ] `lib_messages.i` — fix references to `worn` entity:
-    + [ ] `CONTAINS_COMMA`
-    + [ ] `CONTAINS_AND`
-    + [ ] `CONTAINS_END`
+- [x] `lib_messages.i` — fix references to `worn` entity:
+    + [x] `CONTAINS_COMMA`
+    + [x] `CONTAINS_AND`
+    + [x] `CONTAINS_END`
 
 
 ### Verbs Referencing `worn`
