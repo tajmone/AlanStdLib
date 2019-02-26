@@ -30,7 +30,8 @@ This temporary document annotates all the tasks of the development stages to fix
         - [`wear` and `remove`](#wear-and-remove)
         - [Inventory and Examine Actor](#inventory-and-examine-actor)
         - [Verbs Referencing `worn`](#verbs-referencing-worn)
-        - [Handling Worn Items](#handling-worn-items)
+    - [Handling Worn Items](#handling-worn-items)
+        - [Block Verbs on `clothing`](#block-verbs-on-clothing)
     - [Implicit Taking](#implicit-taking)
         - [List of Verbs With Implicit Take](#list-of-verbs-with-implicit-take)
 
@@ -79,6 +80,7 @@ I'll add a separate subset of tests in the `tests/clothing/` folder, using the `
     + [`DEV.bat`][DEV.bat] — execute a subset of tests dedicated to development:
         * [`DEV_init.a3log`][DEV_init.a3log]/[`.a3sol`][DEV_init.a3sol] — test clothing initialization.
         * [`DEV_inventory.a3log`][DEV_inventory.a3log]/[`.a3sol`][DEV_inventory.a3sol] — test how `inventory` and `examine actor` are handling separate lists of carried and worn.
+        * [`DEV_manipulation.a3log`][DEV_manipulation.a3log]/[`.a3sol`][DEV_manipulation.a3sol] — test verbs that could move worn items around.
         * [`DEV_skirts.a3log`][DEV_skirts.a3log]/[`.a3sol`][DEV_skirts.a3sol] — test special clothes: skirts, coats, bikinis, etc.
         * [`DEV_wear_remove.a3log`][DEV_wear_remove.a3log]/[`.a3sol`][DEV_wear_remove.a3sol] — general purpose tests for `wear`/`remove`.
 
@@ -306,7 +308,7 @@ into a single CHECK that distinguished between carried and worn items:
 
 
 
-### Handling Worn Items
+## Handling Worn Items
 
 All verbs which can dislocate an object (clothing or otherwise) from an actor should always set the dislocated object to `NOT worn`.
 
@@ -315,6 +317,19 @@ The logic behind this is that, although such verbs will be prevented to act on `
 Setting to `NOT worn` an object which has been moved around is always a safe action, for the item couldn't be possibly be worn after the action. If the object is not a wearable, then no harm is done (as non-wearable should always be `NOT worn` anywhow).
 
 We need also to take into account any implicit taking action which might affect worn items.
+
+### Block Verbs on `clothing`
+
+The following verbs have been implemented on `clothing` class to allow CHECKS that prevent their execution with `worn` clothing items.
+
+- [x] `put_in`
+- [x] `put_on`
+- [x] `give`
+- [x] `throw`
+- [x] `throw_at`
+- [x] `throw_to`
+- [x] `throw_in`
+- [x] `tie_to`
 
 ## Implicit Taking
 
@@ -380,6 +395,8 @@ This is the list of all verbs which contain implicit taking:
 [DEV_wear_remove.a3sol]: ./tests/clothing/DEV_wear_remove.a3sol "View source"
 [DEV_inventory.a3log]: ./tests/clothing/DEV_inventory.a3log "View source"
 [DEV_inventory.a3sol]: ./tests/clothing/DEV_inventory.a3sol "View source"
+[DEV_manipulation.a3log]: ./tests/clothing/DEV_manipulation.a3log "View source"
+[DEV_manipulation.a3sol]: ./tests/clothing/DEV_manipulation.a3sol "View source"
 
 <!-- Alan Builds -->
 

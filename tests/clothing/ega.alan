@@ -434,6 +434,7 @@ END EVERY.
 
 EVERY cl_boots IsA clothing.
   NAME boots.
+  IS plural.
   HAS feetcover 4.
   INDEFINITE ARTICLE "a pair of"
 END EVERY.
