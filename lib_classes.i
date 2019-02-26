@@ -572,7 +572,7 @@ EVERY clothing ISA OBJECT
           -- ----------------------------------
           -- We'll just take it (if not already possessed)
           IF THIS NOT IN hero
-          -- >>> implicit take: >>>
+          -- >>> implicit take >>>
             THEN "You pick up $+1."
           END IF.
           LOCATE THIS IN hero.
@@ -1734,7 +1734,7 @@ EVERY liquid ISA OBJECT
   VERB give
     WHEN obj
     DOES ONLY
-      -- implicit taking:
+      -- >>> implicit take >>>
       IF THIS NOT IN hero
         THEN
           IF vessel OF THIS = null_vessel OR vessel OF THIS IS NOT takeable
@@ -1743,7 +1743,7 @@ EVERY liquid ISA OBJECT
               "(taking" SAY THE vessel OF THIS. "of" SAY THIS. "first)$n"
           END IF.
       END IF.
-      -- end of implicit taking.
+      -- <<< implicit take <<<
 
       IF THIS IN hero
         -- i.e. if the implicit taking was successful
@@ -1760,7 +1760,7 @@ EVERY liquid ISA OBJECT
 
   VERB pour
     DOES ONLY
-      -- implicit taking:
+      -- >>> implicit take >>>
       IF THIS NOT IN hero
         THEN
           IF vessel OF THIS = null_vessel OR vessel OF THIS IS NOT takeable
@@ -1774,7 +1774,7 @@ EVERY liquid ISA OBJECT
             "(taking" SAY THE vessel OF THIS. "of" SAY THIS. "first)$n"
           END IF.
       END IF.
-      -- end of implicit taking.
+      -- <<< implicit take <<<
 
       IF THIS IN hero
         THEN LOCATE THIS AT hero.
@@ -1792,7 +1792,7 @@ EVERY liquid ISA OBJECT
   VERB pour_in
     WHEN obj
       DOES ONLY
-        -- implicit taking:
+        -- >>> implicit take >>>
         IF THIS NOT IN hero
           THEN
             IF vessel OF THIS = null_vessel
@@ -1803,7 +1803,7 @@ EVERY liquid ISA OBJECT
               "(taking" SAY THE vessel OF THIS. "of" SAY THIS. "first)$n"
             END IF.
         END IF.
-        -- end of implicit taking.
+        -- <<< implicit take <<<
 
         IF THIS IN hero   --i.e. if the implicit taking was successful
           THEN LOCATE THIS IN cont.
@@ -1833,7 +1833,7 @@ EVERY liquid ISA OBJECT
   VERB pour_on
     WHEN obj
       DOES ONLY
-        -- implicit taking:
+        -- >>> implicit take >>>
         IF THIS NOT IN hero
           THEN
             IF vessel OF THIS = null_vessel
@@ -1844,7 +1844,7 @@ EVERY liquid ISA OBJECT
               "(taking" SAY THE vessel OF THIS. "of" SAY THIS. "first)$n"
             END IF.
         END IF.
-        -- end of implicit taking.
+        -- <<< implicit take <<<
 
         IF THIS IN hero
           -- i.e. if the implicit taking was successful
@@ -1871,7 +1871,7 @@ EVERY liquid ISA OBJECT
           ELSE
             IF vessel OF THIS IS takeable
               THEN
-                -- implicit taking:
+                -- >>> implicit take >>>
                 IF THIS NOT IN hero
                   THEN
                     IF vessel OF THIS = null_vessel
@@ -1880,7 +1880,7 @@ EVERY liquid ISA OBJECT
                       "(taking" SAY THE vessel OF THIS. "of" SAY THIS. "first)$n"
                     END IF.
                 END IF.
-                -- end of implicit taking.
+                -- <<< implicit take <<<
 
                 LOCATE vessel OF THIS IN cont.
                     "You put" SAY THE vessel OF THIS. "of" SAY THIS. "into" SAY THE cont. "."
@@ -1915,7 +1915,7 @@ EVERY liquid ISA OBJECT
   VERB put_on
     WHEN obj
       DOES ONLY
-        -- implicit taking:
+        -- >>> implicit take >>>
         IF THIS NOT IN hero
           THEN
             IF vessel OF THIS = null_vessel
@@ -1926,7 +1926,7 @@ EVERY liquid ISA OBJECT
                   "(taking" SAY THE vessel OF THIS. "of" SAY THIS. "first)$n"
             END IF.
         END IF.
-        -- end of implicit taking.
+        -- <<< implicit take <<<
 
         IF THIS IN hero
           -- i.e. if the implicit taking was successful

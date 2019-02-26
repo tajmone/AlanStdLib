@@ -24,11 +24,15 @@ This temporary document annotates all the tasks of the development stages to fix
         - [Debug Module](#debug-module)
     - [Clothing Attributes](#clothing-attributes)
     - [Dispose of `worn` and `wearing`](#dispose-of-worn-and-wearing)
+        - [Rename `donned` to `worn`](#rename-donned-to-worn)
     - [Adapt Verbs](#adapt-verbs)
         - [New Verb Messages](#new-verb-messages)
         - [`wear` and `remove`](#wear-and-remove)
         - [Inventory and Examine Actor](#inventory-and-examine-actor)
         - [Verbs Referencing `worn`](#verbs-referencing-worn)
+        - [Handling Worn Items](#handling-worn-items)
+    - [Implicit Taking](#implicit-taking)
+        - [List of Verbs With Implicit Take](#list-of-verbs-with-implicit-take)
 
 <!-- /MarkdownTOC -->
 
@@ -195,6 +199,15 @@ Before actually removing the `worn` entity and the `wearing` set from the librar
     
         > __NOTE__ — I haven't implement such checks in the Italian library, partly due to the bug, partly because I didn't see it as strictly necessary; still, all clothing tests passed without problems.
 
+### Rename `donned` to `worn`
+
+When no more references are left to the `worn` entity in the library code, we should rename the `donned` attribute to `worn`.
+
+- [ ] Rename all occurences of `donned` to `worn` in:
+    + [ ] __LIBRARY SOURCES__.
+    + [ ] __TEST ADVENTURE SOURCES__.
+    + [ ] __DEBUG MODULE__.
+
 
 ## Adapt Verbs
 
@@ -267,6 +280,60 @@ These general verbs must also be adapted for they contain references to the `wor
     + [ ] `shoot`
     + [ ] `take`
     + [ ] `wear`
+
+
+### Handling Worn Items
+
+All verbs which can dislocate an object (clothing or otherwise) from an actor should always set the dislocated object to `NOT donned`.
+
+The logic behind this is that, although such verbs will be prevented to act on `clothing` instances via CHECKS for the same verbs on the `clothing` class, we must still cater for non-clothing wearables (eg. wearable devices) which might be implement by authors in their adventures.
+
+Setting to `NOT donned` an object which has been moved around is always a safe action, for the item couldn't be possibly be worn after the action. If the object is not a wearable, then no harm is done (as non-wearable should always be `NOT donned` anywhow).
+
+We need also to take into account any implicit taking action which might affect worn items.
+
+## Implicit Taking
+
+Every verb that can/does carry out implicit taking must be examined to ensure it will handle properly worn items (`clothing` or otherwise).
+
+To simplify work, every implicit take code in the library should be enclosed within special comments markers, so they can quickly be found via editor Search functionality:
+
+```
+-- >>> implicit take >>>
+-- <<< implicit take <<<
+```
+
+- [ ] Mark with comments all implicit take occurences in the library sources.
+
+### List of Verbs With Implicit Take
+
+This is the list of all verbs which contain implicit taking:
+
+- `lib_classes.i`:
+    + `clothing` class:
+        * `wear`
+    + `liquid` class:
+        * `give`
+        * `pour`
+        * `pour_in`
+        * `pour_on`
+        * `put_in`
+        * `put_on`
+- `lib_verbs.i`:
+    + `bite`
+    + `drink`
+    + `eat`
+    + `empty`
+    + `empty_in`
+    + `empty_on`
+    + `give`
+    + `put_on`
+    + `sip`
+    + `throw`
+    + `throw_at`
+    + `throw_to`
+    + `throw_in`
+    + `tie_to`
 
 <!-----------------------------------------------------------------------------
                                REFERENCE LINKS                                

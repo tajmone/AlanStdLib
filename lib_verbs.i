@@ -660,12 +660,12 @@ ADD TO EVERY OBJECT
       -- This same if-statement is found in numerous other verbs throughout
       -- the library, as well.
 
-      -- implicit taking:
+      -- >>> implicit take >>>
       IF obj NOT DIRECTLY IN hero
         THEN LOCATE obj IN hero.
              SAY implicit_taking_message OF my_game.
       END IF.
-      -- end of implicit taking.
+      -- <<< implicit take <<<
 
       "You take a bite of" SAY THE obj. "$$."
         IF obj IS NOT plural
@@ -1843,7 +1843,7 @@ ADD TO EVERY LIQUID
         ELSE
           -- = if the liquid is in a container:
 
-          -- implicit taking:
+          -- >>> implicit take >>>
           IF vessel OF liq NOT DIRECTLY IN hero
             THEN
               IF vessel OF liq IS NOT takeable
@@ -1854,7 +1854,7 @@ ADD TO EVERY LIQUID
                   "(taking" SAY THE vessel OF THIS. "of" SAY THIS. "first)$n"
               END IF.
           END IF.
-          -- end of implicit taking.
+          -- <<< implicit take <<<
 
           IF liq IN hero
             -- i.e. if the implicit taking was successful
@@ -2036,12 +2036,12 @@ ADD TO EVERY OBJECT
         END IF.
 
     DOES
-      -- implicit taking:
+      -- >>> implicit take >>>
       IF food NOT DIRECTLY IN hero
         THEN LOCATE food IN hero.
-          SAY implicit_taking_message OF my_game.
+             SAY implicit_taking_message OF my_game.
       END IF.
-      -- end of implicit taking.
+      -- <<< implicit take <<<
 
       "You eat all of" SAY THE food. "."
       LOCATE food AT nowhere.
@@ -2129,12 +2129,12 @@ ADD TO EVERY OBJECT
         END IF.
 
     DOES
-      -- implicit taking:
+      -- >>> implicit take >>>
       IF obj NOT DIRECTLY IN hero
         THEN LOCATE obj IN hero.
           SAY implicit_taking_message OF my_game.
       END IF.
-      -- end of implicit taking.
+      -- <<< implicit take <<<
 
       IF COUNT ISA OBJECT, DIRECTLY IN obj = 0
         THEN "There is nothing in" SAY THE obj. "."
@@ -2274,12 +2274,12 @@ ADD TO EVERY OBJECT
           END IF.
 
       DOES
-      -- implicit taking:
+      -- >>> implicit take >>>
       IF obj NOT DIRECTLY IN hero
         THEN LOCATE obj IN hero.
           SAY implicit_taking_message OF my_game.
       END IF.
-      -- end of implicit taking.
+      -- <<< implicit take <<<
 
       IF COUNT ISA OBJECT, DIRECTLY IN obj = 0
         THEN "There is nothing in" SAY THE obj. "."
@@ -2389,12 +2389,12 @@ ADD TO EVERY THING
           END IF.
 
       DOES
-        -- implicit taking:
+        -- >>> implicit take >>>
         IF obj NOT DIRECTLY IN hero
           THEN LOCATE obj IN hero.
             SAY implicit_taking_message OF my_game.
         END IF.
-        -- end of implicit taking.
+        -- <<< implicit take <<<
 
         IF COUNT ISA OBJECT, DIRECTLY IN obj = 0
           THEN "There is nothing in" SAY THE obj. "."
@@ -3251,12 +3251,12 @@ ADD TO EVERY OBJECT
           END IF.
 
       DOES
-        -- implicit taking:
+        -- >>> implicit take >>>
         IF obj NOT DIRECTLY IN hero
           THEN SAY implicit_taking_message OF my_game.
-          LOCATE obj IN hero.
+               LOCATE obj IN hero.
         END IF.
-        -- end of implicit taking.
+        -- <<< implicit take <<<
 
         LOCATE obj IN recipient.
         "You give" SAY THE obj. "to" SAY THE recipient. "."
@@ -5682,12 +5682,12 @@ ADD TO EVERY OBJECT
           END IF.
 
       DOES
-        -- implicit taking:
+        -- >>> implicit take >>>
         IF obj NOT DIRECTLY IN hero
           THEN LOCATE obj IN hero.
                SAY implicit_taking_message OF my_game.
         END IF.
-        -- end of implicit taking.
+        -- <<< implicit take <<<
 
         IF surface = floor OR surface = ground
           THEN LOCATE obj AT hero.
@@ -6635,7 +6635,7 @@ ADD TO EVERY LIQUID
         -- the action is allowed to succeed.
         THEN "You take a sip of" SAY THE liq. "."
         ELSE
-          -- implicit taking:
+          -- >>> implicit take >>>
           IF vessel OF liq NOT DIRECTLY IN hero
             THEN
               IF vessel OF liq IS NOT takeable
@@ -6645,7 +6645,7 @@ ADD TO EVERY LIQUID
                 "(taking" SAY THE vessel OF liq. "first)$n"
               END IF.
           END IF.
-          -- end of implicit taking.
+          -- <<< implicit take <<<
       END IF.
 
       IF liq IN hero    -- i.e. if the implicit taking was successful
@@ -7372,14 +7372,14 @@ ADD TO EVERY THING
         THEN
           IF holder ISA LISTED_CONTAINER AND holder IS NOT open
             THEN "You can't;" SAY THE holder.
-                IF holder IS NOT plural
-                  THEN "is"
-                  ELSE "are"
-                END IF.
+              IF holder IS NOT plural
+                THEN "is"
+                ELSE "are"
+              END IF.
               "closed."
             ELSE
               LOCATE obj IN hero.
-                  "You take" SAY THE obj. "from" SAY THE holder. "."
+              "You take" SAY THE obj. "from" SAY THE holder. "."
           END IF.
       END IF.
 
@@ -7722,12 +7722,12 @@ ADD TO EVERY OBJECT
         END IF.
 
     DOES
-      -- implicit taking:
+      -- >>> implicit take >>>
       IF projectile NOT DIRECTLY IN hero
         THEN LOCATE projectile IN hero.
           SAY implicit_taking_message OF my_game.
       END IF.
-      -- end of implicit taking.
+      -- <<< implicit take <<<
 
       "You can't throw very far;" SAY THE projectile.
 
@@ -7815,12 +7815,12 @@ ADD TO EVERY OBJECT
           END IF.
 
     DOES
-      -- implicit taking:
+      -- >>> implicit take >>>
       IF projectile NOT DIRECTLY IN hero
         THEN LOCATE projectile IN hero.
              SAY implicit_taking_message OF my_game.
       END IF.
-      -- end of implicit taking.
+      -- <<< implicit take <<<
 
       IF target IS inanimate
         THEN
@@ -7928,12 +7928,12 @@ ADD TO EVERY OBJECT
           END IF.
 
     DOES
-      -- implicit taking:
+      -- >>> implicit take >>>
       IF projectile NOT DIRECTLY IN hero
         THEN LOCATE projectile IN hero.
           SAY implicit_taking_message OF my_game.
       END IF.
-      -- end of implicit taking.
+      -- <<< implicit take <<<
 
       "It wouldn't accomplish anything trying to throw"
       SAY the projectile. "to" SAY THE recipient. "."
@@ -8029,12 +8029,12 @@ ADD TO EVERY OBJECT
           END IF.
 
     DOES
-      -- implicit taking:
+      -- >>> implicit take >>>
       IF projectile NOT DIRECTLY IN hero
         THEN LOCATE projectile IN hero.
           SAY implicit_taking_message OF my_game.
       END IF.
-      -- end of implicit taking.
+      -- <<< implicit take <<<
 
       "It wouldn't accomplish anything trying to throw"
       SAY THE projectile. "into" SAY THE cont. "."
@@ -8156,12 +8156,12 @@ ADD TO EVERY THING
           END IF.
 
     DOES
-      -- implicit taking:
+      -- >>> implicit take >>>
       IF obj NOT DIRECTLY IN hero
         THEN LOCATE obj IN hero.
-          SAY implicit_taking_message OF my_game.
+             SAY implicit_taking_message OF my_game.
       END IF.
-      -- end of implicit taking.
+      -- <<< implicit take <<<
 
       "It's not possible to tie" SAY THE obj. "to" SAY THE target. "."
 
