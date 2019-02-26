@@ -1062,8 +1062,9 @@ END EVERY.
 --------------------------------------------------------------------
 
 ADD TO EVERY ACTOR
-  IS tempcovered 0.
-  IS wear_flag 0.
+-- >>> dev-clothing: DELETED >>> ACTOR: 'tempcovered' and 'wear_flag'
+-- IS tempcovered 0.
+-- IS wear_flag 0.
   IS sex 0.
 END ADD TO.
 
@@ -2518,9 +2519,10 @@ ADD TO EVERY ACTOR
   IS NOT lying_down.
   IS NOT named.
   -- = the actor's name is not known to the player
-  IS wearing {null_clothing}.
-  -- = the actor's clothing is not specified.
-  -- "null_clothing" is a dummy default that can be ignored.
+-- >>> dev-clothing: DELETED >>>
+--  IS wearing {null_clothing}.
+--  -- = the actor's clothing is not specified.
+--  -- "null_clothing" is a dummy default that can be ignored.
   IS NOT compliant.
   -- an actor only gives something to the hero if it is in a compliant mood.
   -- In practice, this happens by default when the hero asks the actor for anything.
@@ -2588,9 +2590,10 @@ ADD TO EVERY ACTOR
   -- so that the hero can give, drop, etc. carried objects.
 
 
-  -- excluding the default dummy clothing object from all actors; ignore.
-
-  EXCLUDE null_clothing FROM wearing OF THIS.
+-- >>> dev-clothing: DELETED >>> ACTOR INITIALIZE: EXCLUDE null_clothing FROM wearing
+---- excluding the default dummy clothing object from all actors; ignore.
+--
+--EXCLUDE null_clothing FROM wearing OF THIS.
 
 
   -- all actors will obey this script from the start of the game:

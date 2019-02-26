@@ -27,6 +27,21 @@ fashion consumism.
 > ; General purpose tests for 'wear' and 'remove' verbs. Checks that layered order
 > ; and 'donned' status are being handled correctly.
 > ; ******************************************************************************
+> ; TEST INVALID ACTIONS
+> ; ******************************************************************************
+> ; ==============================================================================
+> ; WEAR -> ALREADY WORN
+> ; ==============================================================================
+> wear sneakers
+You are already wearing your sneakers.
+
+> ; ==============================================================================
+> ; REMOVE -> NOT WORN
+> ; ==============================================================================
+> remove kippah
+You are not wearing your kippah.
+
+> ; ******************************************************************************
 > ; TEST BODY AREAS
 > ; ******************************************************************************
 > ; We need to test how our custom layering system implemented in EGA adventure

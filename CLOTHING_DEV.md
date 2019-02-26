@@ -97,8 +97,8 @@ The following list resumes the overall steps required to implement the new syste
 
 - [x] Dispose of the `worn` entity and the `wearing` set, and use instead just the `donned` boolean attribute.
 - [x] Renamed the `donned` attribute to `worn`.
-- [ ] Ensure that nested clothes are never considered as being worn.
-- [ ] List separately carried and worn items by actors, for both Hero (via 'inventory') and NPCs (via 'examine actor').
+- [x] Ensure that nested clothes are never considered as being worn.
+- [x] List separately carried and worn items by actors, for both Hero (via 'inventory') and NPCs (via 'examine actor').
 - [x] When the verbs `wear`/`remove` fail, report only the blocking items (instead of the full list of worn items).
 - [x] Remove hard-coded handling of special clothes like coats and skirts, and allow authors to implement those via some new (optional) clothing attributes: `blockslegs` and `twopiecess`.
 - [x] Allow authors to free number clothing layers, instead of imposing exponential layering (2, 4, 8, 16, 32, 64).
@@ -135,7 +135,7 @@ Here are the various tasks list for shifting to the new clothing system, largely
 ## Tests
 
 - [x] Create `tests/clothing/DEV.bat` script to run tests only with solution files with name pattern `DEV_*.a3sol`.
-- [ ] Add tests to track tweaked clothing features.
+- [x] Add tests to track tweaked clothing features.
 - [ ] __EGA__ — Tweak `ega.alan` test adventure to reflect changes in the library code and/or provide better testing material:
     + [x] __DBG VERB__ — Tweak it to work with the new clothing system and attributes (verb now moved to `tests/inc_debug.i`):
         * [x] `facecover`
@@ -170,7 +170,7 @@ Create a separate debugging module `tests/inc_debug.i` that can be used by all t
     + [x] Move here `DBG` verb from EGA and rename it `DBG_CLOTHES`
         * [x] Change use of `DBG` verb into `DBG_CLOTHES` in all commands scripts
       inside `tests/clothing/` folder.
-    + [ ] Add new debug verbs:
+    + [x] Add new debug verbs:
         * [x] `DBG_INV <ACTOR>` to list all objects carried/worn by an actor (via `LIST` command).
         * [x] `DBG_COMP <ACTOR>` — to show compliance status of actors.
         * [x] Verb `subjugate` to toggle actors compliance.
@@ -195,7 +195,7 @@ Before actually removing the `worn` entity and the `wearing` set from the librar
 - [x] __MOVE `donned` ON `thing`__ — The `donned` attribute (now `worn`) must be made available on the `thing` class, not just on `clothing`, fro two reasons:
     1. Allow to carry out checks in syntaxes of verbs that might affect worn items.
     1. Enable authors to implement non-clothing wearables (eg. wearable `device`s like VR goggles).
-- [ ] __CLOTHING INITIALIZATION__ — Tweak initialization of `clothing`:
+- [x] __CLOTHING INITIALIZATION__ — Tweak initialization of `clothing`:
     + [x] Comment out the code that iterates every ACTOR to see if the clothing instance is in its `wearing` set in order to make it `donned` and, in case of the Hero, move it to `worn`. None of this is any longer necessary, for a clothing items only needs to be DIRECTLY IN an ACTOR and `IS worn` for it to be worn by the actor.
     + [x] Suppress scheduling the `worn_clothing_check` EVENT. That's no longer required.
 - [ ] __EVENT `worn_clothing_check`__:
@@ -208,10 +208,10 @@ Before actually removing the `worn` entity and the `wearing` set from the librar
 
 When no more references are left to the `worn` entity in the library code, we should rename the `donned` attribute to `worn`.
 
-- [ ] Rename all occurences of `donned` to `worn` in:
-    + [ ] __LIBRARY SOURCES__.
-    + [ ] __TEST ADVENTURE SOURCES__.
-    + [ ] __DEBUG MODULE__.
+- [x] Rename all occurences of `donned` to `worn` in:
+    + [x] __LIBRARY SOURCES__.
+    + [x] __TEST ADVENTURE SOURCES__.
+    + [x] __DEBUG MODULE__.
 
 
 ## Adapt Verbs
@@ -232,11 +232,11 @@ The new system required the introduction of some new `my_game` string attributes
 
 Obviously, changes to the `wear` and `remove` verbs in `lib_classes.i` are central to the new clothings system, so we'll assign to them a task list of its own.
 
-- [ ] __TEMP ATTRIBUTES__ — add new attributes on `definition_block`, for internal usage:
+- [x] __TEMP ATTRIBUTES__ — add new attributes on `definition_block`, for internal usage:
     + [x] `temp_cnt` (integer), used for listing carried/worn items.
     + [x] `temp_clothes { clothing }` used to track clothes preventing wear/remove actions.
-    + [ ] Delete `ACTOR:wear_flag` (no longer needed).
-    + [ ] Delete `ACTOR:tempcovered` (no longer needed).
+    + [x] Delete `ACTOR:wear_flag` (no longer needed).
+    + [x] Delete `ACTOR:tempcovered` (no longer needed).
 - [x] __VERB `wear`__:
     + [x] __NON EXPONENTIAL LAYERS__ — Allow free arbitrary assignment of layers values.
     + [x] __FACE COVER VALUE__ — introduce checks for `facecover`.
