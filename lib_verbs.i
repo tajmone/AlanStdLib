@@ -431,6 +431,8 @@ ADD TO EVERY ACTOR
         -- It is only possible to get something from an NPC
         -- if the NPC is 'compliant'.
         LOCATE obj IN hero.
+-- >>> dev-clothing: ADDED >>>
+        MAKE obj NOT worn. -- for non-clothing wearables.
         SAY THE act. "gives" SAY THE obj. "to you."
         -- Now let's restore act to its original state of compliacne:
         IF my_game IS NOT temp_compliant
@@ -3282,6 +3284,8 @@ ADD TO EVERY OBJECT
 
         LOCATE obj IN recipient.
         "You give" SAY THE obj. "to" SAY THE recipient. "."
+-- >>> dev-clothing: ADDED >>>
+        MAKE obj NOT worn. -- for non-clothing wearables.
 
   END VERB give.
 END ADD TO.
@@ -5532,6 +5536,8 @@ ADD TO EVERY OBJECT
           END IF.
 
       DOES
+       -- >>> dev-clothing: ADDED >>>
+       MAKE obj NOT worn. -- for non-clothing wearables.
         LOCATE obj IN cont.
         "You put" SAY THE obj. "into" SAY THE cont. "."
 
@@ -5725,6 +5731,8 @@ ADD TO EVERY OBJECT
         END IF.
 
         "You put" SAY THE obj. "on" SAY THE surface. "."
+       -- >>> dev-clothing: ADDED >>>
+       MAKE obj NOT worn. -- for non-clothing wearables.
 
   END VERB put_on.
 END ADD TO.
@@ -7803,6 +7811,8 @@ ADD TO EVERY OBJECT
 
       "nearby."
       LOCATE projectile AT hero.
+      -- >>> dev-clothing: ADDED >>>
+      MAKE projectile NOT worn. -- for non-clothing wearables.
 
   END VERB throw.
 END ADD TO.
@@ -7844,8 +7854,17 @@ ADD TO EVERY OBJECT
         ELSE SAY check_obj_suitable_at OF my_game.
       AND projectile <> target
         ELSE SAY check_obj_not_obj2_at OF my_game.
+-- >>> dev-clothing: TWEAKED >>> VERB attack
       AND target NOT IN hero
-        ELSE SAY check_obj2_not_in_hero1 OF my_game.
+        ELSE
+          IF target IS NOT worn
+            THEN SAY my_game:check_obj_not_in_hero1.
+            ELSE SAY my_game:check_obj_not_in_worn2.
+          END IF.
+-- >>> original code >>>
+    --AND target NOT IN hero
+    --  ELSE SAY check_obj2_not_in_hero1 OF my_game.
+-- <<< original code <<<
       AND target <> hero
         ELSE SAY check_obj2_not_hero1 OF my_game.
       AND CURRENT LOCATION IS lit
@@ -7880,6 +7899,8 @@ ADD TO EVERY OBJECT
              SAY implicit_taking_message OF my_game.
       END IF.
       -- <<< implicit take <<<
+      -- >>> dev-clothing: ADDED >>>
+      MAKE projectile NOT worn. -- for non-clothing wearables.
 
       IF target IS inanimate
         THEN
@@ -7958,8 +7979,10 @@ ADD TO EVERY OBJECT
         ELSE SAY check_obj_suitable_at OF my_game.
       AND projectile <> recipient
         ELSE SAY check_obj_not_obj2_to OF my_game.
-      AND recipient NOT IN hero
-        ELSE SAY check_obj2_not_in_hero1 OF my_game.
+-- >>> dev-clothing: DELETED >>> actors can't be IN HERO!
+--                   see: https://github.com/AnssiR66/AlanStdLib/issues/46
+    --AND recipient NOT IN hero
+    --  ELSE SAY check_obj2_not_in_hero1 OF my_game.
       AND recipient <> hero
         ELSE SAY check_obj2_not_hero1 OF my_game.
       AND CURRENT LOCATION IS lit
@@ -7987,11 +8010,12 @@ ADD TO EVERY OBJECT
           END IF.
 
     DOES
+-- >>> dev-clothing: TWEAKED >>> suppress implicit take
       -- >>> implicit take >>>
-      IF projectile NOT DIRECTLY IN hero
-        THEN LOCATE projectile IN hero.
-          SAY implicit_taking_message OF my_game.
-      END IF.
+   -- IF projectile NOT DIRECTLY IN hero
+   --   THEN LOCATE projectile IN hero.
+   --     SAY implicit_taking_message OF my_game.
+   -- END IF.
       -- <<< implicit take <<<
 
       "It wouldn't accomplish anything trying to throw"
@@ -8043,8 +8067,17 @@ ADD TO EVERY OBJECT
         ELSE SAY check_obj_not_obj2_in OF my_game.
       AND cont <> hero
         ELSE SAY check_obj2_not_hero1 OF my_game.
+-- >>> dev-clothing: TWEAKED >>> VERB attack
       AND cont NOT IN hero
-        ELSE SAY check_obj2_not_in_hero1 OF my_game.
+        ELSE
+          IF cont IS NOT worn
+            THEN SAY my_game:check_obj_not_in_hero1.
+            ELSE SAY my_game:check_obj_not_in_worn2.
+          END IF.
+-- >>> original code >>>
+    --AND cont NOT IN hero
+    --  ELSE SAY check_obj2_not_in_hero1 OF my_game.
+-- <<< original code <<<
       AND CURRENT LOCATION IS lit
         ELSE SAY check_current_loc_lit OF my_game.
       AND projectile NOT IN cont
@@ -8088,11 +8121,12 @@ ADD TO EVERY OBJECT
           END IF.
 
     DOES
+-- >>> dev-clothing: TWEAKED >>> suppress implicit take
       -- >>> implicit take >>>
-      IF projectile NOT DIRECTLY IN hero
-        THEN LOCATE projectile IN hero.
-          SAY implicit_taking_message OF my_game.
-      END IF.
+    --IF projectile NOT DIRECTLY IN hero
+    --  THEN LOCATE projectile IN hero.
+    --    SAY implicit_taking_message OF my_game.
+    --END IF.
       -- <<< implicit take <<<
 
       "It wouldn't accomplish anything trying to throw"
@@ -8215,11 +8249,12 @@ ADD TO EVERY THING
           END IF.
 
     DOES
+-- >>> dev-clothing: TWEAKED >>> suppress implicit take
       -- >>> implicit take >>>
-      IF obj NOT DIRECTLY IN hero
-        THEN LOCATE obj IN hero.
-             SAY implicit_taking_message OF my_game.
-      END IF.
+    --IF obj NOT DIRECTLY IN hero
+    --  THEN LOCATE obj IN hero.
+    --       SAY implicit_taking_message OF my_game.
+    --END IF.
       -- <<< implicit take <<<
 
       "It's not possible to tie" SAY THE obj. "to" SAY THE target. "."

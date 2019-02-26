@@ -17,7 +17,7 @@ clothing item.
 Outside Emporium Alani
 You're standing in front of the Giorgio Alani Emporium entrance. Two
 large brass doors await northward your entrance into the sanctuary of
-fashion consumism.
+fashion consumism. 
 
 > ; ******************************************************************************
 > ; *                                                                            *
@@ -202,7 +202,7 @@ You'll have to take off your sneakers first.
 > ; TEST: 'THROW AT' (IND WORN)
 > ; ------------------------------------------------------------------------------
 > throw wallet at boxers
-You are carrying your boxers.
+It doesn't make sense to throw something you're wearing.
 
 > ; ------------------------------------------------------------------------------
 > ; TEST: 'THROW IN' (CONTAINER)
@@ -214,7 +214,7 @@ You'll have to take off your sneakers first.
 > ; TEST: 'THROW IN' (WORN CONTAINER)
 > ; ------------------------------------------------------------------------------
 > throw wallet in sneakers
-You are carrying your sneakers.
+It doesn't make sense to throw something you're wearing.
 
 > ; ==============================================================================
 > ; GIVING
@@ -283,11 +283,11 @@ The assistant gives the uniform to you.
 > ; //// CHECK 'NOT worn' (OK!): ////
 > DBG_CLOTHES uniform
 'uniform' VALUES: | topcover: 8 | botcover: 32 | NOT blockslegs | 
-WORN: Yes (by hero)
+WORN: No
 
 > inventory
-You are carrying your wallet. You are wearing a uniform, your socks, your 
-boxers and your sneakers.
+You are carrying a uniform and your wallet. You are wearing your socks, 
+your boxers and your sneakers.
 
 > ; ==============================================================================
 > ; TAKING
@@ -340,8 +340,8 @@ Taken.
 > ; ATTACKING/KICKING
 > ; ==============================================================================
 > inventory
-You are carrying a gun, a pair of fashion boots and your wallet. You are
-wearing a uniform, your socks, your boxers and your sneakers.
+You are carrying a gun, a uniform, a pair of fashion boots and your wallet
+. You are wearing your socks, your boxers and your sneakers.
 
 > ; ------------------------------------------------------------------------------
 > ; TEST: 'ATTACK' -> WORN BY HERO

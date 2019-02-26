@@ -32,8 +32,10 @@ This temporary document annotates all the tasks of the development stages to fix
         - [Verbs Referencing `worn`](#verbs-referencing-worn)
     - [Handling Worn Items](#handling-worn-items)
         - [Block Verbs on `clothing`](#block-verbs-on-clothing)
+        - [Verbs That Could Dislocate Worn Items](#verbs-that-could-dislocate-worn-items)
     - [Implicit Taking](#implicit-taking)
         - [List of Verbs With Implicit Take](#list-of-verbs-with-implicit-take)
+        - [Suppress Implicit Taking](#suppress-implicit-taking)
 
 <!-- /MarkdownTOC -->
 
@@ -274,11 +276,18 @@ The various library-defined runtime MESSAGES must also be tweaked now that the `
 These general verbs must also be adapted for they contain references to the `worn` entity.
 
 - [x] `lib_verbs.i`:
-    + [x] `attack`
-    + [x] `attack_with`
-    + [x] `drop`
-    + [x] `i` (inventory)
-    + [x] `kick`
+    + [x] `attack`:
+        * removed CHECK `target NOT IN hero` and tweaked CHECK `target NOT IN hero` to distinguish between carried and worn.
+    + [x] `attack_with`:
+        * removed CHECK `target NOT IN hero` and tweaked CHECK `target NOT IN hero` to distinguish between carried and worn.
+    + [x] `drop`:
+        * removed from CHECK the `IF obj IN worn` part.
+        * added CHECK `AND obj IS NOT worn` for non-clothing wearables.
+    + [x] `i` (inventory):
+        * removed reference to `worn` entity.
+        * implemented custom loops to list carried and worn items.
+    + [x] `kick`:
+        * removed CHECK `target NOT IN hero` and tweaked CHECK `target NOT IN hero` to distinguish between carried and worn.
     + [x] `shoot`
     + [x] `shoot_with`
     + [x] `take`
@@ -322,14 +331,24 @@ We need also to take into account any implicit taking action which might affect 
 
 The following verbs have been implemented on `clothing` class to allow CHECKS that prevent their execution with `worn` clothing items.
 
-- [x] `put_in`
-- [x] `put_on`
+- [x] `put_in` (container)
+- [x] `put_on` (supporter)
 - [x] `give`
 - [x] `throw`
 - [x] `throw_at`
 - [x] `throw_to`
 - [x] `throw_in`
 - [x] `tie_to`
+
+### Verbs That Could Dislocate Worn Items
+
+In `lib_verbs.i`, if the action succeeds for the following verbs we must still set the dislocated item as `NOT worn` (even though the CHECKS on `clothing` for the same verbs prevent the action with worn `clothing` items) because authors might implement non-clothing wearables:
+
+- [x] `ask_for`
+- [x] `give`
+- [x] `put_in` (container)
+- [x] `put_on` (supporter)
+- [x] `throw`
 
 ## Implicit Taking
 
@@ -342,7 +361,7 @@ To simplify work, every implicit take code in the library should be enclosed wit
 -- <<< implicit take <<<
 ```
 
-- [ ] Mark with comments all implicit take occurences in the library sources.
+- [x] Mark with comments all implicit take occurences in the library sources.
 
 ### List of Verbs With Implicit Take
 
@@ -373,6 +392,22 @@ This is the list of all verbs which contain implicit taking:
     + `throw_to`
     + `throw_in`
     + `tie_to`
+
+### Suppress Implicit Taking
+
+In the following verbs, which are more like placeholders for authors, because they don't complete the action by default, implicit taking was commented out. The reason being that since the action is prevented, it doesn't make much sense to carry out the implicit taking either.
+
+Since authors will have to override such verbs in their own adventures (via `DOES ONLY`, on classes or instances) in order for them to do something meaningful, they'll have to handle implicit taking anyhow, as well as setting to `NOT worn` any object dislocated by them.
+
+- [x] `throw_to`
+- [x] `throw_in`
+- [x] `tie_to`
+
+In these verbs the action either is always carried out or it's carried out in some conditions, either way the implicit taking must be honored and the moved object set to `NOT worn`:
+
+- [x] `throw`
+- [x] `throw_at`
+
 
 <!-----------------------------------------------------------------------------
                                REFERENCE LINKS                                
