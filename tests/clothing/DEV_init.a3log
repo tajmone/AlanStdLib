@@ -34,9 +34,8 @@ fashion consumism.
 > ; HERO'S CLOTHING
 > ; ==============================================================================
 > inventory
-You are carrying your undershirt (being worn), your sneakers (being worn), 
-your khakis (being worn), your boxers (being worn) and your socks (being
-worn).
+You are empty-handed. You are wearing your socks, your boxers, your 
+undershirt, your sneakers and your khakis.
 
 > ; /// CHECK ITEMS ARE DONNED: (OK!) ///
 > DBG_CLOTHES boxers

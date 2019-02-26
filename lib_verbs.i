@@ -3389,13 +3389,55 @@ VERB i
   CHECK my_game CAN i
     ELSE SAY restricted_response OF my_game.
 
+-- >>> dev-clothing: TWEAKED >>> VERB i (inventory)
   DOES
-    LIST hero.
-
--- >>> dev-clothing: FIXME >>> VERB i (inventory)
-    IF COUNT DIRECTLY IN worn > 0   -- See the file 'classes.i', subclass 'clothing'.
-      THEN LIST worn.     -- This code will list what the hero is wearing.
+    -- ------------------
+    -- List carried items
+    -- ------------------
+    SET my_game:temp_cnt TO COUNT IsA object, IS NOT donned, DIRECTLY IN hero.
+    IF  my_game:temp_cnt = 0
+      THEN "You are empty-handed."
+      ELSE
+        "You are carrying"
+        FOR EACH carried_item IsA object, IS NOT donned, DIRECTLY IN hero
+          DO
+            SAY AN carried_item.
+            DECREASE my_game:temp_cnt.
+            DEPENDING ON my_game:temp_cnt
+              = 1 THEN "and"
+              = 0 THEN "."
+              ELSE ","
+            END DEPEND.
+        END FOR.
     END IF.
+    -- ------------------------
+    -- List worn clothing items
+    -- ------------------------
+    -- Don't say anything if the Hero is not wearing anything.
+    SET my_game:temp_cnt TO COUNT IsA clothing, DIRECTLY IN hero, IS donned.
+    IF  my_game:temp_cnt <> 0
+      THEN
+        SAY my_game:hero_worn_header. --> "You are wearing"
+        FOR EACH worn_item IsA clothing, DIRECTLY IN hero, IS donned
+          DO
+            SAY AN worn_item.
+            DECREASE my_game:temp_cnt.
+            DEPENDING ON my_game:temp_cnt
+              = 1 THEN "and"
+              = 0 THEN "."
+              ELSE ","
+            END DEPEND.
+        END FOR.
+    END IF.
+
+
+-- >>> original code >>>
+    -- LIST hero.
+
+    -- IF COUNT DIRECTLY IN worn > 0   -- See the file 'classes.i', subclass 'clothing'.
+    --   THEN LIST worn.     -- This code will list what the hero is wearing.
+    -- END IF.
+-- <<< original code <<<
 
 END VERB i.
 

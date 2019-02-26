@@ -14,8 +14,11 @@ This temporary document annotates all the tasks of the development stages to fix
 - [Introduction](#introduction)
     - [Sources Annotations](#sources-annotations)
     - [Keep Original Code](#keep-original-code)
-- [Development Steps](#development-steps)
     - [Dedicated Tests](#dedicated-tests)
+- [Development Steps Overwiew](#development-steps-overwiew)
+    - [New System Implementation](#new-system-implementation)
+    - [Post-Implementation Fixes](#post-implementation-fixes)
+    - [Pre-Merge Cleanup](#pre-merge-cleanup)
 - [Tasks List](#tasks-list)
     - [Tests](#tests)
         - [Debug Module](#debug-module)
@@ -61,23 +64,6 @@ Also, I'll be keeping a commented-out copy of the original code next to any twea
 Again, these will be deleted before merging into `master` branch.
 
 
-# Development Steps
-
-The following list resumes the overall steps required to implement the new system.
-
-- [ ] Dispose of the `worn` entity and the `wearing` set, and use instead just the `donned` boolean attribute (which shall ultimately be renamed to `worn`).
-- [ ] Ensure that nested clothes are never considered as being worn.
-- [ ] List separately carried and worn items by actors, for both Hero (via 'inventory') and NPCs (via 'examine actor').
-- [x] When the verbs `wear`/`remove` fail, report only the blocking items (instead of the full list of worn items).
-- [x] Remove hard-coded handling of special clothes like coats and skirts, and allow authors to implement those via some new (optional) clothing attributes: `blockslegs` and `twopiecess`.
-- [x] Allow authors to free number clothing layers, instead of imposing exponential layering (2, 4, 8, 16, 32, 64).
-- [x] Add new clothing attribute `facecover` to allow handling goggles, beards, masks, etc., independently from `headcover`.
-- [ ] Establish some rules on how the library should handle verbs that might interact with a worn clothing item (including implicit taking), then enforce them in the library vers, and provide clear guidelines for authors so that they might create custom verbs that comply to these guidelines and won't interfere with worn clothing.
-
-
-The details of each step are covered in the Tasks Lists sections below.
-
-
 ## Dedicated Tests
 
 All testing will be done against the (already existing) `tests/clothing/ega.alan` adventure file. Some tweaks to the EGA source will be required in order to allow testing the new clothing system, but that's fine for EGA will still be the reference test adventure for clothing after the new system will be in place. 
@@ -88,11 +74,43 @@ I'll add a separate subset of tests in the `tests/clothing/` folder, using the `
     + [`ega.alan`][ega.alan] — "Emporium Alani" adventure for clothing tests.
     + [`DEV.bat`][DEV.bat] — execute a subset of tests dedicated to development:
         * [`DEV_init.a3log`][DEV_init.a3log]/[`.a3sol`][DEV_init.a3sol] — test clothing initialization.
+        * [`DEV_inventory.a3log`][DEV_inventory.a3log]/[`.a3sol`][DEV_inventory.a3sol] — test how `inventory` and `examine actor` are handling separate lists of carried and worn.
         * [`DEV_skirts.a3log`][DEV_skirts.a3log]/[`.a3sol`][DEV_skirts.a3sol] — test special clothes: skirts, coats, bikinis, etc.
         * [`DEV_wear_remove.a3log`][DEV_wear_remove.a3log]/[`.a3sol`][DEV_wear_remove.a3sol] — general purpose tests for `wear`/`remove`.
 
 At a later stage, when the clothing code revision work is complete, I'll start to run the original tests too, to confirm that the original problems are solved. In some cases, this will require adpating the original commands scripts to the new system or the tweaks done to the EGA adventure in the meantime. Before merging into `master` branch, the separate tests can either be stripped of the `DEV_` prefix and preserved, or just deleted if redundant.
 
+
+# Development Steps Overwiew
+
+The following list resumes the overall steps required to implement the new system. The details of each step are covered in the Tasks Lists sections below.
+
+## New System Implementation
+
+- [ ] Dispose of the `worn` entity and the `wearing` set, and use instead just the `donned` boolean attribute (which shall ultimately be renamed to `worn`).
+- [ ] Ensure that nested clothes are never considered as being worn.
+- [ ] List separately carried and worn items by actors, for both Hero (via 'inventory') and NPCs (via 'examine actor').
+- [x] When the verbs `wear`/`remove` fail, report only the blocking items (instead of the full list of worn items).
+- [x] Remove hard-coded handling of special clothes like coats and skirts, and allow authors to implement those via some new (optional) clothing attributes: `blockslegs` and `twopiecess`.
+- [x] Allow authors to free number clothing layers, instead of imposing exponential layering (2, 4, 8, 16, 32, 64).
+- [x] Add new clothing attribute `facecover` to allow handling goggles, beards, masks, etc., independently from `headcover`.
+- [ ] Establish some rules on how the library should handle verbs that might interact with a worn clothing item (including implicit taking), then enforce them in the library vers, and provide clear guidelines for authors so that they might create custom verbs that comply to these guidelines and won't interfere with worn clothing.
+
+## Post-Implementation Fixes
+
+After the new system is in place, the old code, tests and documents need to be adapated accordingly.
+
+- [ ] __TESTS__ — Command scripts of the original tests will need to be tweaked to mirror the new changes, some tests might no longer be needed and can be deleted.
+- [ ] __COMMENTED DOCUMENTATION__ — Comments in the library sources documenting need to be revised so they mirror the new system.
+- [ ] __DOCUMENTS__ — READMEs and documentation files must also be revised to reflect library changes.
+
+## Pre-Merge Cleanup
+
+Once everything is ready to be merged into `master` branch, all commented dev annotations in the sources should be removed, and temporary documents and files too.
+
+- [ ] Remove all the `-- >>> dev-clothing` comments and `-- >>> original code >>>` commented out code.
+
+-------------------------------------------------------------------------------
 
 # Tasks List
 
@@ -213,10 +231,22 @@ Obviously, changes to the `wear` and `remove` verbs in `lib_classes.i` are centr
 
 When taking inventory or examining actors, the library should produce two separate lists for carried and worn items. Also, these verbs should produce a "not wearing anything" message for it adds verbosity and would be intrusive in adventures that don't employ clothing. When examining NPCs, the "empty handed" message should not be produced either, to reduce verbosity (it's implicit) and prevent complications in adventures that don't implement NPCs carrying possesions.
 
-- [ ] `lib_verbs.i`:
-    + [ ] `i` (inventory)
+- [x] `lib_verbs.i`:
+    + [x] `i` (inventory)
+        * [x] Produce separate lists of carried/worn via custom loops.
+        * [x] Don't report that Hero is not wearing anything.
 - [ ] `lib_classes.i`:
     + [ ] `examine` (on `actor`)
+        * [ ] Produce separate lists of carried/worn via custom loops.
+        * [ ] Don't report that actor is empty handed.
+        * [ ] Don't report that actor is not wearing anything.
+
+The various library-defined runtime MESSAGES must also be tweaked now that the `worn` entity will be removed:
+
+- [ ] `lib_messages.i` — fix references to `worn` entity:
+    + [ ] `CONTAINS_COMMA`
+    + [ ] `CONTAINS_AND`
+    + [ ] `CONTAINS_END`
 
 
 ### Verbs Referencing `worn`
@@ -253,6 +283,8 @@ These general verbs must also be adapted for they contain references to the `wor
 [DEV_skirts.a3sol]: ./tests/clothing/DEV_skirts.a3sol "View source"
 [DEV_wear_remove.a3log]: ./tests/clothing/DEV_wear_remove.a3log "View source"
 [DEV_wear_remove.a3sol]: ./tests/clothing/DEV_wear_remove.a3sol "View source"
+[DEV_inventory.a3log]: ./tests/clothing/DEV_inventory.a3log "View source"
+[DEV_inventory.a3sol]: ./tests/clothing/DEV_inventory.a3sol "View source"
 
 <!-- Alan Builds -->
 
