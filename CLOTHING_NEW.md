@@ -38,15 +38,15 @@ Here's how the new clothing system works, with some notes on how it differs from
 
 ## Clothing and Wearability
 
-The worn status of any wearable item is controlled by the `donned` boolean attribute only (available on `thing` class).
+The worn status of any wearable item is controlled by the `worn` boolean attribute only (available on `thing` class).
 
 The criteria to distinguish between worn and not-worn items is simple:
 
-- Any `clothing IS donned DIRECLY IN` an actor is a worn item.
+- Any `clothing IS worn DIRECLY IN` an actor is a worn item.
 - Any `clothing INDIRECLY IN` an actor _can not be_ a worn item.
-- Any  `clothing DIRECLY IN` an actor might be a worn item or not, depending on the value of its `donned` attribute.
+- Any  `clothing DIRECLY IN` an actor might be a worn item or not, depending on the value of its `worn` attribute.
 
-Therefore, in the new system is sufficient to ensure that any verb (or event or script) that _might_ dislocate clothing items outside an actor also sets the dislocated item as `NOT donned` — if the item is not of a wearable type it doesn't matter, for non clothing items should be set to `NOT donned` anyhow.
+Therefore, in the new system is sufficient to ensure that any verb (or event or script) that _might_ dislocate clothing items outside an actor also sets the dislocated item as `NOT worn` — if the item is not of a wearable type it doesn't matter, for non clothing items should be set to `NOT worn` anyhow.
 
 It's important to notice here that, although the library only offers werables of `clothing` type, the new system introduces a general concept of 'wearability', which extends also to other types of wearables which authors might implement. 
 
@@ -56,22 +56,22 @@ The library redefines many verbs on the `clothing` class to ensure that clothing
 
 The new system allows authors to easily implement wearables which are not of the `clothing` class. For example, authors might wish to extend the `device` class to implement wearable gadgets (eg, VR googles, headphones) or other types of wearables.
 
-The `donned` attribute is defined on the `thing` class instead of the `clothing` class because:
+The `worn` attribute is defined on the `thing` class instead of the `clothing` class because:
 
 1. It allows implementing CHECKS on any verb.
 2. Authors might implement non-clothing wearable object in their adventures.
 
-In view of possible author-defined wearables, the Library also ensures that any of its built-in verbs that move around objects always set them to `NOT donned`. This means that authors implementing custom wearables won't have to worry about library verbs mishandling worn objects status.
+In view of possible author-defined wearables, the Library also ensures that any of its built-in verbs that move around objects always set them to `NOT worn`. This means that authors implementing custom wearables won't have to worry about library verbs mishandling worn objects status.
 
 Obviously, when implement custom wearable types, authors are better off implementing some new class for them and override on the new class many of the base library verbs, just like the library does with `clothing`. 
 
 ## Working With Clothes in Adventures
 
-Now, to create worn items in an adventure, authors only need to locate the clothing instance directly in the wearing actor and set it to `donned`:
+Now, to create worn items in an adventure, authors only need to locate the clothing instance directly in the wearing actor and set it to `worn`:
 
 ```alan
 THE shoes IsA clothing IN hero.
-  IS donned.
+  IS worn.
 ```
 
 ## Layered Clothing

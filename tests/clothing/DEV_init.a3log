@@ -40,23 +40,23 @@ undershirt, your sneakers and your khakis.
 > ; /// CHECK ITEMS ARE DONNED: (OK!) ///
 > DBG_CLOTHES boxers
 'boxers' VALUES: | botcover: 2 | 
-DONNED: Yes (by hero)
+WORN: Yes (by hero)
 
 > DBG_CLOTHES khakis
 'khakis' VALUES: | botcover: 16 | 
-DONNED: Yes (by hero)
+WORN: Yes (by hero)
 
 > DBG_CLOTHES sneakers
 'sneakers' VALUES: | feetcover: 4 | 
-DONNED: Yes (by hero)
+WORN: Yes (by hero)
 
 > DBG_CLOTHES socks
 'socks' VALUES: | feetcover: 2 | 
-DONNED: Yes (by hero)
+WORN: Yes (by hero)
 
 > DBG_CLOTHES undershirt
 'undershirt' VALUES: | topcover: 2 | 
-DONNED: Yes (by hero)
+WORN: Yes (by hero)
 
 > ; ------------------------------------------------------------------------------
 > ; NESTED CLOTHES
@@ -71,7 +71,7 @@ It's your kippah. You always carry it around with you.
 > ; /// CHECK NESTED ITEM IS NOT DONNED: (OK!) ///
 > DBG_CLOTHES kippah
 'kippah' VALUES: (none) 
-DONNED: No
+WORN: No
 
 > ; ==============================================================================
 > ; NPCS' CLOTHING
@@ -91,11 +91,11 @@ and a pair of fashion boots.
 
 > DBG_CLOTHES boots
 'fashion boots' VALUES: | feetcover: 4 | 
-DONNED: Yes (by assistant)
+WORN: Yes (by assistant)
 
 > DBG_CLOTHES uniform
 'uniform' VALUES: | topcover: 8 | botcover: 32 | NOT blockslegs | 
-DONNED: Yes (by assistant)
+WORN: Yes (by assistant)
 
 > 
 

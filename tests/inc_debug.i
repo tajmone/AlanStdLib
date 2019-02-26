@@ -106,11 +106,11 @@ ADD TO EVERY clothing
           END IF.
           "|"
       END IF.
-      ------------------------
-      -- Show if donned or not
-      ------------------------
-      "$nDONNED:"
-      IF obj IS NOT donned
+      ---------------------------
+      -- Show if it's worn or not
+      ---------------------------
+      "$nWORN:"
+      IF obj IS NOT worn
         THEN "No"
         ELSE "Yes"
           -------------------------------

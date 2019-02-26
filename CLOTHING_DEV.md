@@ -92,7 +92,7 @@ The following list resumes the overall steps required to implement the new syste
 ## New System Implementation
 
 - [x] Dispose of the `worn` entity and the `wearing` set, and use instead just the `donned` boolean attribute.
-- [ ] Renamed the `donned` attribute to `worn`.
+- [x] Renamed the `donned` attribute to `worn`.
 - [ ] Ensure that nested clothes are never considered as being worn.
 - [ ] List separately carried and worn items by actors, for both Hero (via 'inventory') and NPCs (via 'examine actor').
 - [x] When the verbs `wear`/`remove` fail, report only the blocking items (instead of the full list of worn items).
@@ -141,7 +141,7 @@ Here are the various tasks list for shifting to the new clothing system, largely
     + [x] __UNDRESS VERB__ — Tweak it to work with new system (no use of `worn` or `wearing`).
     + [x] __WORN CLOTHES__ — Adapt code relating to worn items:
         * [x] __HERO__: Locate item `IN hero` instead of `worn`.
-        * [x] __ALL ACTORS__: Set item as `donned`.
+        * [x] __ALL ACTORS__: Set item as `worn`.
     + [x] __FIX SPECIAL CLOTHES__ — Use new `blockslegs`, `twopieces` and `facecover` attributes in existing clothes:
         * [x] skirt (`NOT blockslegs`)
         * [x] dress (`NOT blockslegs`)
@@ -186,17 +186,17 @@ Add new attributes on `clothing` class:
 
 ## Dispose of `worn` and `wearing`
 
-Before actually removing the `worn` entity and the `wearing` set from the library code, and use instead just the `donned` boolean attribute (which will be renamed to `worn`) any references to them (in VERBs, EVENTs, etc.) must be subsituted with the new system. This will require a gradual approach, starting with the `clothing` class initialization and the `wear` and `remove` verbs, and then dealing with the `i` (inventory) verb, and then adapting every other verb that references `worn` and `wearing`.
+Before actually removing the `worn` entity and the `wearing` set from the library code, and use instead just the `worn` boolean attribute (which will be renamed to `worn`) any references to them (in VERBs, EVENTs, etc.) must be subsituted with the new system. This will require a gradual approach, starting with the `clothing` class initialization and the `wear` and `remove` verbs, and then dealing with the `i` (inventory) verb, and then adapting every other verb that references `worn` and `wearing`.
 
-- [x] __MOVE `donned` ON `thing`__ — The `donned` attribute must be made available on the `thing` class, not just on `clothing`, fro two reasons:
+- [x] __MOVE `donned` ON `thing`__ — The `donned` attribute (now `worn`) must be made available on the `thing` class, not just on `clothing`, fro two reasons:
     1. Allow to carry out checks in syntaxes of verbs that might affect worn items.
     1. Enable authors to implement non-clothing wearables (eg. wearable `device`s like VR goggles).
 - [ ] __CLOTHING INITIALIZATION__ — Tweak initialization of `clothing`:
-    + [x] Comment out the code that iterates every ACTOR to see if the clothing instance is in its  `wearing` set in order to make it `donned` and, in case of the Hero, move it to `worn`. None of this is any longer necessary, for a clothing items only needs to be DIRECTLY IN an ACTOR and `IS donned` for it to be worn by the actor.
+    + [x] Comment out the code that iterates every ACTOR to see if the clothing instance is in its `wearing` set in order to make it `donned` and, in case of the Hero, move it to `worn`. None of this is any longer necessary, for a clothing items only needs to be DIRECTLY IN an ACTOR and `IS worn` for it to be worn by the actor.
     + [x] Suppress scheduling the `worn_clothing_check` EVENT. That's no longer required.
 - [ ] __EVENT `worn_clothing_check`__:
     + [x] Commented out the whole event for it's no longer strictly required.
-    + [ ] Now that the loop bug was fixed in Alan, we could use the event to check that any clothing item `INDIRECTLY IN HERO` is set to `NOT donned`. Although this should never happen due to Library verbs (which will now handle carefully the `donned` attribute in _any_ transferred thing), chances are that authors-created verbs in an adventure might not be handling these subtle cases correctly, and this event might help them.
+    + [ ] Now that the loop bug was fixed in Alan, we could use the event to check that any clothing item `INDIRECTLY IN HERO` is set to `NOT worn`. Although this should never happen due to Library verbs (which will now handle carefully the `worn` attribute in _any_ transferred thing), chances are that authors-created verbs in an adventure might not be handling these subtle cases correctly, and this event might help them.
     
         > __NOTE__ — I haven't implement such checks in the Italian library, partly due to the bug, partly because I didn't see it as strictly necessary; still, all clothing tests passed without problems.
 
@@ -298,7 +298,7 @@ into a single CHECK that distinguished between carried and worn items:
 ```alan
     AND target NOT IN hero
       ELSE
-        IF target IS NOT donned
+        IF target IS NOT worn
           THEN SAY my_game:check_obj_not_in_hero1.
           ELSE SAY my_game:check_obj_not_in_worn2.
         END IF.
@@ -308,11 +308,11 @@ into a single CHECK that distinguished between carried and worn items:
 
 ### Handling Worn Items
 
-All verbs which can dislocate an object (clothing or otherwise) from an actor should always set the dislocated object to `NOT donned`.
+All verbs which can dislocate an object (clothing or otherwise) from an actor should always set the dislocated object to `NOT worn`.
 
 The logic behind this is that, although such verbs will be prevented to act on `clothing` instances via CHECKS for the same verbs on the `clothing` class, we must still cater for non-clothing wearables (eg. wearable devices) which might be implement by authors in their adventures.
 
-Setting to `NOT donned` an object which has been moved around is always a safe action, for the item couldn't be possibly be worn after the action. If the object is not a wearable, then no harm is done (as non-wearable should always be `NOT donned` anywhow).
+Setting to `NOT worn` an object which has been moved around is always a safe action, for the item couldn't be possibly be worn after the action. If the object is not a wearable, then no harm is done (as non-wearable should always be `NOT worn` anywhow).
 
 We need also to take into account any implicit taking action which might affect worn items.
 

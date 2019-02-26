@@ -44,7 +44,7 @@ MESSAGE
         -- the following snippet adds "(being worn)" after all
         -- pieces of clothing worn by an NPC, at 'x [actor]'
 -- >>> dev-clothing: TWEAKED >>> MESSAGES referencing worn
-        IF parameter1 IS donned
+        IF parameter1 IS worn
           THEN "(being worn)"
         END IF.
     END IF.
@@ -55,7 +55,7 @@ MESSAGE
         -- the following snippet adds "(being worn)" after all
         -- pieces of clothing worn by an NPC, after 'x [actor]'
 -- >>> dev-clothing: TWEAKED >>> MESSAGES referencing worn
-        IF parameter1 IS donned
+        IF parameter1 IS worn
           THEN "(being worn)"
         END IF.
     END IF. "and"
@@ -65,7 +65,7 @@ MESSAGE
         -- the following snippet adds "(being worn)" after all
         -- pieces of clothing worn by an NPC, after 'x [actor]'
 -- >>> dev-clothing: TWEAKED >>> MESSAGES referencing worn
-        IF parameter1 IS donned
+        IF parameter1 IS worn
           THEN "(being worn)"
         END IF.
     END IF. "."

@@ -189,12 +189,12 @@ THE dressing_room IsA room.
     DOES ONLY
      -- IF COUNT DIRECTLY IN worn, ISA CLOTHING > 0
       --   THEN EMPTY worn IN hero.
-      IF COUNT IsA clothing, DIRECTLY IN hero, IS donned > 0
+      IF COUNT IsA clothing, DIRECTLY IN hero, IS worn > 0
          THEN
           "You remove all the items you were wearing."
-          FOR EACH worncl IsA clothing, DIRECTLY IN Hero, IS donned
+          FOR EACH worncl IsA clothing, DIRECTLY IN Hero, IS worn
             DO
-              MAKE worncl NOT donned.
+              MAKE worncl NOT worn.
               LOCATE worncl AT CURRENT LOCATION.
           END FOR.
         ELSE "You're not wearing anything you can remove."
@@ -672,7 +672,7 @@ THE personal_assistant IsA female AT ega_hall.
 -- >>> dev-clothing: TWEAKED >>> EGA: clothing INITIALIZE (don't use 'wearing')
     FOR EACH cl IsA clothing, IN THIS
       DO
-        MAKE cl donned.
+        MAKE cl worn.
         -- INCLUDE cl IN wearing OF THIS.
     END FOR.
 END THE personal_assistant.
@@ -936,7 +936,7 @@ END THE.
 -- >>> dev-clothing: TWEAKED >>> EGA: Hero clothing (don't use 'worn')
 
 THE hero_socks IsA cl_socks IN hero.
-  IS donned.
+  IS worn.
   NAME socks.
   NAME my white socks.
   INDEFINITE ARTICLE "your"
@@ -947,7 +947,7 @@ THE hero_socks IsA cl_socks IN hero.
 END THE hero_socks.
 
 THE hero_boxers IsA cl_underpants IN hero.
-  IS donned.
+  IS worn.
   NAME boxers.
   NAME my white boxers.
   INDEFINITE ARTICLE "your"
@@ -956,7 +956,7 @@ THE hero_boxers IsA cl_underpants IN hero.
 END THE hero_boxers.
 
 THE hero_undershirt IsA cl_undershirt IN hero.
-  IS donned.
+  IS worn.
   NAME undershirt.
   NAME my white undershirt.
   INDEFINITE ARTICLE "your"
@@ -965,7 +965,7 @@ THE hero_undershirt IsA cl_undershirt IN hero.
 END THE.
 
 THE hero_shoes IsA cl_shoes IN hero.
-  IS donned.
+  IS worn.
   NAME sneakers.
   NAME my black converse sneakers.
   INDEFINITE ARTICLE "your"
@@ -979,7 +979,7 @@ END THE.
 
 
 THE hero_trousers IsA proto_trousers IN hero.
-  IS donned.
+  IS worn.
   NAME khakis.
   NAME my khakis.
   NAME khaki pants.

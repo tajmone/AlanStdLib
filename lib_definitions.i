@@ -85,14 +85,15 @@ ADD TO EVERY THING
 
 -- >>> dev-clothing: ADDED >>> THING: 'donned' attribute.
 --      The 'donned' attribute was moved from 'clothing' class to 'thing'.
+--      Now renamed to 'worn'.
 
-  IS NOT donned.
+  IS NOT worn.
     -- (for 'clothing' instances) it's not worn by any actor.
     -- -------------------------------------------------------------------------
     -- NOTE: Authors can also use this attribute to implement non-clothing type
     --       of wearables (eg. devices). The library ensures that any verbs
     --       which could remove a thing from an actor also set the thing as 
-    --       'NOT donned', in case authors are using this attribute outside of
+    --       'NOT worn', in case authors are using this attribute outside of
     --       the 'clothing' class context.
     -- -------------------------------------------------------------------------
 -- <<< dev-clothing <<< 

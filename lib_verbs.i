@@ -493,7 +493,7 @@ ADD TO EVERY THING
 -- >>> dev-clothing: TWEAKED >>> VERB attack
     AND target NOT IN hero
       ELSE
-        IF target IS NOT donned
+        IF target IS NOT worn
           THEN SAY my_game:check_obj_not_in_hero1.
           ELSE SAY my_game:check_obj_not_in_worn2.
         END IF.
@@ -580,7 +580,7 @@ ADD TO EVERY THING
 -- >>> dev-clothing: TWEAKED >>> VERB attack
     AND target NOT IN hero
       ELSE
-        IF target IS NOT donned
+        IF target IS NOT worn
           THEN SAY my_game:check_obj_not_in_hero1.
           ELSE SAY my_game:check_obj_not_in_worn2.
         END IF.
@@ -1994,7 +1994,7 @@ ADD TO EVERY OBJECT
   --        END IF.
 -- <<< original code <<<
 -- >>> dev-clothing: ADDED >>>
-    AND obj IS NOT donned -- protect non-clothing wearables
+    AND obj IS NOT worn -- protect non-clothing wearables
       ELSE SAY check_obj_not_in_worn3 OF my_game.
 
     DOES
@@ -3416,12 +3416,12 @@ VERB i
     -- ------------------
     -- List carried items
     -- ------------------
-    SET my_game:temp_cnt TO COUNT IsA object, IS NOT donned, DIRECTLY IN hero.
+    SET my_game:temp_cnt TO COUNT IsA object, IS NOT worn, DIRECTLY IN hero.
     IF  my_game:temp_cnt = 0
       THEN "You are empty-handed."
       ELSE
         "You are carrying"
-        FOR EACH carried_item IsA object, IS NOT donned, DIRECTLY IN hero
+        FOR EACH carried_item IsA object, IS NOT worn, DIRECTLY IN hero
           DO
             SAY AN carried_item.
             DECREASE my_game:temp_cnt.
@@ -3436,11 +3436,11 @@ VERB i
     -- List worn clothing items
     -- ------------------------
     -- Don't say anything if the Hero is not wearing anything.
-    SET my_game:temp_cnt TO COUNT IsA clothing, DIRECTLY IN hero, IS donned.
+    SET my_game:temp_cnt TO COUNT IsA clothing, DIRECTLY IN hero, IS worn.
     IF  my_game:temp_cnt <> 0
       THEN
         SAY my_game:hero_worn_header. --> "You are wearing"
-        FOR EACH worn_item IsA clothing, DIRECTLY IN hero, IS donned
+        FOR EACH worn_item IsA clothing, DIRECTLY IN hero, IS worn
           DO
             SAY AN worn_item.
             DECREASE my_game:temp_cnt.
@@ -3630,7 +3630,7 @@ ADD TO EVERY THING
 -- >>> dev-clothing: TWEAKED >>> VERB kick
     AND target NOT IN hero
       ELSE
-        IF target IS NOT donned
+        IF target IS NOT worn
           THEN SAY my_game:check_obj_not_in_hero1.
           ELSE SAY my_game:check_obj_not_in_worn2.
         END IF.
@@ -6405,7 +6405,7 @@ ADD TO EVERY THING
 -- >>> dev-clothing: TWEAKED >>> VERB shoot
     AND target NOT IN hero
       ELSE
-        IF target IS NOT donned
+        IF target IS NOT worn
           THEN SAY my_game:check_obj_not_in_hero1.
           ELSE SAY my_game:check_obj_not_in_worn2.
         END IF.
@@ -6495,7 +6495,7 @@ ADD TO EVERY THING
 -- >>> dev-clothing: TWEAKED >>> VERB shoot_with
       AND target NOT IN hero
         ELSE
-          IF target IS NOT donned
+          IF target IS NOT worn
             THEN SAY my_game:check_obj_not_in_hero1.
             ELSE SAY my_game:check_obj_not_in_worn2.
           END IF.
@@ -7272,7 +7272,7 @@ ADD TO EVERY THING
 -- >>> dev-clothing: TWEAKED >>> VERB take
       ELSIF obj IsA OBJECT THEN
         LOCATE obj IN hero.
-        MAKE obj NOT donned. -- for non-clothing wearables.
+        MAKE obj NOT worn. -- for non-clothing wearables.
         "Taken."
       END IF.
 

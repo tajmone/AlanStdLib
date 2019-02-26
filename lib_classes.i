@@ -241,8 +241,8 @@ EVERY clothing ISA OBJECT
 
 -- >>> dev-clothing: TWEAKED >>> CLOTHING: 'donned' attribute.
 
---   | The 'donned' attribute was moved from 'clothing' class to 'thing'.
---   | (see 'lib_definitions.i')
+--   | The 'donned' attribute was moved from 'clothing' class to 'thing', and
+--   | renamed to 'worn' (see 'lib_definitions.i')
 
   -- >>> original code >>>
   -- IS NOT donned. -- not in the 'wearing' set of any actor; this attribute
@@ -256,7 +256,7 @@ EVERY clothing ISA OBJECT
 --   +--------------------------------------------------------------------------
 --   | The new clothing system doesn't require using the 'worn' entity nor the
 --   | 'wearing' set any more. A clothing only needs to be DIRECTLY IN an ACTOR 
---   | and be 'IS donned' for it to be considered as being worn by that actor.
+--   | and be 'IS worn' for it to be considered as being worn by that actor.
 --   | So we no longer need the old initialization code...
 --   +--------------------------------------------------------------------------
 -- >>> original code >>>
@@ -343,7 +343,7 @@ EVERY clothing ISA OBJECT
     CHECK sex OF THIS = sex OF hero OR sex OF THIS = 0
       ELSE SAY check_clothing_sex OF my_game.
 -- >>> dev-clothing: ADDED >>>
-    AND THIS IS NOT donned
+    AND THIS IS NOT worn
       ELSE
         IF THIS IN hero
           THEN SAY my_game:check_obj_not_in_worn1.
@@ -386,7 +386,7 @@ EVERY clothing ISA OBJECT
           -- value of the item we're trying to wear it's a blocking item which
           -- prevents the action.
           -- -------------------------------------------------------------------
-          FOR EACH item IsA clothing, DIRECTLY IN hero, IS donned
+          FOR EACH item IsA clothing, DIRECTLY IN hero, IS worn
             DO
               IF THIS:headcover  <> 0 AND THIS:headcover  <= item:headcover
                 THEN INCLUDE item IN my_game:temp_clothes.
@@ -609,7 +609,7 @@ EVERY clothing ISA OBJECT
               "You put on $+1."
           END IF.
           LOCATE THIS IN hero.
-          MAKE THIS donned.
+          MAKE THIS worn.
       END IF.
 
 -- >>> original code >>>
@@ -660,7 +660,7 @@ EVERY clothing ISA OBJECT
 -- >>> dev-clothing: TWEAKED >>> VERB remove
 
   VERB remove
-    CHECK THIS DIRECTLY IN hero AND THIS IS donned
+    CHECK THIS DIRECTLY IN hero AND THIS IS worn
       ELSE SAY my_game:check_obj_in_worn.
  -- >>> original code >>>
  -- CHECK THIS IN worn
@@ -694,7 +694,7 @@ EVERY clothing ISA OBJECT
           -- value of the item we're trying to remove it's a blocking item which
           -- prevents the action.
           -- -------------------------------------------------------------------
-          FOR EACH item IsA clothing, DIRECTLY IN hero, IS donned
+          FOR EACH item IsA clothing, DIRECTLY IN hero, IS worn
             DO
               IF THIS:headcover  <> 0 AND THIS:headcover  < item:headcover
                 THEN INCLUDE item IN my_game:temp_clothes.
@@ -843,7 +843,7 @@ EVERY clothing ISA OBJECT
           -- --------------------------------
           "You take off $+1."
           LOCATE THIS IN hero.
-          MAKE THIS NOT donned.
+          MAKE THIS NOT worn.
       END IF.
 -- >>> original code >>>
 -- --------------------------------------------------------------------
@@ -884,7 +884,7 @@ END ADD TO.
 --   | The original code of the worn_clothing_check is no longer be required.
 --   | But now that the Alan loop bug was fixed, it might be worth adding some
 --   | code that ensure that any clothing item INDIRECTLY IN HERO is set to
---   | 'NOT donned' -- the libray verbs are handling well all clothing, so this
+--   | 'NOT worn' -- the libray verbs are handling well all clothing, so this
 --   | should never happen, but user verbs added to an adventure might forget to
 --   | cater for these cases, and nested clothing might end up being seen as worn.
 --   | 
@@ -2459,14 +2459,14 @@ ADD TO EVERY ACTOR
           -- List carried items
           -- ------------------
           -- Don't say anything if the actor is not carrying anything.
-          SET my_game:temp_cnt TO COUNT IsA object, IS NOT donned, DIRECTLY IN THIS.
+          SET my_game:temp_cnt TO COUNT IsA object, IS NOT worn, DIRECTLY IN THIS.
           IF  my_game:temp_cnt <> 0
             THEN "$+1"
               IF THIS IS NOT plural
                 THEN "is"
                 ELSE "are"
               END IF. "carrying"
-              FOR EACH carried_item ISA object, IS NOT donned, DIRECTLY IN THIS
+              FOR EACH carried_item ISA object, IS NOT worn, DIRECTLY IN THIS
                 DO
                   SAY AN carried_item.
                   DECREASE my_game:temp_cnt.
@@ -2481,14 +2481,14 @@ ADD TO EVERY ACTOR
           -- List worn clothing items
           -- ------------------------
           -- Don't say anything if the actor is not wearing anything.
-          SET my_game:temp_cnt TO COUNT IsA clothing, DIRECTLY IN THIS, IS donned.
+          SET my_game:temp_cnt TO COUNT IsA clothing, DIRECTLY IN THIS, IS worn.
           IF  my_game:temp_cnt <> 0
             THEN "$+1"
               IF THIS IS NOT plural
                 THEN "is"
                 ELSE "are"
               END IF. "wearing"
-              FOR EACH worn_item IsA clothing, DIRECTLY IN THIS, IS donned
+              FOR EACH worn_item IsA clothing, DIRECTLY IN THIS, IS worn
                 DO
                   SAY AN worn_item.
                   DECREASE my_game:temp_cnt.
