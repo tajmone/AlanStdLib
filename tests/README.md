@@ -53,6 +53,8 @@ Execution of all tests is controlled by a single batch script:
 
 - [`RUNTESTS.bat`][RUNTESTS]
 
+Inside each tests folder there's also a `TEST_FOLDER.bat` script for running all tests therein independently from the other tests folders. Theses scripts are intended only as an aid to speed up development work, and they are not a replacement fro the main `RUNTESTS.bat` script, which should always be used before commiting changes because it provides better errors reports.
+
 ## Extra Modules
 
 This folder also contains some extra modules that the test adventures can include for shared functionality:

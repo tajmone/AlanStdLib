@@ -148,6 +148,10 @@ Here are the various tasks list for shifting to the new clothing system, largely
         * [x] shirts: black and red
         * [x] ski helmet
     + [ ] __REDEFINE LAYERS__ — redesign the clothing layers numbering, dropping the old exponential system based on the Clothing Table, and adopt a new arbitrary system based on the needs of EGA.
+- [x] Add a new `TEST_FOLDER.bat` script in every test folder to allow quickly running all tests of that folder independently from the others:
+    + [x] `tests/clothing/` (single source, multiple tests)
+    + [x] `tests/house/` (single source, multiple tests)
+    + [x] `tests/misc/` (multiple sources, one ore more tests each)
 
 ### Debug Module
 
@@ -257,7 +261,7 @@ These general verbs must also be adapted for they contain references to the `wor
     + [ ] `attack_with`
     + [ ] `attack`
     + [ ] `drop`
-    + [ ] `i` (inventory)
+    + [x] `i` (inventory)
     + [ ] `kick`
     + [ ] `shoot_with`
     + [ ] `shoot`
