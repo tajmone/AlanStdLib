@@ -270,16 +270,39 @@ The various library-defined runtime MESSAGES must also be tweaked now that the `
 
 These general verbs must also be adapted for they contain references to the `worn` entity.
 
-- [ ] `lib_verbs.i`:
-    + [ ] `attack_with`
-    + [ ] `attack`
-    + [ ] `drop`
+- [x] `lib_verbs.i`:
+    + [x] `attack`
+    + [x] `attack_with`
+    + [x] `drop`
     + [x] `i` (inventory)
-    + [ ] `kick`
-    + [ ] `shoot_with`
-    + [ ] `shoot`
-    + [ ] `take`
-    + [ ] `wear`
+    + [x] `kick`
+    + [x] `shoot`
+    + [x] `shoot_with`
+    + [x] `take`
+    + [x] `wear`
+
+Although may of these verbs are going to be prevented by reimplementing them on `clothing` class and add CHECKs that block them if the items is worn, we still want to keep the CHECKs in the main verbs so that non-clothing wearables are treated correctly too.
+
+These will usally be handled by changing code like:
+
+```alan
+    AND target NOT IN hero
+      ELSE SAY check_obj_not_in_hero1 OF my_game.
+    AND target NOT IN worn
+      ELSE SAY check_obj_not_in_worn2 OF my_game.
+```
+
+into a single CHECK that distinguished between carried and worn items:
+
+```alan
+    AND target NOT IN hero
+      ELSE
+        IF target IS NOT donned
+          THEN SAY my_game:check_obj_not_in_hero1.
+          ELSE SAY my_game:check_obj_not_in_worn2.
+        END IF.
+```
+
 
 
 ### Handling Worn Items

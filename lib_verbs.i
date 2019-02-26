@@ -490,11 +490,18 @@ ADD TO EVERY THING
         END IF.
     AND target <> hero
       ELSE SAY check_obj_not_hero1 OF my_game.
+-- >>> dev-clothing: TWEAKED >>> VERB attack
     AND target NOT IN hero
-      ELSE SAY check_obj_not_in_hero1 OF my_game.
--- >>> dev-clothing: FIXME >>> VERB attack
-    AND target NOT IN worn
-      ELSE SAY check_obj_not_in_worn2 OF my_game.
+      ELSE
+        IF target IS NOT donned
+          THEN SAY my_game:check_obj_not_in_hero1.
+          ELSE SAY my_game:check_obj_not_in_worn2.
+        END IF.
+-- >>> original code >>>
+  --AND target NOT IN hero
+  --  ELSE SAY check_obj_not_in_hero1 OF my_game. --AND target NOT IN worn
+  --  ELSE SAY check_obj_not_in_worn2 OF my_game.
+-- <<< original code <<<
     AND CURRENT LOCATION IS lit
       ELSE SAY check_current_loc_lit OF my_game.
     AND target IS reachable AND target IS NOT distant
@@ -570,11 +577,19 @@ ADD TO EVERY THING
         ELSE SAY check_obj_not_obj2_with OF my_game.
       AND target <> hero
         ELSE SAY check_obj_not_hero1 OF my_game.
-      AND target NOT IN hero
-        ELSE SAY check_obj_not_in_hero1 OF my_game.
--- >>> dev-clothing: FIXME >>> VERB attack_with
-      AND target NOT IN worn
-        ELSE SAY check_obj_not_in_worn2 OF my_game.
+-- >>> dev-clothing: TWEAKED >>> VERB attack
+    AND target NOT IN hero
+      ELSE
+        IF target IS NOT donned
+          THEN SAY my_game:check_obj_not_in_hero1.
+          ELSE SAY my_game:check_obj_not_in_worn2.
+        END IF.
+-- >>> original code >>>
+    --AND target NOT IN hero
+    --  ELSE SAY check_obj_not_in_hero1 OF my_game.
+    --AND target NOT IN worn
+    --  ELSE SAY check_obj_not_in_worn2 OF my_game.
+-- <<< original code <<<
       AND CURRENT LOCATION IS lit
         ELSE SAY check_current_loc_lit OF my_game.
       AND target IS reachable AND target IS NOT distant
@@ -1967,13 +1982,20 @@ ADD TO EVERY OBJECT
   VERB drop
     CHECK my_game CAN drop
       ELSE SAY restricted_response OF my_game.
+-- >>> dev-clothing: TWEAKED >>> VERB drop
     AND obj IN hero
-      ELSE
--- >>> dev-clothing: FIXME >>> VERB drop
-        IF obj IN worn
-          THEN SAY check_obj_not_in_worn3 OF my_game.
-          ELSE SAY check_obj_in_hero OF my_game.
-            END IF.
+      ELSE SAY check_obj_in_hero OF my_game.
+-- >>> original code >>>
+  --AND obj IN hero
+  --  ELSE
+  --    IF obj IN worn
+  --      THEN SAY check_obj_not_in_worn3 OF my_game.
+  --      ELSE SAY check_obj_in_hero OF my_game.
+  --        END IF.
+-- <<< original code <<<
+-- >>> dev-clothing: ADDED >>>
+    AND obj IS NOT donned -- protect non-clothing wearables
+      ELSE SAY check_obj_not_in_worn3 OF my_game.
 
     DOES
       LOCATE obj HERE.
@@ -3605,11 +3627,19 @@ ADD TO EVERY THING
         END IF.
     AND target <> hero
       ELSE SAY check_obj_not_hero1 OF my_game.
+-- >>> dev-clothing: TWEAKED >>> VERB kick
     AND target NOT IN hero
-      ELSE SAY check_obj_not_in_hero1 OF my_game.
--- >>> dev-clothing: FIXME >>> VERB kick
-    AND target NOT IN worn
-      ELSE SAY check_obj_not_in_worn2 OF my_game.
+      ELSE
+        IF target IS NOT donned
+          THEN SAY my_game:check_obj_not_in_hero1.
+          ELSE SAY my_game:check_obj_not_in_worn2.
+        END IF.
+-- >>> original code >>>
+  --AND target NOT IN hero
+  --  ELSE SAY check_obj_not_in_hero1 OF my_game.
+  --AND target NOT IN worn
+  --  ELSE SAY check_obj_not_in_worn2 OF my_game.
+-- <<< original code <<<
     AND CURRENT LOCATION IS lit
       ELSE SAY check_current_loc_lit OF my_game.
     AND target IS reachable AND target IS NOT distant
@@ -6372,11 +6402,19 @@ ADD TO EVERY THING
       ELSE SAY check_obj_not_hero2 OF my_game.
     AND CURRENT LOCATION IS lit
       ELSE SAY check_current_loc_lit OF my_game.
+-- >>> dev-clothing: TWEAKED >>> VERB shoot
     AND target NOT IN hero
-      ELSE SAY check_obj_not_in_hero1 OF my_game.
--- >>> dev-clothing: FIXME >>> VERB shoot
-    AND target NOT IN worn
-      ELSE SAY check_obj_not_in_worn2 OF my_game.
+      ELSE
+        IF target IS NOT donned
+          THEN SAY my_game:check_obj_not_in_hero1.
+          ELSE SAY my_game:check_obj_not_in_worn2.
+        END IF.
+-- >>> original code >>>
+  --AND target NOT IN hero
+  --  ELSE SAY check_obj_not_in_hero1 OF my_game.
+  --AND target NOT IN worn
+  --  ELSE SAY check_obj_not_in_worn2 OF my_game.
+-- <<< original code <<<
     AND target IS NOT distant
       ELSE
         IF target IS NOT plural
@@ -6454,11 +6492,19 @@ ADD TO EVERY THING
         ELSE SAY check_obj_not_obj2_with OF my_game.
       AND CURRENT LOCATION IS lit
         ELSE SAY check_current_loc_lit OF my_game.
+-- >>> dev-clothing: TWEAKED >>> VERB shoot_with
       AND target NOT IN hero
-        ELSE SAY check_obj_not_in_hero1 OF my_game.
--- >>> dev-clothing: FIXME >>> VERB shoot_with
-      AND target NOT IN worn
-        ELSE SAY check_obj_not_in_worn2 OF my_game.
+        ELSE
+          IF target IS NOT donned
+            THEN SAY my_game:check_obj_not_in_hero1.
+            ELSE SAY my_game:check_obj_not_in_worn2.
+          END IF.
+-- >>> original code >>>
+    --AND target NOT IN hero
+    --  ELSE SAY check_obj_not_in_hero1 OF my_game.
+    --AND target NOT IN worn
+    --  ELSE SAY check_obj_not_in_worn2 OF my_game.
+-- <<< original code <<<
       AND target IS NOT distant
         ELSE
           IF target IS NOT plural
@@ -7223,19 +7269,32 @@ ADD TO EVERY THING
       -- actors are not prohibited from being taken in the checks; this is to
       -- allow for example a dog to be picked up, or a bird to be taken out of
       -- a cage, etc.
-
--- >>> dev-clothing: FIXME >>> VERB take
-      ELSIF obj ISA OBJECT
-        THEN IF obj DIRECTLY IN worn
-            THEN LOCATE obj IN hero.
-              "You take off" SAY THE obj. "and carry it in your hands."
-              IF obj ISA CLOTHING
-                THEN EXCLUDE obj FROM wearing OF hero.
-              END IF.
-            ELSE LOCATE obj IN hero.
-              "Taken."
-          END IF.
+-- >>> dev-clothing: TWEAKED >>> VERB take
+      ELSIF obj IsA OBJECT THEN
+        LOCATE obj IN hero.
+        MAKE obj NOT donned. -- for non-clothing wearables.
+        "Taken."
       END IF.
+
+-- >>> original code >>>
+    -- -----------------------------------------------------------------------
+    -- The problem with this original code was that it would remove the clothing
+    -- item without respecting the wearing order imposed by the layers!
+    -- Therefore, we'll add a CHECK on 'take' VERB on 'clothing' to prevent the
+    -- action by saying that it should be removed first.
+    -- -----------------------------------------------------------------------
+    --ELSIF obj ISA OBJECT
+    --  THEN IF obj DIRECTLY IN worn
+    --      THEN LOCATE obj IN hero.
+    --        "You take off" SAY THE obj. "and carry it in your hands."
+    --        IF obj ISA CLOTHING
+    --          THEN EXCLUDE obj FROM wearing OF hero.
+    --        END IF.
+    --      ELSE LOCATE obj IN hero.
+    --        "Taken."
+    --    END IF.
+    --END IF.
+-- <<< original code <<<
 
         -- Objects held by NPCs cannot be taken by the hero by default.
         -- The hero must *ask for* the object to obtain it.
