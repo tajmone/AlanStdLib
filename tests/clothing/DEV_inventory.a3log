@@ -42,6 +42,10 @@ worn).
 The assistant is carrying a pair of fashion boots (being worn) and a 
 uniform (being worn).
 
+> DBG_INV manager
+The manager is carrying a pair of loafers (being worn), a pullover (being
+worn) and a pair of pleated trousers (being worn).
+
 > ; ******************************************************************************
 > ; HERO -> INVENTORY
 > ; ******************************************************************************
@@ -123,8 +127,9 @@ As you move toward the doors they automagically slide open before you.
 Emporium Alani Main Hall
 This luxurious hall is the crossroad to the various clothing departments
 of the emporium. Two large brass doors lead the way south, out of the
-fashion temple and back into the world of mortal souls. There is your
-personal assistant here.
+fashion temple and back into the world of mortal souls.There is a trashcan 
+here. Behind a desk stands the emporium manager. There is your personal
+assistant here.
 
 > ; ------------------------------------------------------------------------------
 > ; CARRIED: 0 | WORN: 2

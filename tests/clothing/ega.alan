@@ -452,6 +452,15 @@ EVERY cl_tshirt IsA proto_shirt.
 END EVERY.
 
 --==============================================================================
+-- SWEATERS & PULLOVERS
+--==============================================================================
+
+EVERY proto_pullover IsA clothing.
+  HAS topcover 16.
+END EVERY.
+
+
+--==============================================================================
 -- LEGWEAR
 --==============================================================================
 
@@ -563,7 +572,7 @@ END VERB exits.
 --=============================================================================
 --\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 --------------------------------------------------------------------------------
--- Emporium GA Entrance 
+-- FURNITURE & PROPS: Emporium GA Entrance 
 -------------------------------------------------------------------------------
 --//////////////////////////////////////////////////////////////////////////////
 --=============================================================================
@@ -611,7 +620,72 @@ END THE ega_doorframe.
 --=============================================================================
 --\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 --------------------------------------------------------------------------------
--- The Dressing Room 
+-- FURNITURE & PROPS: Main Hall
+-------------------------------------------------------------------------------
+--//////////////////////////////////////////////////////////////////////////////
+--=============================================================================
+
+-- Having a surface to carry out tests in the Hall is convenient:
+
+THE desk IsA supporter AT ega_hall.
+  DESCRIPTION "" -- We'll describe the desk along with the manager.
+  HAS ex
+    "This luxurios mahogany desk is where customers go and pay their purchased
+     merchandise, a bit like the supermarket cash, but more discrete.".
+  VERB look_behind
+    DOES ONLY
+      "Peeking behind the desk you notice a gun, hidden out of sight but readily
+       grabbable if the need comes. They must keep it there for emergencies."
+      LOCATE gun AT ega_hall.
+  END VERB look_behind.
+END THE desk.
+
+-- In orders to test verbs that need a weapon, we'll hide a gun behind the desk,
+-- which will become visible after looking behind the desk.
+
+THE gun IsA weapon.
+  NAME gun.
+  NAME pistol.
+  CAN shoot.
+  IS hidden.
+  MENTIONED
+    "gun"
+    IF THIS IS hidden
+      THEN "(hidden behind the desk)"
+    END IF.
+  HAS ex "A semiautomatic pistol, seemingly loaded.".
+
+  VERB take
+    DOES AFTER
+      MAKE THIS NOT hidden.
+  END VERB take.
+END THE gun.
+
+
+THE trashcan IsA listed_container AT ega_hall.
+  NAME trashcan.
+  NAME bin.
+  WITH CONTAINER
+    HEADER "Inside the trashcan you can see"
+  IS NOT moveable. NOT takeable.
+  HAS ex "Just a trashcan.".
+
+  INITIALIZE
+    -- Let's ensure that the trashcan can contain any object of the game:
+    FOR EACH obj IsA object
+      DO INCLUDE obj IN allowed OF THIS.
+    END FOR.
+  
+  VERB examine
+    DOES ONLY
+      LIST THIS.
+  END VERB examine.
+END THE.
+
+--=============================================================================
+--\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+--------------------------------------------------------------------------------
+-- FURNITURE & PROPS: The Dressing Room 
 -------------------------------------------------------------------------------
 --//////////////////////////////////////////////////////////////////////////////
 --=============================================================================
@@ -642,6 +716,39 @@ END THE basket.
 --* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 -- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 --==============================================================================
+
+--==============================================================================
+--------------------------------------------------------------------------------
+-- The Manager
+--------------------------------------------------------------------------------
+--==============================================================================
+
+-- We'll place this NPC in the Main Hall, so that we might test those verbs
+-- that would transfer (implicitly) worn clothing from one NPC to another.
+
+THE manager IsA male AT ega_hall.
+  DESCRIPTION "Behind a desk stands the emporium manager."
+END THE manager.
+
+--==============================================================================
+-- Abbigliamento Manager
+--==============================================================================
+THE manager_trousers IsA proto_trousers IN manager.
+  IS worn.
+  NAME pleated trousers.
+  NAME his pleated.
+END THE.
+
+THE manager_pullover IsA proto_pullover IN manager.
+  IS worn.
+  NAME pullover.
+  NAME his pullover.
+END THE.
+
+THE manager_shoes IsA cl_shoes IN manager.
+  IS worn.
+  NAME loafers.
+END THE.
 
 --==============================================================================
 --------------------------------------------------------------------------------
