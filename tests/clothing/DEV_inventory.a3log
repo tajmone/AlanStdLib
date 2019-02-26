@@ -123,15 +123,15 @@ As you move toward the doors they automagically slide open before you.
 Emporium Alani Main Hall
 This luxurious hall is the crossroad to the various clothing departments
 of the emporium. Two large brass doors lead the way south, out of the
-fashion temple and back into the world of mortal souls.There is your
+fashion temple and back into the world of mortal souls. There is your
 personal assistant here.
 
 > ; ------------------------------------------------------------------------------
 > ; CARRIED: 0 | WORN: 2
 > ; ------------------------------------------------------------------------------
 > examine assistant
-She's your personal shopping assistant. The assistant is carrying a pair
-of fashion boots (being worn) and a uniform (being worn).
+She's your personal shopping assistant. The assistant is wearing a uniform 
+and a pair of fashion boots.
 
 > ask assistant for uniform
 The assistant gives the uniform to you.
@@ -140,8 +140,8 @@ The assistant gives the uniform to you.
 > ; CARRIED: 0 | WORN: 1
 > ; ------------------------------------------------------------------------------
 > examine assistant
-She's your personal shopping assistant. The assistant is carrying a pair
-of fashion boots (being worn).
+She's your personal shopping assistant. The assistant is wearing a pair of 
+fashion boots.
 
 > ask assistant for boots
 The assistant gives the fashion boots to you.
@@ -150,7 +150,7 @@ The assistant gives the fashion boots to you.
 > ; CARRIED: 0 | WORN: 0
 > ; ------------------------------------------------------------------------------
 > examine assistant
-She's your personal shopping assistant. The assistant is empty-handed.
+She's your personal shopping assistant.
 
 > give sneakers to assistant
 You give your sneakers to the assistant.
@@ -170,7 +170,7 @@ You give your boxers to the assistant.
 > ; ------------------------------------------------------------------------------
 > examine assistant
 She's your personal shopping assistant. The assistant is carrying your 
-sneakers and your boxers.
+boxers and your sneakers.
 
 > give socks to assistant
 You give your socks to the assistant.
@@ -180,7 +180,7 @@ You give your socks to the assistant.
 > ; ------------------------------------------------------------------------------
 > examine assistant
 She's your personal shopping assistant. The assistant is carrying your 
-sneakers, your boxers and your socks.
+socks, your boxers and your sneakers.
 
 > 
 

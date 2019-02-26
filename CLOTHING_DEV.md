@@ -235,11 +235,11 @@ When taking inventory or examining actors, the library should produce two separa
     + [x] `i` (inventory)
         * [x] Produce separate lists of carried/worn via custom loops.
         * [x] Don't report that Hero is not wearing anything.
-- [ ] `lib_classes.i`:
-    + [ ] `examine` (on `actor`)
-        * [ ] Produce separate lists of carried/worn via custom loops.
-        * [ ] Don't report that actor is empty handed.
-        * [ ] Don't report that actor is not wearing anything.
+- [x] `lib_classes.i`:
+    + [x] `examine` (on `actor`)
+        * [x] Produce separate lists of carried/worn via custom loops.
+        * [x] Don't report that actor is empty handed.
+        * [x] Don't report that actor is not wearing anything.
 
 The various library-defined runtime MESSAGES must also be tweaked now that the `worn` entity will be removed:
 

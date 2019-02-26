@@ -86,8 +86,8 @@ fashion temple and back into the world of mortal souls.There is your
 personal assistant here.
 
 > x assistant
-She's your personal shopping assistant. The assistant is carrying a pair
-of fashion boots (being worn) and a uniform (being worn).
+She's your personal shopping assistant. The assistant is wearing a uniform 
+and a pair of fashion boots.
 
 > DBG_CLOTHES boots
 'fashion boots' VALUES: | feetcover: 4 | 

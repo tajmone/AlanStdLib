@@ -2452,15 +2452,59 @@ ADD TO EVERY ACTOR
     END IF.
 
 
+-- >>> dev-clothing: TWEAKED >>> ACTOR EXAMINE VERB
+
   VERB examine
     DOES AFTER
       IF THIS <> hero
         THEN
--- >>> dev-clothing: TODO >>> ACTOR EXAMINE VERB
---                            Use custom loops to produce separate list of
---                            carried and worn items. 
-
-          LIST THIS.
+          -- ------------------
+          -- List carried items
+          -- ------------------
+          -- Don't say anything if the actor is not carrying anything.
+          SET my_game:temp_cnt TO COUNT IsA object, IS NOT donned, DIRECTLY IN THIS.
+          IF  my_game:temp_cnt <> 0
+            THEN "$+1"
+              IF THIS IS NOT plural
+                THEN "is"
+                ELSE "are"
+              END IF. "carrying"
+              FOR EACH carried_item ISA object, IS NOT donned, DIRECTLY IN THIS
+                DO
+                  SAY AN carried_item.
+                  DECREASE my_game:temp_cnt.
+                  DEPENDING ON my_game:temp_cnt
+                    = 1 THEN "and"
+                    = 0 THEN "."
+                    ELSE ","
+                  END DEPEND.
+              END FOR.
+          END IF.
+          -- ------------------------
+          -- List worn clothing items
+          -- ------------------------
+          -- Don't say anything if the actor is not wearing anything.
+          SET my_game:temp_cnt TO COUNT IsA clothing, DIRECTLY IN THIS, IS donned.
+          IF  my_game:temp_cnt <> 0
+            THEN "$+1"
+              IF THIS IS NOT plural
+                THEN "is"
+                ELSE "are"
+              END IF. "wearing"
+              FOR EACH worn_item IsA clothing, DIRECTLY IN THIS, IS donned
+                DO
+                  SAY AN worn_item.
+                  DECREASE my_game:temp_cnt.
+                  DEPENDING ON my_game:temp_cnt
+                    = 1 THEN "and"
+                    = 0 THEN "."
+                    ELSE ","
+                  END DEPEND.
+              END FOR.
+          END IF.
+-- >>> original code >>>
+       -- LIST THIS.
+-- <<< original code <<<
       END IF.
   END VERB examine.
 
