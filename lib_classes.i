@@ -184,16 +184,13 @@ END ADD.
 -- An entity is present everywhere and thus the hero's clothing is always accessible.
 -- This container is only used internally in the library; ignore.
 
--- >>> dev-clothing: TODO >>> Delete worn ENTITY
---                            When no more references to 'worn' are present in
---                            the library, this definition should be commented
---                            out (first) and then deleted (before merging).
-
-THE worn ISA ENTITY
-  CONTAINER TAKING CLOTHING.
-    HEADER SAY hero_worn_header OF my_game.
-    ELSE SAY hero_worn_else OF my_game.
-END THE.
+-- >>> dev-clothing: DELETED >>> worn ENTITY
+--
+-- THE worn ISA ENTITY
+--   CONTAINER TAKING CLOTHING.
+--     HEADER SAY hero_worn_header OF my_game.
+--     ELSE SAY hero_worn_else OF my_game.
+-- END THE.
 
 
 -- >>> dev-clothing: ADDED >>>

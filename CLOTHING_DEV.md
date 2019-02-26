@@ -91,7 +91,8 @@ The following list resumes the overall steps required to implement the new syste
 
 ## New System Implementation
 
-- [ ] Dispose of the `worn` entity and the `wearing` set, and use instead just the `donned` boolean attribute (which shall ultimately be renamed to `worn`).
+- [x] Dispose of the `worn` entity and the `wearing` set, and use instead just the `donned` boolean attribute.
+- [ ] Renamed the `donned` attribute to `worn`.
 - [ ] Ensure that nested clothes are never considered as being worn.
 - [ ] List separately carried and worn items by actors, for both Hero (via 'inventory') and NPCs (via 'examine actor').
 - [x] When the verbs `wear`/`remove` fail, report only the blocking items (instead of the full list of worn items).
