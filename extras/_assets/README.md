@@ -15,7 +15,7 @@ This folder contains some assets required to build the documents in the parent `
     - [Installing Asciidoctor](#installing-asciidoctor)
 - [Credits](#credits)
     - [Highlight Extension](#highlight-extension)
-    - [ERB Templates](#erb-templates)
+    - [Haml Templates](#haml-templates)
 
 <!-- /MarkdownTOC -->
 
@@ -25,7 +25,7 @@ This folder contains some assets required to build the documents in the parent `
 # Folder Contents
 
 - [`/css/`][css] — CSS stylesheets.
-- [`/erb/`][erb] — customized ERB templates.
+- [`/haml/`][haml] — customized Haml templates.
 - [`/sass/`][sass] — Sass/SCSS stylesheets source files.
 - [`docinfo.html`][docinfo] — document docinfo file.
 - [`highlight-treeprocessor_mod.rb`][rb] — extension for Highlight integration.
@@ -78,9 +78,9 @@ The Asciidoctor Project, released under MIT License:
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 
-## ERB Templates
+## Haml Templates
 
-The files inside the [`/erb/`][erb] folder were adapted by Tristano Ajmone from the original [ERB HTML5 templates] taken from the
+The files inside the [`/haml/`][haml] folder were adapted by Tristano Ajmone from the original [Haml HTML5 templates] taken from the
 [Asciidoctor Backends] project, Copyright (C) 2012-2016 Dan Allen and the Asciidoctor Project, released under MIT License:
 
     The MIT License
@@ -113,7 +113,7 @@ The files inside the [`/erb/`][erb] folder were adapted by Tristano Ajmone from 
 
 <!-- proj files -->
 
-[erb]: ./erb "Navigate to folder"
+[haml]: ./haml "Navigate to folder"
 [css]: ./css/ "Navigate to folder"
 [sass]: ./sass/ "Navigate to folder"
 [docinfo]: ./docinfo.html
@@ -139,6 +139,6 @@ The files inside the [`/erb/`][erb] folder were adapted by Tristano Ajmone from 
 [Asciidoctor Extensions Lab]: https://github.com/asciidoctor/asciidoctor-extensions-lab/ "Visit the Asciidoctor Extensions Lab project"
 
 [Asciidoctor Backends]: https://github.com/asciidoctor/asciidoctor-backends "Visit the Asciidoctor Backends project"
-[ERB HTML5 templates]: https://github.com/asciidoctor/asciidoctor-backends/tree/master/erb/html5
+[Haml HTML5 templates]: https://github.com/asciidoctor/asciidoctor-backends/tree/master/haml/html5
 
 <!-- EOF -->

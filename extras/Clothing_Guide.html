@@ -497,23 +497,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="paragraph">
 <p>The library defines the <code>clothing</code> class for clothing items, which adds to its instances some special attributes:</p>
 </div>
-
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="alan"><code data-lang="alan"><span class="hl kwa">EVERY</span> clothing <span class="hl kwa">ISA</span> <span class="hl kwb">OBJECT</span>
-
-  <span class="hl kwa">IS</span> wearable<span class="hl kwa">.</span>
-
-  <span class="hl kwa">IS</span> sex <span class="hl num">0</span><span class="hl kwa">.</span> <span class="hl slc">--&gt; If not zero, restricts wearing to actors with same &apos;sex&apos; value. (optional)</span>
-
-  <span class="hl slc">-- Body coverage layered-values, by area:</span>
-  <span class="hl kwa">IS</span> headcover  <span class="hl num">0</span><span class="hl kwa">.</span> <span class="hl slc">--&gt; Head.</span>
-  <span class="hl kwa">IS</span> handscover <span class="hl num">0</span><span class="hl kwa">.</span> <span class="hl slc">--&gt; Hands.</span>
-  <span class="hl kwa">IS</span> feetcover  <span class="hl num">0</span><span class="hl kwa">.</span> <span class="hl slc">--&gt; Feet.</span>
-  <span class="hl kwa">IS</span> topcover   <span class="hl num">0</span><span class="hl kwa">.</span> <span class="hl slc">--&gt; Chest and arms.</span>
-  <span class="hl kwa">IS</span> botcover   <span class="hl num">0</span><span class="hl kwa">.</span> <span class="hl slc">--&gt; Pelvis and legs.</span>
-
-  <span class="hl kwa">IS NOT</span> donned<span class="hl kwa">.</span>   <span class="hl slc">--&gt; Not in the &apos;wearing&apos; set of any actor. (library internal use)</span></code></pre>
+<pre class="highlight" lang="alan"><code class="language-alan" data-lang="alan"><span class="hl kwa">EVERY</span> clothing <span class="hl kwa">ISA</span> <span class="hl kwb">OBJECT</span>&#x000A;&#x000A;  <span class="hl kwa">IS</span> wearable<span class="hl kwa">.</span>&#x000A;&#x000A;  <span class="hl kwa">IS</span> sex <span class="hl num">0</span><span class="hl kwa">.</span> <span class="hl slc">--&gt; If not zero, restricts wearing to actors with same &apos;sex&apos; value. (optional)</span>&#x000A;&#x000A;  <span class="hl slc">-- Body coverage layered-values, by area:</span>&#x000A;  <span class="hl kwa">IS</span> headcover  <span class="hl num">0</span><span class="hl kwa">.</span> <span class="hl slc">--&gt; Head.</span>&#x000A;  <span class="hl kwa">IS</span> handscover <span class="hl num">0</span><span class="hl kwa">.</span> <span class="hl slc">--&gt; Hands.</span>&#x000A;  <span class="hl kwa">IS</span> feetcover  <span class="hl num">0</span><span class="hl kwa">.</span> <span class="hl slc">--&gt; Feet.</span>&#x000A;  <span class="hl kwa">IS</span> topcover   <span class="hl num">0</span><span class="hl kwa">.</span> <span class="hl slc">--&gt; Chest and arms.</span>&#x000A;  <span class="hl kwa">IS</span> botcover   <span class="hl num">0</span><span class="hl kwa">.</span> <span class="hl slc">--&gt; Pelvis and legs.</span>&#x000A;&#x000A;  <span class="hl kwa">IS NOT</span> donned<span class="hl kwa">.</span>   <span class="hl slc">--&gt; Not in the &apos;wearing&apos; set of any actor. (library internal use)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">

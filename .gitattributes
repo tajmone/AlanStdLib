@@ -17,6 +17,7 @@
 ## Alan Files
 ## ==========
 *.a3c      binary
+*.a3r      binary
 *.alan     text
 *.i        text
 *.ifid     text
@@ -45,9 +46,10 @@
 ## ==================
 ## MISC. DATA FORMATS
 ## ==================
+*.haml     text
 *.json     text
-*.xml      text
 *.xhtml    text
+*.xml      text
 *.yaml     text
 *.yml      text
 
