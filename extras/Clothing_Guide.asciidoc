@@ -1,6 +1,6 @@
 = The Clothing Guide
 Tristano Ajmone <tajmone@gmail.com>
-v1, 2018-12-16
+v1, 2019-03-14
 :lang: en
 // TOC Settings:
 :toc: left
@@ -47,7 +47,7 @@ This document explores these features and provides some examples on how to imple
 
 The library defines the `clothing` class for clothing items, which adds to its instances some special attributes:
 
-[source, alan]
+[source, alan,subs=none]
 --------------------------
 EVERY clothing ISA OBJECT
 
