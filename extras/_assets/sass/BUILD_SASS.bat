@@ -1,10 +1,10 @@
-:: "BUILD_SASS.bat" v1.0.0 (2018/12/16) by Tristano Ajmone
+:: "BUILD_SASS.bat"                     v2.0.0 | 2019/03/14 | by Tristano Ajmone
 :: -----------------------------------------------------------------------------
-:: REQUIREMENTS -- To run this script you'll need to install either:
-:: - Dart Sass (Node.js):
-::   https://github.com/sass/dart-sass
-:: - Ruby Sass (Ruby):
-::   https://github.com/sass/ruby-sass
+:: This script requires Dart Sass to be installed on the system:
+::      https://github.com/sass/dart-sass
+::
+:: You can use Chocolatey to install Dart Sass and keep it updated:
+::      https://chocolatey.org/packages/sass
 :: -----------------------------------------------------------------------------
 @ECHO OFF
 ECHO.
@@ -18,7 +18,9 @@ ECHO =================================
 ECHO SOURCE: %SRC%
 ECHO OUTPUT: %OUT%
 
-CALL SCSS %SRC% %OUT%
+CALL SASS %SRC% %OUT%
+
+ECHO /// Finished ///
 EXIT /B
 
 :: EOF ::

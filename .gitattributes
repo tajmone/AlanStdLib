@@ -58,7 +58,7 @@
 ## =================
 *.htm      text
 *.html     text
-*.css      text
+*.css      text eol=lf
 *.css.map  text
 *.js       text
 
