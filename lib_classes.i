@@ -253,9 +253,63 @@ EVERY clothing ISA OBJECT
       END IF.
   END VERB examine.
 
--- =============================================================================
--- Block verbs that could dislocate worn clothing items
--- =============================================================================
+  -- ===========================================================================
+  -- Block verbs that could dislocate worn clothing items
+  -- ===========================================================================
+
+  -- The following verbs are extended on the 'clothing' class with additional
+  -- CHECKs to prevent displacing worn clothing items from their wearer:
+  -- 
+  --   * give
+  --   * put_in
+  --   * put_on
+  --   * throw
+  --   * throw_at
+  --   * throw_in
+  --   * throw_to
+  --   * tie_to
+
+  -- +----------------------------------------------------------------------+
+  -- | If you want to prevent NPCs from giving their clothes when asked to, |
+  -- | either uncomment the following code or add it to your adventure:     |
+  -- +----------------------------------------------------------------------+
+  -- VERB ask_for --> ask (act) 'for' (obj)
+  --   WHEN obj
+  --     CHECK obj IS NOT worn
+  --       ELSE
+  --         IF obj IN hero
+  --           THEN SAY my_game:check_obj2_not_in_hero3.
+  --           ELSE
+  --             FOR EACH ac IsA actor DO
+  --               IF THIS IN ac
+  --                 THEN SAY THE ac. "is wearing $+2."
+  --               END IF.
+  --             END FOR.
+  --         END IF.
+  -- END VERB ask_for.
+  -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+  VERB give --> 'give' (obj) 'to' (recipient)
+    WHEN obj
+      CHECK obj IS NOT worn
+        ELSE
+          IF obj IN hero
+            THEN SAY my_game:check_obj_not_in_worn3.
+            ELSE
+              IF obj IS NOT plural
+                --       "Currently $+1 [is/are] worn by"
+                THEN SAY my_game:check_obj1_not_worn_by_NPC_sg.
+                ELSE SAY my_game:check_obj1_not_worn_by_NPC_pl.
+              END IF.
+              FOR EACH ac IsA actor DO
+                IF obj IN ac
+                  THEN SAY THE ac. "."
+                END IF.
+              END FOR.
+          END IF.
+  END VERB give.
+
 
   VERB put_in --> put (obj) 'in' (cont)
     WHEN obj
@@ -299,47 +353,6 @@ EVERY clothing ISA OBJECT
   END VERB put_on.
 
 
-  VERB give --> 'give' (obj) 'to' (recipient)
-    WHEN obj
-      CHECK obj IS NOT worn
-        ELSE
-          IF obj IN hero
-            THEN SAY my_game:check_obj_not_in_worn3.
-            ELSE
-              IF obj IS NOT plural
-                --       "Currently $+1 [is/are] worn by"
-                THEN SAY my_game:check_obj1_not_worn_by_NPC_sg.
-                ELSE SAY my_game:check_obj1_not_worn_by_NPC_pl.
-              END IF.
-              FOR EACH ac IsA actor DO
-                IF obj IN ac
-                  THEN SAY THE ac. "."
-                END IF.
-              END FOR.
-          END IF.
-  END VERB give.
-
-
-  --| NOTE: If you want to prevent NPCs from giving their clothes when asked to,
-  --|       either uncomment the following code or add it to your adventure:
-  -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  -- VERB ask_for --> ask (act) 'for' (obj)
-  --   WHEN obj
-  --     CHECK obj IS NOT worn
-  --       ELSE
-  --         IF obj IN hero
-  --           THEN SAY my_game:check_obj2_not_in_hero3.
-  --           ELSE
-  --             FOR EACH ac IsA actor DO
-  --               IF THIS IN ac
-  --                 THEN SAY THE ac. "is wearing $+2."
-  --               END IF.
-  --             END FOR.
-  --         END IF.
-  -- END VERB ask_for.
-  -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
   VERB throw --> throw (projectile)
     CHECK projectile IS NOT worn
       ELSE
@@ -358,27 +371,6 @@ EVERY clothing ISA OBJECT
             END FOR.
         END IF.
   END VERB throw.
-
-
-  VERB throw_to --> throw (projectile) 'to' (recipient)
-    WHEN projectile
-      CHECK projectile IS NOT worn
-        ELSE
-          IF projectile IN hero
-            THEN SAY my_game:check_obj_not_in_worn3.
-            ELSE
-              IF projectile IS NOT plural
-                --       "Currently $+1 [is/are] worn by"
-                THEN SAY my_game:check_obj1_not_worn_by_NPC_sg.
-                ELSE SAY my_game:check_obj1_not_worn_by_NPC_pl.
-              END IF.
-              FOR EACH ac IsA actor DO
-                IF projectile IN ac
-                  THEN SAY THE ac. "."
-                END IF.
-              END FOR.
-          END IF.
-  END VERB throw_to.
 
 
   VERB throw_at --> throw (projectile) 'at' (target)
@@ -421,6 +413,27 @@ EVERY clothing ISA OBJECT
               END FOR.
           END IF.
   END VERB throw_in.
+
+
+  VERB throw_to --> throw (projectile) 'to' (recipient)
+    WHEN projectile
+      CHECK projectile IS NOT worn
+        ELSE
+          IF projectile IN hero
+            THEN SAY my_game:check_obj_not_in_worn3.
+            ELSE
+              IF projectile IS NOT plural
+                --       "Currently $+1 [is/are] worn by"
+                THEN SAY my_game:check_obj1_not_worn_by_NPC_sg.
+                ELSE SAY my_game:check_obj1_not_worn_by_NPC_pl.
+              END IF.
+              FOR EACH ac IsA actor DO
+                IF projectile IN ac
+                  THEN SAY THE ac. "."
+                END IF.
+              END FOR.
+          END IF.
+  END VERB throw_to.
 
 
   VERB tie_to --> tie (obj) 'to' (target)
