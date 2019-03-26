@@ -456,23 +456,19 @@ EVERY clothing ISA OBJECT
           END IF.
   END VERB tie_to.
 
--- -----------------------------------------------------------------------------
-
--- >>> dev-clothing: TWEAKED >>> VERB wear
-
-    VERB wear
-
+  ------------------------------------------------------------------------------
+  VERB wear
+  ------------------------------------------------------------------------------
     CHECK sex OF THIS = sex OF hero OR sex OF THIS = 0
       ELSE SAY check_clothing_sex OF my_game.
--- >>> dev-clothing: ADDED >>>
     AND THIS IS NOT worn
       ELSE
         IF THIS IN hero
+          --      "You are already wearing $+1."
           THEN SAY my_game:check_obj_not_in_worn1.
-               -->        "You are already wearing $+1."
           ELSE
             IF THIS IS NOT plural
-              -->             "Currently $+1 [is/are] worn by""
+              --      "Currently $+1 [is/are] worn by""
               THEN SAY my_game:check_obj1_not_worn_by_NPC_sg.
               ELSE SAY my_game:check_obj1_not_worn_by_NPC_pl.
             END IF.
@@ -488,10 +484,8 @@ EVERY clothing ISA OBJECT
       -- Clothes which prevent the action are stored in a temporary set in
       -- order to list all blocking items in the verb failure response.
       --------------------------------------------------------------------
-
-      -- --------------------
-      -- Empty temporary set:
-      -- --------------------
+      -- Empty the temporary set:
+      -- ------------------------
       SET my_game:temp_clothes TO {}.
       -- -----------------------------------------------------------------------
       -- Check if the item being worn is subjected to ordered layering
@@ -505,7 +499,7 @@ EVERY clothing ISA OBJECT
         THEN
           -- -------------------------------------------------------------------
           -- Every worn clothing with a layer value equal or greater than the
-          -- value of the item we're trying to wear it's a blocking item which
+          -- value of the item we're trying to wear is a blocking item which
           -- prevents the action.
           -- -------------------------------------------------------------------
           FOR EACH item IsA clothing, DIRECTLY IN hero, IS worn
@@ -524,12 +518,12 @@ EVERY clothing ISA OBJECT
                   -- -----------------------------------------------------------
                   -- Carry out special checks for 'NOT blockslegs'
                   -- -----------------------------------------------------------
-                  IF item:blockslegs
                   -- If the item standing in the way is a leg-blocker, prevent:
+                  IF item:blockslegs
                     THEN INCLUDE item IN my_game:temp_clothes.
                   -- Otherwise, it must be a skirt or a coat.
-                  -- Check that item we're trying to wear is not a single-piece
-                  -- covering both legs and torso.
+                  -- Check that the handled item is not a single-piece clothing
+                  -- covering both legs and torso:
                   ELSIF THIS:topcover <> 0 AND THIS IS NOT twopieces
                     THEN INCLUDE item IN my_game:temp_clothes.
                   END IF.
@@ -543,142 +537,6 @@ EVERY clothing ISA OBJECT
           END FOR.
       END IF.
 
--- >>> original code >>>
-
--- --------------------------------------------------------------------
--- -- 'wear_flag' is a multi-purpose flag used for several purposes in
--- -- this library, here it is reset to 0 before proceeding as a matter
--- -- of 'housekeeping' for the code.
--- --------------------------------------------------------------------
-
-
---     SET wear_flag OF hero TO 0.
-
-
--- --------------------------------------------------------------------
--- -- First check to see if the player is carrying the item already, if
--- -- not, set the 'wear_flag' to 1 to indicate the item was picked up
--- -- in this turn.
--- --------------------------------------------------------------------
-
-
---     IF THIS NOT IN hero
---       THEN
---         SET wear_flag OF hero TO 1.
---     END IF.
-
-
--- --------------------------------------------------------------------
--- --  Now see if the player can put this item on by testing
--- --  all of its coverage attributes against the player's state.
--- --------------------------------------------------------------------
-
-
--- --------------------------------------------------------------------
--- -- First check the 'topcover' attributes, if 'obj' fails this test
--- -- then it means the hero is already wearing clothes that cover the
--- -- topcover area and those clothes are of the same layer or a layer
--- -- that belongs on top of the 'obj' item. In either case it would
--- -- NOT be possible to put on the 'obj'. To 'flag' this condition add
--- -- 5 to the 'wear_flag' attribute as an indicator this test failed.
--- --------------------------------------------------------------------
-
-
---     IF topcover OF THIS <> 0 AND topcover OF THIS <= SUM OF topcover DIRECTLY IN worn
---       THEN
---         INCREASE wear_flag OF hero BY 5.
---     END IF.
-
-
--- --------------------------------------------------------------------
--- -- Perform a similar test for other attributes.
--- --------------------------------------------------------------------
-
-
---     IF handscover OF THIS <> 0 AND handscover OF THIS <= SUM OF handscover DIRECTLY IN worn
---       THEN
---         INCREASE wear_flag OF hero BY 5.
---     END IF.
-
-
---     IF feetcover OF THIS <> 0 AND feetcover OF THIS <= SUM OF feetcover DIRECTLY IN worn
---       THEN
---         INCREASE wear_flag OF hero BY 5.
---     END IF.
-
-
---     IF headcover OF THIS <> 0 AND headcover OF THIS <= SUM OF headcover DIRECTLY IN worn
---       THEN
---         INCREASE wear_flag OF hero BY 5.
---     END IF.
-
-
--- --------------------------------------------------------------------
--- --  botcover is a special case, adjust the 'tempcovered OF hero'
--- --  attribute so that the code rejects non sensible options.
--- --  First of all, discount any coatlike clothes as these never
--- --  affect ability to put on other lower body only garments.
--- --------------------------------------------------------------------
-
-
---     SET tempcovered OF hero TO SUM OF botcover DIRECTLY IN worn.
-
---     IF tempcovered OF hero >63 and botcover OF THIS < 33
---       THEN
---         SET tempcovered OF hero TO tempcovered OF hero -64.
---     END IF.
-
-
--- --------------------------------------------------------------------
--- -- Now discount any dress/ skirt coverall like clothes as these do
--- -- not technically affect ability to put on lower body only clothes.
--- -- Special clause here excludes the full body coverage 'teddy' type
--- -- garment - as a skirt WOULD prevent that from being removed.
--- -- ( dress/coat garments automatically prevent this by virtue of
--- -- having higher 'topcover' settings than the teddy )
--- --------------------------------------------------------------------
-
-
---     IF tempcovered OF hero >31 AND botcover OF THIS < 16 and botcover OF THIS <> 4
---       THEN
---         SET tempcovered OF hero TO tempcovered OF hero -32.
---     END IF.
-
-
--- --------------------------------------------------------------------
--- -- IF tempcovered OF hero is still > 15 then must have trousers
--- -- type clothing on - therefore disallow wearing dress type clothing
--- -- because, although technically possible, it is not very sensible.
--- --------------------------------------------------------------------
-
-
---     IF tempcovered OF hero >15 AND botcover OF THIS > 16
---       THEN
---         SET tempcovered OF hero TO tempcovered OF hero +16.
---     END IF.
-
-
--- --------------------------------------------------------------------
--- --  From here down, clothes DO work as they do for other areas.
--- --------------------------------------------------------------------
-
-
---     IF botcover OF THIS <> 0  AND botcover OF THIS <= tempcovered OF hero
---       THEN
---         INCREASE wear_flag OF hero BY 5.
---     END IF.
-
-
--- --------------------------------------------------------------------
--- -- At this point, 'wear_flag' will be 0 if the obj was held by the
--- -- player and can be put on, or l if he picked it up this turn and
--- -- it can be put on. Any higher value means one or more of the
--- -- tests failed and the player cannot put on these clothes.
--- --------------------------------------------------------------------
--- <<< original code <<<
-
--- >>> dev-clothing: TWEAKED >>>
-
       --========================================================================
       -- Outcome of the wear action...
       --========================================================================
@@ -689,9 +547,10 @@ EVERY clothing ISA OBJECT
           -- ----------------------------------
           -- It's not possible to wear the item
           -- ----------------------------------
-          -- We'll just take it (if not already possessed)
-          IF THIS NOT IN hero
+          -- We'll just take it (if not already possessed).
+
           -- >>> implicit take >>>
+          IF THIS NOT IN hero
             THEN "You pick up $+1."
           END IF.
           LOCATE THIS IN hero.
@@ -733,61 +592,13 @@ EVERY clothing ISA OBJECT
           LOCATE THIS IN hero.
           MAKE THIS worn.
       END IF.
-
--- >>> original code >>>
-    -- IF wear_flag OF hero >1
-    --   THEN
-    --     -- -------------------------------
-    --     -- The clothing item can't be worn
-    --     -- -------------------------------
-    --     IF THIS NOT IN hero
-    --     -- >>> implicit taking: >>>
-    --       THEN "You pick up" SAY THE THIS. "."
-    --     END IF.
-    --     LOCATE THIS IN hero.
-    --     -- <<< implicit taking. <<<
-
-    --     LIST worn.
-    --     "Trying to put" SAY THE THIS. "on isn't very sensible."
-
-    --   ELSE
-    --     -- -----------------------------
-    --     -- The clothing item can be worn
-    --     -- -----------------------------
-    --     MAKE THIS donned.
-    --     LOCATE THIS IN worn.
-    --     INCLUDE THIS IN wearing OF hero.
-    --     IF wear_flag OF hero = 1
-    --       THEN
-    --         -- --------------------------
-    --         -- The item is taken and worn
-    --         -- --------------------------
-    --         "You pick up" SAY THE THIS.
-    --         IF THIS IS NOT plural
-    --           THEN "and put it on."
-    --           ELSE "and put them on."
-    --         END IF.
-    --       ELSE
-    --         -- -----------------------
-    --         -- The item is simply worn
-    --         -- -----------------------
-    --         "You put on" SAY THE THIS. "."
-    --       END IF.
-    -- END IF.
--- <<< original code <<<
-
   END VERB wear.
 
-
--- >>> dev-clothing: TWEAKED >>> VERB remove
-
+  ------------------------------------------------------------------------------
   VERB remove
+  ------------------------------------------------------------------------------
     CHECK THIS DIRECTLY IN hero AND THIS IS worn
       ELSE SAY my_game:check_obj_in_worn.
- -- >>> original code >>>
- -- CHECK THIS IN worn
- --   ELSE SAY check_obj_in_worn OF my_game.
- -- <<< original code <<<
     AND CURRENT LOCATION IS lit
       ELSE SAY check_current_loc_lit OF my_game.
 
@@ -796,10 +607,8 @@ EVERY clothing ISA OBJECT
       -- Clothes which prevent the action are stored in a temporary set in
       -- order to list all blocking items in the verb failure response.
       --------------------------------------------------------------------
-
-      -- --------------------
-      -- Empty temporary set:
-      -- --------------------
+      -- Empty the temporary set:
+      -- ------------------------
       SET my_game:temp_clothes TO {}.
       -- -----------------------------------------------------------------------
       -- Check if the item being removed is subjected to ordered layering
@@ -813,7 +622,7 @@ EVERY clothing ISA OBJECT
         THEN
           -- -------------------------------------------------------------------
           -- Every worn clothing with a layer value equal or greater than the
-          -- value of the item we're trying to remove it's a blocking item which
+          -- value of the item we're trying to remove is a blocking item which
           -- prevents the action.
           -- -------------------------------------------------------------------
           FOR EACH item IsA clothing, DIRECTLY IN hero, IS worn
@@ -832,12 +641,12 @@ EVERY clothing ISA OBJECT
                   -- -----------------------------------------------------------
                   -- Carry out special checks for 'NOT blockslegs'
                   -- -----------------------------------------------------------
-                  IF item:blockslegs
                   -- If the item standing in the way is a leg-blocker, prevent:
+                  IF item:blockslegs
                     THEN INCLUDE item IN my_game:temp_clothes.
                   -- Otherwise, it must be a skirt or a coat.
-                  -- Check that item we're trying to wear is not a single-piece
-                  -- covering both legs and torso.
+                  -- Check that the handled item is not a single-piece clothing
+                  -- covering both legs and torso:
                   ELSIF THIS:topcover <> 0 AND THIS IS NOT twopieces
                     THEN INCLUDE item IN my_game:temp_clothes.
                   END IF.
@@ -850,93 +659,6 @@ EVERY clothing ISA OBJECT
               END IF.
           END FOR.
       END IF.
-
--- >>> original code >>>
---   SET wear_flag OF hero TO 0.
-
-
--- --------------------------------------------------------------------
--- -- Check the total 'topcover' of items worn. Because of the number
--- -- sequence used, by dividing the sum of the worn attributes by two
--- -- and then comparing the result to the individual 'topcover' of the
--- -- obj in question, ( the former can only ever be greater than the
--- -- latter if an article of clothing is worn that goes over 'obj' )
--- -- it's easy to tell if the obj ought to be removable. A temporary
--- -- attribute is used here because it needs to be manipulated. Once
--- -- again 'wear_flag' is used to indicate the results.
--- --------------------------------------------------------------------
-
-
---   SET tempcovered OF hero TO SUM OF topcover DIRECTLY IN worn /2.
---   IF topcover OF THIS <> 0 AND topcover OF THIS < tempcovered OF hero
---     THEN
---     INCREASE wear_flag OF hero BY 1.
---   END IF.
-
-
--- --------------------------------------------------------------------
--- -- Perform a similar test for other attributes.
--- --------------------------------------------------------------------
-
-
---   SET tempcovered OF hero TO SUM OF handscover DIRECTLY IN worn /2.
---   IF handscover OF THIS <> 0 AND handscover OF THIS < tempcovered OF hero
---     THEN
---       INCREASE wear_flag OF hero BY 1.
---   END IF.
-
-
---   SET tempcovered OF hero TO SUM OF feetcover DIRECTLY IN worn /2.
---   IF feetcover OF THIS <> 0 AND feetcover OF THIS < tempcovered OF hero
---     THEN
---       INCREASE wear_flag OF hero BY 1.
---   END IF.
-
-
---   SET tempcovered OF hero TO SUM OF headcover DIRECTLY IN worn /2.
---   IF headcover OF THIS <> 0 AND headcover OF THIS < tempcovered OF hero
---     THEN
---       INCREASE wear_flag OF hero BY 1.
---   END IF.
-
-
--- --------------------------------------------------------------------
--- -- botcover is a special case - first discount any coatlike clothes
--- -- as these do not affect ability to take off other lower garments.
--- --------------------------------------------------------------------
-
-
---   SET tempcovered OF hero TO SUM OF botcover DIRECTLY IN worn.
---   IF tempcovered OF hero >63
---     THEN
---       SET tempcovered OF hero TO tempcovered OF hero -64.
---   END IF.
-
-
--- --------------------------------------------------------------------
--- -- Now discount any dress/ skirt coverall like clothes as these do
--- -- not affect ability to take off other lower garments. The 'teddy'
--- -- type garment is expressly NOT included in the exclusion here.
--- --------------------------------------------------------------------
-
-
---   IF tempcovered OF hero >31 and botcover OF THIS <>4
---     THEN
---       SET tempcovered OF hero TO tempcovered OF hero -32.
---   END IF.
-
-
--- --------------------------------------------------------------------
--- -- Now process the manipulated value just as was done for the others
--- --------------------------------------------------------------------
-
-
---   SET tempcovered OF hero TO tempcovered OF hero /2.
---   IF botcover OF THIS <> 0 AND botcover OF THIS < tempcovered OF hero
---     THEN
---       INCREASE wear_flag OF hero BY 1.
---   END IF.
--- <<< original code <<<
 
       --========================================================================
       -- Outcome of the remove action...
@@ -967,27 +689,8 @@ EVERY clothing ISA OBJECT
           LOCATE THIS IN hero.
           MAKE THIS NOT worn.
       END IF.
--- >>> original code >>>
--- --------------------------------------------------------------------
--- -- Depending on the value of 'wear_flag' print and process the obj
--- -- as needed. If 'wear_flag' is NOT 0 then the clothes cannot be
--- -- removed.
--- --------------------------------------------------------------------
---
---   IF wear_flag OF hero > 0
---     THEN
---       LIST worn.
---       "Trying to take" SAY THE THIS. "off isn't very sensible."
---     ELSE
---       LOCATE THIS IN hero.
---       "You take off" SAY THE THIS. "."
---       EXCLUDE THIS FROM wearing OF hero.
---       MAKE THIS NOT donned.
---   END IF.
--- <<< original code <<<
   END VERB remove.
 END EVERY.
-
 
 
 --------------------------------------------------------------------
@@ -995,65 +698,16 @@ END EVERY.
 --------------------------------------------------------------------
 
 ADD TO EVERY ACTOR
--- >>> dev-clothing: DELETED >>> ACTOR: 'tempcovered' and 'wear_flag'
--- IS tempcovered 0.
--- IS wear_flag 0.
   IS sex 0.
 END ADD TO.
 
 
--- >>> dev-clothing: TWEAKED >>> EVENT worn_clothing_check
---   +--------------------------------------------------------------------------
---   | The original code of the worn_clothing_check is no longer be required.
---   | But now that the Alan loop bug was fixed, it might be worth adding some
---   | code that ensure that any clothing item INDIRECTLY IN HERO is set to
---   | 'NOT worn' -- the libray verbs are handling well all clothing, so this
---   | should never happen, but user verbs added to an adventure might forget to
---   | cater for these cases, and nested clothing might end up being seen as worn.
---   | 
---   |  BUG NOTE: A bug recently came up relating to nested loops using DIRECTLY.
---   |            It was fixed in Build 1870, so adopting the new dev snapshot
---   |            in the StdLib is crucial!
---   +--------------------------------------------------------------------------
-
--- >>> dev-clothing: DELETED >>>
---      The original event code is no longer be required.
-
--- >>> original code >>>
--- --------------------------------------------------------------------
--- -- An event checking that clothing acquired and worn by an actor
--- -- mid-game is recognised to be worn by the actor:
--- --------------------------------------------------------------------
--- --
--- --
--- EVENT worn_clothing_check
---   FOR EACH ac ISA ACTOR
---     DO
---       FOR EACH cl ISA CLOTHING, IN wearing OF ac
---         DO
---           IF ac = hero
---             THEN
---               IF cl NOT IN worn
---                 THEN LOCATE cl IN worn.
---                   MAKE cl donned.
---               END IF.
---             ELSE
---               IF cl NOT IN ac
---                 THEN LOCATE cl IN ac.
---                   MAKE cl donned.
---               END IF.
---           END IF.
---       END FOR.
---    END FOR.
---    SCHEDULE worn_clothing_check AFTER 1.
--- END EVENT.
--- <<< original code <<<
-
 
 -----------------------------------------------------------------------
+
 -- INSTRUCTIONS FOR USING THE CLOTHING CLASS
------------------------------------------------------------------------
 
+-----------------------------------------------------------------------
 
 -- Here is a quick overview for using the class 'clothing'.
 
