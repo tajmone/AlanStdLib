@@ -709,6 +709,11 @@ END ADD TO.
 
 -----------------------------------------------------------------------
 
+-- >>> dev-clothing: TODO >>> CLOTHING INSTRUCTIONS
+--     | This whole section needs updating to the new system.
+
+
+
 -- Here is a quick overview for using the class 'clothing'.
 
 -- A piece of clothing in your game code should look
@@ -801,6 +806,11 @@ END ADD TO.
 
 -- The clothing table
 -----------------------
+-- >>> dev-clothing: TODO >>> The Clothing Table
+--     | The new system doesn't use exponential values any more, and special
+--     | clothing like skirts and coats are no longer hardcoded.
+--     | So the Clothing Table must either be removed or redesigned as a mere
+--     | example of how to use coverage layers.
 
 
 -- Here is the chart showing a selection of fairly typical clothing items and the values to

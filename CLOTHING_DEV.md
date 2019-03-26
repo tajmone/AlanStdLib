@@ -51,7 +51,8 @@ The dev branch needs now to be polished and cleaned up before merging back into 
 After the new system is in place, the old code, tests and documents need to be adapated accordingly.
 
 - [ ] __TESTS__ — Command scripts of the original tests will need to be tweaked to mirror the new changes, some tests might no longer be needed and can be deleted.
-- [ ] __COMMENTED DOCUMENTATION__ — Comments in the library sources documenting need to be revised so they mirror the new system.
+- [ ] __COMMENTED DOCUMENTATION__ — Comments in the library sources documenting its usage need to be revised so they mirror the new system:
+    + [ ] __CLOTHING INSTRUCTIONS__ — This needs to be wholly revised.
 - [ ] __DOCUMENTS__ — READMEs and documentation files must also be revised to reflect library changes.
 - [ ] __CLOTHING GUIDE__
     - [ ] Update the guide to mirror the new system.
