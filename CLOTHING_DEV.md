@@ -68,6 +68,15 @@ Before merging into `master` branch, all commented dev annotations in the source
 - [ ] Remove all the `-- >>> dev-clothing` comments.
 - [ ] Remove all the `-- >>> original code >>>` commented out code.
 
+During the cleanup stage, I'll also take the chance to cleanup formatting/indentation of both code and documentation comments.
+
+Library modules status:
+
+- [ ] `lib_classes.i`
+- [ ] `lib_definitions.i`
+- [ ] `lib_locations.i`
+- [ ] `lib_messages.i`
+- [ ] `lib_verbs.i`
 
 -------------------------------------------------------------------------------
 

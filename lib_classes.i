@@ -162,11 +162,6 @@ END ADD.
 
 -- ==============================================================
 
-
--- (See the file 'lib_verbs.i', verbs 'inventory' and 'take' where the
--- container 'worn', defined below, is used in the verb definitions.)
-
-
 -- To use this class, see the documentation text right after the
 -- code below.
 
@@ -177,52 +172,41 @@ END ADD.
 
 
 -----------------------------------------------------------------
--- First, we declare the container for clothing.
+-- Define attributes used internally by the library for clothing.
 -----------------------------------------------------------------
 
-
--- An entity is present everywhere and thus the hero's clothing is always accessible.
--- This container is only used internally in the library; ignore.
-
--- >>> dev-clothing: DELETED >>> worn ENTITY
---
--- THE worn ISA ENTITY
---   CONTAINER TAKING CLOTHING.
---     HEADER SAY hero_worn_header OF my_game.
---     ELSE SAY hero_worn_else OF my_game.
--- END THE.
-
-
--- >>> dev-clothing: ADDED >>>
 ADD TO EVERY definition_block
-  HAS temp_cnt 0.                 --> Internal counter used by the library.
+  HAS temp_cnt 0.
+  -- Internal counter used by the library when listing clothing items,
+  -- in order to identify the second-last item and use "and" instead of
+  -- the comma separator.
 
-  HAS temp_clothes { clothing }.  --> Temporary set used by the library to track
-                                  --  clothies preventing wear/remove, in order
-                                  --  to list them in the verb message.
+  HAS temp_clothes { clothing }.
+  -- Temporary set used by the library to track clothes preventing
+  -- wear/remove, in order to list them in the verb response message.
 END ADD TO definition_block.
-
--- >>> dev-clothing: TODO >>>
-
 
 
 -------------------------------------------------------------------
 -- Now, we define some common attributes for clothing as well as
--- how the verbs 'remove', 'undress' and 'wear' (and their synonyms) behave with this class.
+-- how the verbs 'remove', 'undress' and 'wear' (and their synonyms)
+-- behave with this class.
 -------------------------------------------------------------------
 
+-- NOTE: The 'worn' attribute is defined on the 'thing' class, in module
+--       'lib_definitions.i'. This was done for two reasons:
+-- 
+-- 1. It allows more flexible syntax and verb checks.
+-- 
+-- 2. Authors might want to implement non-clothing wearables (e.g. devices like
+--    headphones, VR headsets, etc.), therefore the 'worn' state should not be
+--    exclusive to the clothing class.
 
 EVERY clothing ISA OBJECT
 
   IS wearable.
 
   IS sex 0.
-
--- >>> dev-clothing: TWEAKED >>> clothing attributes
---       | The new system adds new attributes to the clothing class:
---       |   * 'facecover'
---       |   * 'blockslegs'
---       |   * 'twopieces'
 
   IS headcover 0.
   IS facecover 0.
@@ -231,99 +215,33 @@ EVERY clothing ISA OBJECT
   IS topcover 0.
   IS botcover 0.
 
--- >>> dev-clothing: ADDED >>>
+  IS blockslegs.
+  -- i.e. the item prevents wearing/removing legsware from the layers below
+  -- (skirts and coats are 'NOT blockslegs').
 
-  IS blockslegs. -- i.e. prevents wearing/removing legsware from layers below
-                 -- (skirts and coats are NOT blockslegs) 
-  IS NOT twopieces. -- For items covering legs + torso (topcover & botcover <> 0)
-                    -- that are to be treated as a single piece (unlike a bikini)
-                    -- Items which are twopieces can be worn/removed with a skirt.
-
--- >>> dev-clothing: TWEAKED >>> CLOTHING: 'donned' attribute.
-
---   | The 'donned' attribute was moved from 'clothing' class to 'thing', and
---   | renamed to 'worn' (see 'lib_definitions.i')
-
-  -- >>> original code >>>
-  -- IS NOT donned. -- not in the 'wearing' set of any actor; this attribute
-        -- is used internally in the library; ignore
-  -- <<< original code <<<
-
-
+  IS NOT twopieces.
+  -- For items covering legs + torso ('topcover' & 'botcover' <> 0) that should
+  -- be treated as a single piece (e.g. a one-piece swimming suite).
+  -- Items which are 'twopieces' (eg. a bikini) can be worn/removed while
+  -- wearing a skirt for, although handled as a single clothing item, they cover
+  -- legs and torso via two separate pieces.
+  
   INITIALIZE
 
--- >>> dev-clothing: TWEAKED >>> clothing INITIALIZE
---   +--------------------------------------------------------------------------
---   | The new clothing system doesn't require using the 'worn' entity nor the
---   | 'wearing' set any more. A clothing only needs to be DIRECTLY IN an ACTOR 
---   | and be 'IS worn' for it to be considered as being worn by that actor.
---   | So we no longer need the old initialization code...
---   +--------------------------------------------------------------------------
--- >>> original code >>>
-    -- -- the set attribute 'IS wearing' is defined to work for both the hero
-    -- -- and NPCs:
-    --
-    -- IF THIS IN worn
-    --   THEN INCLUDE THIS IN wearing OF hero.
-    -- END IF.
-    --
-    -- FOR EACH ac ISA ACTOR
-    --   DO
-    --     IF ac = hero
-    --       THEN
-    --         IF THIS IN wearing OF hero AND THIS <> null_clothing
-    --           THEN
-    --             IF THIS NOT IN worn
-    --               THEN LOCATE THIS IN worn.
-    --             END IF.
-    --             MAKE THIS donned.
-    --         END IF.
-    --     ELSIF THIS IN wearing OF ac AND THIS <> null_clothing
-    --         THEN
-    --           IF THIS NOT IN ac
-    --             THEN
-    --               LOCATE THIS IN ac.
-    --           END IF.
-    --           MAKE THIS donned.
-    --     END IF.
-    -- END FOR.
--- <<< original code <<<
-
-
-
-    -- all objects found in a piece of clothing, for example a wallet in a jacket,
-    -- will be allowed back in the piece of clothing once taken from there:
-
+    -- Any objects inside a clothing item (e.g. a wallet in a jacket) will be
+    -- allowed to be put back into its original containing clothing once taken
+    -- out from it:
 
     FOR EACH o ISA OBJECT, DIRECTLY IN THIS
-      DO
-        INCLUDE o IN allowed OF THIS.
+      DO INCLUDE o IN allowed OF THIS.
     END FOR.
 
 
-
--- >>> dev-clothing: DELETED >>> SCHEDULE worn_clothing_check EVENT
---   +--------------------------------------------------------------------------
---   | We no longer need the Event to carry out check-chores on clothing, so
---   | we suppress it's scheduling...
---   +--------------------------------------------------------------------------
-
--- >>> original code >>>
-    -- -- all clothing acquired and worn by the hero or an NPC mid-game is checked to
-    -- -- show correctly when the possessions of an actor are listed:
-    -- --
-    -- --
-    -- SCHEDULE worn_clothing_check AFTER 0.
--- <<< original code <<<
-
-
-
   CONTAINER
-  -- to allow for example a wallet to be put into a jacket
+  -- To allow for example a wallet to be put into a jacket.
 
-  -- If the clothing contains something, for example if a jacket contains a wallet,
+  -- If the clothing item contains something, e.g. a jacket contains a wallet,
   -- the wallet will be mentioned by default when the jacket is examined:
-
 
   VERB examine
     DOES AFTER
@@ -334,8 +252,6 @@ EVERY clothing ISA OBJECT
           END IF.
       END IF.
   END VERB examine.
-
--- >>> dev-clothing: ADDED >>>
 
 -- =============================================================================
 -- Block verbs that could dislocate worn clothing items
@@ -349,7 +265,7 @@ EVERY clothing ISA OBJECT
             THEN SAY my_game:check_obj_not_in_worn3.
             ELSE
               IF obj IS NOT plural
-                -- "Currently $+1 [is/are] worn by"
+                --       "Currently $+1 [is/are] worn by"
                 THEN SAY my_game:check_obj1_not_worn_by_NPC_sg.
                 ELSE SAY my_game:check_obj1_not_worn_by_NPC_pl.
               END IF.
@@ -370,7 +286,7 @@ EVERY clothing ISA OBJECT
             THEN SAY my_game:check_obj_not_in_worn3.
             ELSE
               IF obj IS NOT plural
-                -- "Currently $+1 [is/are] worn by"
+                --       "Currently $+1 [is/are] worn by"
                 THEN SAY my_game:check_obj1_not_worn_by_NPC_sg.
                 ELSE SAY my_game:check_obj1_not_worn_by_NPC_pl.
               END IF.
@@ -391,7 +307,7 @@ EVERY clothing ISA OBJECT
             THEN SAY my_game:check_obj_not_in_worn3.
             ELSE
               IF obj IS NOT plural
-                -- "Currently $+1 [is/are] worn by"
+                --       "Currently $+1 [is/are] worn by"
                 THEN SAY my_game:check_obj1_not_worn_by_NPC_sg.
                 ELSE SAY my_game:check_obj1_not_worn_by_NPC_pl.
               END IF.
@@ -403,9 +319,10 @@ EVERY clothing ISA OBJECT
           END IF.
   END VERB give.
 
---| If you want to prevent NPCs from giving their clothes when asked to, either
---| uncomment the following code or add it to your adventure:
 
+  --| NOTE: If you want to prevent NPCs from giving their clothes when asked to,
+  --|       either uncomment the following code or add it to your adventure:
+  -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   -- VERB ask_for --> ask (act) 'for' (obj)
   --   WHEN obj
   --     CHECK obj IS NOT worn
@@ -420,6 +337,7 @@ EVERY clothing ISA OBJECT
   --             END FOR.
   --         END IF.
   -- END VERB ask_for.
+  -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
   VERB throw --> throw (projectile)
@@ -429,7 +347,7 @@ EVERY clothing ISA OBJECT
           THEN SAY my_game:check_obj_not_in_worn3.
           ELSE
             IF projectile IS NOT plural
-              -- "Currently $+1 [is/are] worn by"
+              --       "Currently $+1 [is/are] worn by"
               THEN SAY my_game:check_obj1_not_worn_by_NPC_sg.
               ELSE SAY my_game:check_obj1_not_worn_by_NPC_pl.
             END IF.
@@ -441,6 +359,7 @@ EVERY clothing ISA OBJECT
         END IF.
   END VERB throw.
 
+
   VERB throw_to --> throw (projectile) 'to' (recipient)
     WHEN projectile
       CHECK projectile IS NOT worn
@@ -449,7 +368,7 @@ EVERY clothing ISA OBJECT
             THEN SAY my_game:check_obj_not_in_worn3.
             ELSE
               IF projectile IS NOT plural
-                -- "Currently $+1 [is/are] worn by"
+                --       "Currently $+1 [is/are] worn by"
                 THEN SAY my_game:check_obj1_not_worn_by_NPC_sg.
                 ELSE SAY my_game:check_obj1_not_worn_by_NPC_pl.
               END IF.
@@ -461,6 +380,7 @@ EVERY clothing ISA OBJECT
           END IF.
   END VERB throw_to.
 
+
   VERB throw_at --> throw (projectile) 'at' (target)
     WHEN projectile
       CHECK projectile IS NOT worn
@@ -469,7 +389,7 @@ EVERY clothing ISA OBJECT
             THEN SAY my_game:check_obj_not_in_worn3.
             ELSE
               IF projectile IS NOT plural
-                -- "Currently $+1 [is/are] worn by"
+                --       "Currently $+1 [is/are] worn by"
                 THEN SAY my_game:check_obj1_not_worn_by_NPC_sg.
                 ELSE SAY my_game:check_obj1_not_worn_by_NPC_pl.
               END IF.
@@ -490,7 +410,7 @@ EVERY clothing ISA OBJECT
             THEN SAY my_game:check_obj_not_in_worn3.
             ELSE
               IF projectile IS NOT plural
-                -- "Currently $+1 [is/are] worn by"
+                --       "Currently $+1 [is/are] worn by"
                 THEN SAY my_game:check_obj1_not_worn_by_NPC_sg.
                 ELSE SAY my_game:check_obj1_not_worn_by_NPC_pl.
               END IF.
@@ -511,7 +431,7 @@ EVERY clothing ISA OBJECT
             THEN SAY my_game:check_obj_not_in_worn3.
             ELSE
               IF obj IS NOT plural
-                -- "Currently $+1 [is/are] worn by"
+                --       "Currently $+1 [is/are] worn by"
                 THEN SAY my_game:check_obj1_not_worn_by_NPC_sg.
                 ELSE SAY my_game:check_obj1_not_worn_by_NPC_pl.
               END IF.
