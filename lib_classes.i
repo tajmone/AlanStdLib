@@ -1,16 +1,16 @@
- -- ALAN Standard Library v2.1
+-- ALAN Standard Library v2.1
 -- Classes (file name: 'lib_classes.i')
 
 
 -- This library file defines various object and actor classes.
--- Many of these classes are frequently  used in verb definitions in 'lib_verbs.i'
+-- Many of these classes are frequently used in verb definitions in 'lib_verbs.i'
 -- so they should be edited or removed with caution. However, to ease things up,
 -- it is mentioned at the beginning of every class below if and where the class
 -- is cross-referenced in the other library files.
 
 
 ---- First, we define the default description for scenery objects
-    -- = no description at all
+--   = no description at all
 
 
 ADD TO EVERY OBJECT
@@ -22,118 +22,116 @@ ADD TO EVERY OBJECT
 END ADD.
 
 
-
-
-
-
--- Contents:
-
-
-
-
+--------------------------------------------------------------------------------
+--                                .: CONTENTS :.                                
+--------------------------------------------------------------------------------
 
 -- 1. OBJECT CLASSES
 -- =================
 
-
-
--- CLOTHING
-  -- Is a piece of clothing that behaves according to Alan Bampton's 'xwear.i' extension.
-     -- The said extension has been fully assimilated to this library.
-     -- This extension prevents clothes from being worn in an illogical order, for example you
-  -- cannot put on a shirt if you are already wearing a jacket, and so forth.
-  -- This only applies to the hero; NPCs cannot be made to wear clothing in layers.
-  -- Also the verbs 'wear', 'remove' and 'undress' are defined here.
-
-
--- DEVICE
-  -- Is a  machine or an electronic device, for example a TV. Can be turned
-  -- (=switched) on and off if it is not broken.
-  -- Attributes: 'on' and NOT 'on', NOT broken.
-      -- Is described by default as being either on or off when examined.
-
-
--- DOOR
-  -- Can be opened, closed, and optionally locked and unlocked.
-  -- Is by default not open, not lockable.
-  -- all default attributes: openable, NOT open, NOT lockable, NOT locked; not takeable.
-  -- Is described by default as being either open or closed when examined.
-
-
--- LIQUID
-  -- Can only be taken if it is in a container. You can fill something with it,
-  -- and you can pour it somewhere.
-  -- A liquid is by default NOT drinkable.
-
-
--- LIGHTSOURCE
-  -- IS natural or NOT natural
-  -- (a natural lightsource is for example a match or a torch).
-  -- Can be turned on and off, lighted and extinguished (= put out) if it
-      -- is not broken. A natural lightsource
-  -- cannot be turned on or off, it can only be lighted and extinguished (= put out).
-  -- When examined, a lightsource is automatically supplied with a description of
-  -- whether it is providing light or not.
-
-
--- LISTED_CONTAINER
-  -- Is a container object. The contents of a listed_container will be listed both after
-  -- 'look' (= in the room description), 'look in' and 'examine' (if the container is open).
-  -- (The contents of a normal container object are not listed after 'examine' by default, but only
-  -- after 'look' (=room description) and 'look in').
-
-
--- SOUND
-  -- Can be listened to but not examined, searched, smelled or manipulated.
-     -- (Can be turned on and off if desirable.)
-
-
--- SUPPORTER
-  -- You can put things on this and you can stand on this. It is declared a container,
-  -- so you can take things from it, as well. When there's something on a supporter,
-      -- a default listing of it will appear in the room description and after 'examine'.
-
-
--- WEAPON
-  -- IS fireable (for example a cannon) or NOT fireable (for example a baseball bat).
-
-
--- WINDOW
-  -- Can be opened, closed, looked through and out of.
-  -- Will be by default described as being either open or closed when examined.
+--+-----------------------------------------------------------------------------
+--| CLOTHING
+--+-----------------------------------------------------------------------------
+--| * Is a piece of clothing that behaves according to Alan Bampton's 'xwear.i'
+--|   extension.
+--| * The said extension has been fully assimilated to this library.
+--| * This extension prevents clothes from being worn in an illogical order,
+--|   for example you cannot put on a shirt if you are already wearing a jacket,
+--|   and so forth.
+--| * This only applies to the hero; NPCs can't wear clothing in layers.
+--| * Also the verbs 'wear', 'remove' and 'undress' are defined here.
+--+-----------------------------------------------------------------------------
+--| DEVICE
+--+-----------------------------------------------------------------------------
+--| * Is a machine or an electronic device, for example a TV. Can be turned
+--|   (= switched) on and off, unless it's broken.
+--| * Attributes: 'on' and 'NOT on', 'NOT broken'.
+--| * Is described by default as being either on or off when examined.
+--+-----------------------------------------------------------------------------
+--| DOOR
+--+-----------------------------------------------------------------------------
+--| * Can be opened, closed, and optionally locked and unlocked.
+--| * Is by default 'NOT open', 'NOT lockable'.
+--| * All default attributes:
+--|   openable, NOT open, NOT lockable, NOT locked; NOT takeable.
+--| * Is described by default as being either open or closed when examined.
+--+-----------------------------------------------------------------------------
+--| LIQUID
+--+-----------------------------------------------------------------------------
+--| * Can only be taken if it's in a container.
+--| * You can fill something with it, and you can pour it somewhere.
+--| * A liquid is by default NOT drinkable.
+--+-----------------------------------------------------------------------------
+--| LIGHTSOURCE
+--+-----------------------------------------------------------------------------
+--| * IS natural or NOT natural
+--|   (a natural lightsource is for example a match or a torch).
+--| * Can be turned on and off, lighted and extinguished (= put out) unless it's
+--|   broken. A natural lightsource cannot be turned on or off, it can only be
+--|   lighted and extinguished (= put out).
+--| * When examined, a lightsource is automatically supplied with a description
+--|   of whether it is providing light or not.
+--+-----------------------------------------------------------------------------
+--| LISTED_CONTAINER
+--+-----------------------------------------------------------------------------
+--| * Is a container object.
+--| * The contents of a listed_container will be listed both after 'look' (= in
+--|   the room description), 'look in' and 'examine' (if the container is open).
+--|   (The contents of a normal container object are not listed after 'examine'
+--|   by default, but only after 'look' (= room description) and 'look in').
+--+-----------------------------------------------------------------------------
+--| SOUND
+--+-----------------------------------------------------------------------------
+--| * Can be listened to but not examined, searched, smelled or manipulated.
+--| * (Can be turned on and off if desirable.)
+--+-----------------------------------------------------------------------------
+--| SUPPORTER
+--+-----------------------------------------------------------------------------
+--| * You can put things on this and you can stand on this.
+--| * It's declared a container, so you can take things from it, as well.
+--| * Contents of a supporter are listed by default in the room description and
+--|   after 'examine'.
+--+-----------------------------------------------------------------------------
+--| WEAPON
+--+-----------------------------------------------------------------------------
+--| * IS fireable (e.g. a cannon) or NOT fireable (e.g. a baseball bat).
+--+-----------------------------------------------------------------------------
+--| WINDOW
+--+-----------------------------------------------------------------------------
+--| * Can be opened, closed, looked through and out of.
+--| * Will be by default described as being either open or closed when examined.
+--+-----------------------------------------------------------------------------
 
 
 
 -- 2. ACTOR CLASSES
 -- ================
 
--- the ACTORS are defined to be NOT inanimate CONTAINERS (so that they can for example
--- receive and carry things.
+-- ACTORS are defined to be NOT inanimate CONTAINERS (so that they can for
+-- example receive and carry things).
 --
--- Actors are usually preceded by an article in-game:
--- for example "You see a man here."
---    "There is nothing special about the dog."
+-- Actors are usually preceded by an article in-game, for example:
+--   | You see a man here.
+--   | There is nothing special about the dog.
 -- unless they are declared as 'named'.
 --
 -- The following classes for actors are defined in this library:
 
-
--- PERSON
-  -- is able to talk (= 'CAN talk').
-
-
--- FEMALE
-  -- a subclass of person (= is able to talk)
-      -- can be referred to with the pronoun 'her'
-
-
--- MALE
-  -- a subclass of person (= is able to talk)
-      -- can be referred to with the pronoun 'him'
-
-
-
-
+--+-----------------------------------------------------------------------------
+--| PERSON
+--+-----------------------------------------------------------------------------
+--| * is able to talk (= 'CAN talk').
+--+-----------------------------------------------------------------------------
+--| FEMALE
+--+-----------------------------------------------------------------------------
+--| * A subclass of person (= is able to talk)-
+--| * Can be referred to with the pronoun 'her'-
+--+-----------------------------------------------------------------------------
+--| MALE
+--+-----------------------------------------------------------------------------
+--| * A subclass of person (= is able to talk)-
+--| * Can be referred to with the pronoun 'him'-
+--+-----------------------------------------------------------------------------
 
 -- The contents end here.
 
