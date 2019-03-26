@@ -11,14 +11,15 @@ This temporary document annotates all the tasks of the development stages to fix
 
 <!-- MarkdownTOC autolink="true" bracket="round" autoanchor="false" lowercase="only_ascii" uri_encoding="true" levels="1,2,3" -->
 
-- [Introduction](#introduction)
+- [Pre-Merge Cleanup Steps](#pre-merge-cleanup-steps)
+    - [Post-Implementation Fixes](#post-implementation-fixes)
+    - [Library Sources Cleanup](#library-sources-cleanup)
+- [Developement Notes](#developement-notes)
     - [Sources Annotations](#sources-annotations)
     - [Keep Original Code](#keep-original-code)
     - [Dedicated Tests](#dedicated-tests)
 - [Development Steps Overwiew](#development-steps-overwiew)
     - [New System Implementation](#new-system-implementation)
-    - [Post-Implementation Fixes](#post-implementation-fixes)
-    - [Pre-Merge Cleanup](#pre-merge-cleanup)
 - [Tasks List](#tasks-list)
     - [Tests](#tests)
         - [Debug Module](#debug-module)
@@ -41,7 +42,36 @@ This temporary document annotates all the tasks of the development stages to fix
 
 -----
 
-# Introduction
+# Pre-Merge Cleanup Steps
+
+The dev branch needs now to be polished and cleaned up before merging back into `master` branch. The new system needs to be documented for this merge introduces significant changes in the StdLib. Also, there are still some minor development tasks pending which should be addressed.
+
+## Post-Implementation Fixes
+
+After the new system is in place, the old code, tests and documents need to be adapated accordingly.
+
+- [ ] __TESTS__ — Command scripts of the original tests will need to be tweaked to mirror the new changes, some tests might no longer be needed and can be deleted.
+- [ ] __COMMENTED DOCUMENTATION__ — Comments in the library sources documenting need to be revised so they mirror the new system.
+- [ ] __DOCUMENTS__ — READMEs and documentation files must also be revised to reflect library changes.
+- [ ] __CLOTHING GUIDE__
+    - [ ] Update the guide to mirror the new system.
+    + [ ] Add example adventures and transcripts to illustrate:
+        * [ ] __Basic clothing__ — clothing are treated as single items, i.e. the Hero or a NPC is either wearing this or that dress.
+        * [ ] __Intermediate clothing__ — clothing items implemented in layered order, with underware being implemented too.
+        * [ ] __Advanced clothing__ — demonstrate how to implement skirts, coats and bikinis special clothes.
+
+## Library Sources Cleanup
+
+Before merging into `master` branch, all commented dev annotations in the sources should be removed, and temporary documents and files too.
+
+- [ ] Annotate pending TODO tasks that must be addressed before merging.
+- [ ] Remove all the `-- >>> dev-clothing` comments.
+- [ ] Remove all the `-- >>> original code >>>` commented out code.
+
+
+-------------------------------------------------------------------------------
+
+# Developement Notes
 
 Some general guidelines on the development approach employed.
 
@@ -105,19 +135,6 @@ The following list resumes the overall steps required to implement the new syste
 - [x] Add new clothing attribute `facecover` to allow handling goggles, beards, masks, etc., independently from `headcover`.
 - [ ] Establish some rules on how the library should handle verbs that might interact with a worn clothing item (including implicit taking), then enforce them in the library vers, and provide clear guidelines for authors so that they might create custom verbs that comply to these guidelines and won't interfere with worn clothing.
 
-## Post-Implementation Fixes
-
-After the new system is in place, the old code, tests and documents need to be adapated accordingly.
-
-- [ ] __TESTS__ — Command scripts of the original tests will need to be tweaked to mirror the new changes, some tests might no longer be needed and can be deleted.
-- [ ] __COMMENTED DOCUMENTATION__ — Comments in the library sources documenting need to be revised so they mirror the new system.
-- [ ] __DOCUMENTS__ — READMEs and documentation files must also be revised to reflect library changes.
-
-## Pre-Merge Cleanup
-
-Once everything is ready to be merged into `master` branch, all commented dev annotations in the sources should be removed, and temporary documents and files too.
-
-- [ ] Remove all the `-- >>> dev-clothing` comments and `-- >>> original code >>>` commented out code.
 
 -------------------------------------------------------------------------------
 
