@@ -2113,11 +2113,7 @@ ADD TO EVERY ACTOR
   IS NOT sitting.
   IS NOT lying_down.
   IS NOT named.
-  -- = the actor's name is not known to the player
--- >>> dev-clothing: DELETED >>>
---  IS wearing {null_clothing}.
---  -- = the actor's clothing is not specified.
---  -- "null_clothing" is a dummy default that can be ignored.
+  -- = the actor's name is not known to the player.
   IS NOT compliant.
   -- an actor only gives something to the hero if it is in a compliant mood.
   -- In practice, this happens by default when the hero asks the actor for anything.
@@ -2184,13 +2180,6 @@ ADD TO EVERY ACTOR
   MAKE hero compliant.
   -- so that the hero can give, drop, etc. carried objects.
 
-
--- >>> dev-clothing: DELETED >>> ACTOR INITIALIZE: EXCLUDE null_clothing FROM wearing
----- excluding the default dummy clothing object from all actors; ignore.
---
---EXCLUDE null_clothing FROM wearing OF THIS.
-
-
   -- all actors will obey this script from the start of the game:
 
   IF THIS <> hero
@@ -2235,8 +2224,6 @@ ADD TO EVERY ACTOR
         END IF.
     END IF.
 
-
--- >>> dev-clothing: TWEAKED >>> ACTOR EXAMINE VERB
 
   VERB examine
     DOES AFTER
@@ -2286,13 +2273,8 @@ ADD TO EVERY ACTOR
                   END DEPEND.
               END FOR.
           END IF.
--- >>> original code >>>
-       -- LIST THIS.
--- <<< original code <<<
       END IF.
   END VERB examine.
-
-
 END ADD TO ACTOR.
 
 

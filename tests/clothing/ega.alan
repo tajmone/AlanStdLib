@@ -184,15 +184,12 @@ THE dressing_room IsA room.
      SOUTHWEST to Womenswear,
      WEST to Sportswear, and
      NORTHWEST to Workswear.".
--- >>> dev-clothing: TWEAKED >>> EGA: VERB undress
   VERB undress -- Allow undressing action when in Dressing Room:
     DOES ONLY
-     -- IF COUNT DIRECTLY IN worn, ISA CLOTHING > 0
-      --   THEN EMPTY worn IN hero.
       IF COUNT IsA clothing, DIRECTLY IN hero, IS worn > 0
-         THEN
+        THEN
           "You remove all the items you were wearing."
-          FOR EACH worncl IsA clothing, DIRECTLY IN Hero, IS worn
+          FOR EACH worncl IsA clothing, DIRECTLY IN hero, IS worn
             DO
               MAKE worncl NOT worn.
               LOCATE worncl AT CURRENT LOCATION.
@@ -777,11 +774,8 @@ THE personal_assistant IsA female AT ega_hall.
     -- ---------------------------------------------------------
     -- Turn every clothing IN assistant into an item worn by her
     -- ---------------------------------------------------------
--- >>> dev-clothing: TWEAKED >>> EGA: clothing INITIALIZE (don't use 'wearing')
     FOR EACH cl IsA clothing, IN THIS
-      DO
-        MAKE cl worn.
-        -- INCLUDE cl IN wearing OF THIS.
+      DO MAKE cl worn.
     END FOR.
 END THE personal_assistant.
 
@@ -1040,8 +1034,6 @@ END THE.
 -- [ ] Could use an 'owned' attribute to allow INITIALIZE all hero clothing to
 --     have same ARTICLE and place them IN WORN, and slim down code here.
 -- [ ] Order of creation matters: items will be listed in inverse order.
-
--- >>> dev-clothing: TWEAKED >>> EGA: Hero clothing (don't use 'worn')
 
 THE hero_socks IsA cl_socks IN hero.
   IS worn.

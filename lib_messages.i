@@ -41,9 +41,8 @@ MESSAGE
   CONTAINS_COMMA: "$01"
     IF parameter1 ISA CLOTHING
       THEN
-        -- the following snippet adds "(being worn)" after all
-        -- pieces of clothing worn by an NPC, at 'x [actor]'
--- >>> dev-clothing: TWEAKED >>> MESSAGES referencing worn
+        -- the following snippet adds "(being worn)" after every
+        -- clothing item worn by an actor, when using 'LIST actor'
         IF parameter1 IS worn
           THEN "(being worn)"
         END IF.
@@ -52,9 +51,8 @@ MESSAGE
   CONTAINS_AND: "$01"
     IF parameter1 ISA CLOTHING
       THEN
-        -- the following snippet adds "(being worn)" after all
-        -- pieces of clothing worn by an NPC, after 'x [actor]'
--- >>> dev-clothing: TWEAKED >>> MESSAGES referencing worn
+        -- the following snippet adds "(being worn)" after every
+        -- clothing item worn by an actor, when using 'LIST actor'
         IF parameter1 IS worn
           THEN "(being worn)"
         END IF.
@@ -62,9 +60,8 @@ MESSAGE
   CONTAINS_END: "$01"
     IF parameter1 ISA CLOTHING
       THEN
-        -- the following snippet adds "(being worn)" after all
-        -- pieces of clothing worn by an NPC, after 'x [actor]'
--- >>> dev-clothing: TWEAKED >>> MESSAGES referencing worn
+        -- the following snippet adds "(being worn)" after every
+        -- clothing item worn by an actor, when using 'LIST actor'
         IF parameter1 IS worn
           THEN "(being worn)"
         END IF.

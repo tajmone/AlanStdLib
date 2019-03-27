@@ -83,20 +83,15 @@ ADD TO EVERY THING
 
   CAN NOT talk.
 
--- >>> dev-clothing: ADDED >>> THING: 'donned' attribute.
---      The 'donned' attribute was moved from 'clothing' class to 'thing'.
---      Now renamed to 'worn'.
-
   IS NOT worn.
     -- (for 'clothing' instances) it's not worn by any actor.
     -- -------------------------------------------------------------------------
-    -- NOTE: Authors can also use this attribute to implement non-clothing type
-    --       of wearables (eg. devices). The library ensures that any verbs
-    --       which could remove a thing from an actor also set the thing as 
-    --       'NOT worn', in case authors are using this attribute outside of
-    --       the 'clothing' class context.
+    -- NOTE: Authors can also use this attribute to implement wearables other
+    --       than clothing (eg. devices, like headphones, a VR headset, etc.).
+    --       The library ensures that any verbs which could remove a thing from
+    --       an actor also set the thing as 'NOT worn', in case authors are
+    --       using this attribute outside of the 'clothing' class context.
     -- -------------------------------------------------------------------------
--- <<< dev-clothing <<< 
 
 -- We still define that plural nouns are preceded by "some" (and not by "a" or "an"):
 
@@ -110,18 +105,18 @@ INDEFINITE ARTICLE
 END ADD TO.
 
 
+-- NOTE: If you need to use "an" instead, you should declare it directly on the
+--       instance, e.g.:
+-- 
+--       ~~~~~~~~~~~~~~~~~~~~~~~~~~
+--       THE owl ISA ACTOR AT woods
+--         INDEFINITE ARTICLE "an"
+--       END THE.
+--       ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--- If you need "an", you should declare it separately at the instance, for example:
 
--- THE owl ISA ACTOR
---    AT woods
---    INDEFINITE ARTICLE "an"
--- END THE.
-
-
--- (We add the 'plural' attribute to the 'entity' class, because the plural
--- applies not only to things but also to for example parameters in syntax statements; ignore.)
-
+-- We add the 'plural' attribute to the 'entity' class, because it doesn't apply
+-- just to things but also (e.g.) to parameters in syntax statements; ignore.
 
 ADD TO EVERY ENTITY
   IS NOT plural.
