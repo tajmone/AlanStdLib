@@ -92,7 +92,8 @@ The Clothing Class commented instructions from `lib_classes.i` will be removed, 
 
 - [ ] Assets update:
     + [x] Update __HighlightTreprocessor__ v1.3.0.
-    + [ ] __Sass/CSS stylesheets__ — provide different Alan syntax themes for Library and tutorial code, to visually distinguish them.
+    + [ ] __Sass/CSS stylesheets__
+        * [x] Provide different Alan syntax themes for Library and tutorial code, to visually distinguish them.
 - [ ] Update the guide to mirror the new system.
 - [ ] Add example adventures and transcripts to illustrate:
     * [ ] __Basic clothing__ — clothing are treated as single items, i.e. the Hero or a NPC is either wearing this or that dress.

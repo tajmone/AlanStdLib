@@ -1,4 +1,4 @@
-//  v1.0.0 (2018-12-16) by Tristano Ajmone
+// "styles.scss"                        v2.0.0 | 2019-04-06 | by Tristano Ajmone
 // *****************************************************************************
 // *                                                                           *
 // *               Highlight Stylesheets for Alan StdLib Extras                *
@@ -11,7 +11,7 @@
 // The latter rely on a custom ERB template that modifies the HTML output for
 // listing blocks:
 // 
-//   ../ERB/block_listing.html.erb
+//   ../haml/block_listing.html.haml
 
 // ==================
 // Mixins and Helpers
@@ -30,16 +30,44 @@
 // ==========================
 @import 'color-schemes';
 
-// =============
-// Default Theme
-// =============
-// A fallback theme for syntaxes that don't have a dedicate theme.
-@import 'default-theme';
+// =============================================================================
+//                             Syntax Highlighting                              
+// =============================================================================
 
-// ====================
-// Custom Syntax Themes
-// ====================
-// Some syntaxes have their own theme:
-@import 'alan'; // Alan IF color scheme
+// -----------------------------------------------------------------------------
+/* Highlight Default Theme: Base16 Eighties */
+// -----------------------------------------------------------------------------
+// We'll use the default values of the Highlight AsciiDoc template for the
+// default theme. This theme will be used for styling any language that doesn't
+// have a dedicated theme.
+
+@import 'hl-adoc-template';
+
+// -----------------------------------------------------------------------------
+/* Highlight Theme for Alan -- based on "github.com style" for highlight.js, by Vasily Polovnyov */
+// -----------------------------------------------------------------------------
+// The imported template will generate the default Alan theme using the color
+// scheme defined in "_color-scheme.scss".
+
+@import 'hl-reset'; // Resets Highlight template vars.
+$HL-Font-family: $FiraCode;
+@import 'hl-template-alan'; // Reusable template for Alan themes.
+
+// -----------------------------------------------------------------------------
+//                        Syntax Theme for Alan Lib Code                        
+// -----------------------------------------------------------------------------
+// Alternative color theme for Alan code with "role=lib", to distinguish between
+// code from the tutorial and that of the Library sources.
+
+@import 'hl-theme_alan-lib';
+
+// -----------------------------------------------------------------------------
+//                     Syntax Theme for Alan Tutorial Code                      
+// -----------------------------------------------------------------------------
+// Alternative color theme for Alan code with "role=tutorial", to distinguish
+// between sourcecode of the tutorial "TV-TIME!" adventure and generic Alan
+// examples or the Library sources.
+
+@import 'hl-theme_alan-tutorial';
 
 // EOF //

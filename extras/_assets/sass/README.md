@@ -14,6 +14,7 @@ This folder contains the Sass sources to build the custom CSS stylesheets for co
     - [Installing Dart Sass](#installing-dart-sass)
 - [Credits](#credits)
     - [Base16 Color Schemes](#base16-color-schemes)
+    - [Base16 Sass](#base16-sass)
     - [Sass Boilerplate](#sass-boilerplate)
 
 <!-- /MarkdownTOC -->
@@ -25,13 +26,17 @@ This folder contains the Sass sources to build the custom CSS stylesheets for co
 Sass sources:
 
 - [`styles.scss`][styles]
-- [`_alan.scss`][alan]
-- [`_color-schemes.scss`][color-schemes]
-- [`_default-theme.scss`][default-theme]
-- [`_fonts-ligatures.scss`][ligatures]
-- [`_fonts.scss`][fonts]
-- [`_helpers.scss`][helpers]
-
+    + [`_base16-eighties.scss`][b16 80s]
+    + [`_base16-google-dark.scss`][b16 Google]
+    + [`_color-schemes.scss`][color-schemes]
+    + [`_fonts-ligatures.scss`][ligatures]
+    + [`_fonts.scss`][fonts]
+    + [`_helpers.scss`][helpers]
+    + [`_hl-adoc-template.scss`][hl adoc template]
+    + [`_hl-reset.scss`][hl reset]
+    + [`_hl-template-alan.scss`][hl template alan]
+    + [`_hl-theme_alan-lib.scss`][hl alan lib]
+    + [`_hl-theme_alan-tutorial.scss`][hl alan tut]
 
 Scripts:
 
@@ -57,35 +62,57 @@ The easiest way to install Dart Sass on Windows, and keep it always updated, is 
 
 ## Base16 Color Schemes
 
-- [`_color-schemes.scss`][color-schemes]
+The Sass/CSS themes use the following Base16 color schemes:
 
-The following color schemes were adapted from Chris Kempson's [base16-builder] project:
+- _Base16 Eighties_ — by [Chris Kempson].
+- _Base16 Google Dark_ — by [Seth Wright].
 
-- [Base16 Eighties] — by [Chris Kempson].
-- [Base16 Google] — by [Seth Wright].
+The *Base16* project was created by Chris Kempson:
 
-[Base16-builder] is released under MIT License:
+- http://chriskempson.com/projects/base16/
 
-    Copyright (C) 2012 [Chris Kempson](http://chriskempson.com)
-    
-    Permission is hereby granted, free of charge, to any person obtaining
-    a copy of this software and associated documentation files (the
-    "Software"), to deal in the Software without restriction, including
-    without limitation the rights to use, copy, modify, merge, publish,
-    distribute, sublicense, and/or sell copies of the Software, and to
-    permit persons to whom the Software is furnished to do so, subject to
-    the following conditions:
-    
-    The above copyright notice and this permission notice shall be
-    included in all copies or substantial portions of the Software.
-    
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-    NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-    LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-    OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-    WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+## Base16 Sass
+
+The following Base16 SCSS files:
+
+- [`_base16-eighties.scss`][b16 80s]
+- [`_base16-google-dark.scss`][b16 Google]
+
+were taken from the *Base16 Sass* project by Tristano Ajmone:
+
+- https://github.com/tajmone/Base16-Sass
+
+released under MIT License.
+
+
+```
+MIT License
+
+Copyright (c) 2019 Tristano Ajmone <tajmone@gmail.com>
+https://github.com/tajmone/Base16-Sass
+
+Copyright (c) 2012 Chris Kempson (http://chriskempson.com)
+https://github.com/chriskempson/base16-builder
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
 
 ## Sass Boilerplate
 
@@ -124,14 +151,23 @@ The `fontFace` Mixin was adapted from Sass Boilerplate project's "[`fontface.scs
 
 [BUILD]: ./BUILD_SASS.bat
 [WATCH]: ./WATCH_SASS.bat
-[color-schemes]: ./_color-schemes.scss
-[default-theme]: ./_default-theme.scss
-[fonts]: ./_fonts.scss
-[helpers]: ./_helpers.scss
-[ligatures]: ./_fonts-ligatures.scss
-[alan]: ./_alan.scss
-[styles]: ./styles.scss
+
+<!-- SCSS/CSS files -->
+
+[styles]: ./styles.scss "View SCSS source"
 [styles.css]: ../css/styles.css "View source file"
+
+[b16 80s]: ./_base16-eighties.scss "View SCSS source"
+[b16 Google]: ./_base16-google-dark.scss "View SCSS source"
+[color-schemes]: ./_color-schemes.scss "View SCSS file"
+[fonts]: ./_fonts.scss "View SCSS file"
+[helpers]: ./_helpers.scss "View SCSS file"
+[hl adoc template]: ./_hl-adoc-template.scss "View SCSS source"
+[hl alan lib]: ./_hl-theme_alan-lib.scss "View SCSS source"
+[hl alan tut]: ./_hl-theme_alan-tutorial.scss "View SCSS source"
+[hl reset]: ./_hl-reset.scss "View SCSS file"
+[hl template alan]: ./_hl-template-alan.scss "View SCSS source"
+[ligatures]: ./_fonts-ligatures.scss "View SCSS file"
 
 <!-- dependencies -->
 
