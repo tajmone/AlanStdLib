@@ -14,6 +14,7 @@ This temporary document annotates all the tasks of the development stages to fix
 - [Pre-Merge Chores](#pre-merge-chores)
     - [Post-Implementation Fixes](#post-implementation-fixes)
     - [Library Sources Cleanup](#library-sources-cleanup)
+    - [Clothing Guide Tutorial](#clothing-guide-tutorial)
 - [Developement Notes](#developement-notes)
     - [Sources Annotations](#sources-annotations)
     - [Keep Original Code](#keep-original-code)
@@ -58,10 +59,7 @@ After the new system is in place, the old code, tests and documents need to be a
 - [ ] __DOCUMENTS__ — READMEs and documentation files must also be revised to reflect library changes.
 - [ ] __CLOTHING GUIDE__
     - [ ] Update the guide to mirror the new system.
-    + [ ] Add example adventures and transcripts to illustrate:
-        * [ ] __Basic clothing__ — clothing are treated as single items, i.e. the Hero or a NPC is either wearing this or that dress.
-        * [ ] __Intermediate clothing__ — clothing items implemented in layered order, with underware being implemented too.
-        * [ ] __Advanced clothing__ — demonstrate how to implement skirts, coats and bikinis special clothes.
+    + [ ] Add example adventures and transcripts.
 
 [See comments in #65]: https://github.com/AnssiR66/AlanStdLib/issues/65#issuecomment-478430401
 
@@ -87,6 +85,20 @@ Library modules status:
 - [ ] `lib_locations.i`
 - [ ] `lib_messages.i`
 - [ ] `lib_verbs.i`
+
+## Clothing Guide Tutorial
+
+The Clothing Class commented instructions from `lib_classes.i` will be removed, and the _Clothing Guide_ tutorial document will become the new reference for using the `clothing` class.
+
+- [ ] Assets update:
+    + [x] Update __HighlightTreprocessor__ v1.3.0.
+    + [ ] __Sass/CSS stylesheets__ — provide different Alan syntax themes for Library and tutorial code, to visually distinguish them.
+- [ ] Update the guide to mirror the new system.
+- [ ] Add example adventures and transcripts to illustrate:
+    * [ ] __Basic clothing__ — clothing are treated as single items, i.e. the Hero or a NPC is either wearing this or that dress.
+    * [ ] __Intermediate clothing__ — clothing items implemented in layered order, with underware being implemented too.
+    * [ ] __Advanced clothing__ — demonstrate how to implement skirts, coats and bikinis special clothes.
+
 
 -------------------------------------------------------------------------------
 
