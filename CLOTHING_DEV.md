@@ -11,7 +11,7 @@ This temporary document annotates all the tasks of the development stages to fix
 
 <!-- MarkdownTOC autolink="true" bracket="round" autoanchor="false" lowercase="only_ascii" uri_encoding="true" levels="1,2,3" -->
 
-- [Pre-Merge Cleanup Steps](#pre-merge-cleanup-steps)
+- [Pre-Merge Chores](#pre-merge-chores)
     - [Post-Implementation Fixes](#post-implementation-fixes)
     - [Library Sources Cleanup](#library-sources-cleanup)
 - [Developement Notes](#developement-notes)
@@ -42,9 +42,11 @@ This temporary document annotates all the tasks of the development stages to fix
 
 -----
 
-# Pre-Merge Cleanup Steps
+# Pre-Merge Chores
 
 The dev branch needs now to be polished and cleaned up before merging back into `master` branch. The new system needs to be documented for this merge introduces significant changes in the StdLib. Also, there are still some minor development tasks pending which should be addressed.
+
+- [ ] Switch to Alan 3.0beta6 build 1880
 
 ## Post-Implementation Fixes
 
@@ -52,7 +54,7 @@ After the new system is in place, the old code, tests and documents need to be a
 
 - [ ] __TESTS__ — Command scripts of the original tests will need to be tweaked to mirror the new changes, some tests might no longer be needed and can be deleted.
 - [ ] __COMMENTED DOCUMENTATION__ — Comments in the library sources documenting its usage need to be revised so they mirror the new system:
-    + [ ] __CLOTHING INSTRUCTIONS__ — This needs to be wholly revised.
+    + [x] __REMOVE CLOTHING INSTRUCTIONS__ — The whole commented section on Clothing Instructions is now obsolete and will be removed from `lib_classes.i` and replaced by the _Clothing Guide_ document ([See comments in #65]).
 - [ ] __DOCUMENTS__ — READMEs and documentation files must also be revised to reflect library changes.
 - [ ] __CLOTHING GUIDE__
     - [ ] Update the guide to mirror the new system.
@@ -61,13 +63,20 @@ After the new system is in place, the old code, tests and documents need to be a
         * [ ] __Intermediate clothing__ — clothing items implemented in layered order, with underware being implemented too.
         * [ ] __Advanced clothing__ — demonstrate how to implement skirts, coats and bikinis special clothes.
 
+[See comments in #65]: https://github.com/AnssiR66/AlanStdLib/issues/65#issuecomment-478430401
+
 ## Library Sources Cleanup
 
 Before merging into `master` branch, all commented dev annotations in the sources should be removed, and temporary documents and files too.
 
-- [ ] Annotate pending TODO tasks that must be addressed before merging.
-- [ ] Remove all the `-- >>> dev-clothing` comments.
-- [ ] Remove all the `-- >>> original code >>>` commented out code.
+- [x] Remove old dev-annotation comments:
+    + [x] all `-- >>> dev-clothing` notes.
+    + [x] all `-- >>> original code >>>` commented out code.
+- [ ] Annotate pre-merge TODO/FIXME tasks that must be addressed before merging.
+- [ ] Then resolve them and delete the comments:
+    + [ ] all `-- >>> dev-clothing: FIXME >>>`
+    + [ ] all `-- >>> dev-clothing: TODO >>>`
+
 
 During the cleanup stage, I'll also take the chance to cleanup formatting/indentation of both code and documentation comments.
 
