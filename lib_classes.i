@@ -204,14 +204,17 @@ EVERY clothing ISA OBJECT
 
   IS wearable.
 
-  IS sex 0.
+  IS sex 0. -- If not zero, restricts wearing to actors with same 'sex' value.
 
-  IS headcover 0.
-  IS facecover 0.
-  IS handscover 0.
-  IS feetcover 0.
-  IS topcover 0.
-  IS botcover 0.
+  -- Body coverage layered-values, by area:
+  IS headcover  0.  -- Head.
+  IS facecover  0.  -- Face.
+  IS handscover 0.  -- Hands.
+  IS feetcover  0.  -- Feet.
+  IS topcover   0.  -- Chest and arms.
+  IS botcover   0.  -- Pelvis and legs.
+
+  -- Attributes for special clothing (skirts, coats, bikinis, etc.):
 
   IS blockslegs.
   -- i.e. the item prevents wearing/removing legsware from the layers below
