@@ -1,10 +1,14 @@
 #!/bin/bash
-version="v0.0.6" ; revdate="2019/04/08"       # by Tristano Ajmone, MIT License.
+version="v0.0.7" ; revdate="2019/04/08"       # by Tristano Ajmone, MIT License.
 ################################################################################
 #                                   SETTINGS                                   #
 ################################################################################
-AlanOpts="-import ../"
-utf8dir="./_assets/utf8"
+AlanOpts="-import ../"  # Alan compiler options (relative to here)
+
+htmlDir="../extras"     # destination folder of Asciidoctor HTML docs
+alanDir="./alan"        # path of Alan files
+utf8Dir="./alan/utf8"   # path of UTF-8 converted Alan files
+
 shopt -s nullglob # Set nullglob to avoid patterns matching null files
 ################################################################################
 #                            FUNCTIONS DEFINITIONS                             #
@@ -55,11 +59,12 @@ function compile {
 }
 
 function runCommandsScripts {
-  scriptsPattern="$(basename ${1%.*})*.a3sol"
+  scriptsPattern="${1%.*}*.a3sol"
+  echo -e "\e[91m** scriptsPattern: $scriptsPattern\e[0m"
   separator
   echo -e "\e[90mADVENTURE: \e[93m$1"
   for script in $scriptsPattern ; do
-    transcript="$(basename ${script%.*}).a3log"
+    transcript="${script%.*}.a3log"
     echo -e "\e[90mPLAY WITH: \e[93m$script"
     arun.exe -r $1 < $script > $transcript
   done
@@ -71,7 +76,7 @@ function alan2utf8 {
   # documents, because Asciidoctor won't handle ISO-8859-1 files. See:
   #   https://github.com/asciidoctor/asciidoctor/issues/3248
   # ----------------------------------------------------------------------------
-  outfile="$utf8dir/$1"
+  outfile="$utf8Dir/$(basename $1)"
   separator
   echo -e "\e[90mPROCESSING: \e[93m$1"
   echo -e "\e[90mCONVERTING: \e[34m$outfile"
@@ -87,9 +92,9 @@ function adoc2html {
   asciidoctor \
     --verbose \
     --safe-mode unsafe \
-    --template-dir ./_assets/haml \
-    --require ./_assets/highlight-treeprocessor_mod.rb \
-     -a docinfodir=./_assets \
+    --destination-dir $htmlDir \
+    --template-dir ./haml \
+    --require ./highlight-treeprocessor_mod.rb \
      -a docinfo=shared-head \
       $1
 }
@@ -116,7 +121,7 @@ Heading1 "Process Alan Adventures"
 # ------------------------------------------------------------------------------
 Heading2 "Compile Adventures"
 # ------------------------------------------------------------------------------
-for sourcefile in *.alan ; do
+for sourcefile in $alanDir/*.alan ; do
   compile $sourcefile
   if [ $? -ne 0 ] ; then
     aborting ; exit 1
@@ -127,7 +132,7 @@ done
 Heading2 "Run Commands Scripts"
 # ------------------------------------------------------------------------------
 
-for adventure in *.a3c ; do
+for adventure in $alanDir/*.a3c ; do
   runCommandsScripts $adventure
 done
 
@@ -142,9 +147,9 @@ Heading2 "Create UTF-8 Version of Alan Sources and Transcripts"
 echo -e "Because Asciidoctor can't handle inclusion of external files in ISO-8859-1"
 echo -e "econding, we need to create UTF-8 versions of them."
 
-rm -rf $utf8dir
-mkdir $utf8dir
-for sourcefile in *.{alan,i,a3log} ; do
+rm -rf $utf8Dir
+mkdir  $utf8Dir
+for sourcefile in $alanDir/*.{alan,i,a3log} ; do
   alan2utf8 $sourcefile
   if [ $? -ne 0 ] ; then
     aborting ; exit 1

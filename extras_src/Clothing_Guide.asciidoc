@@ -36,7 +36,7 @@ help the reader distinguish which code belongs to what:
 
 // The {utf8dir} attribute points to a folder containing UTF8 versions of Alan
 // sources and transcripts, to allow including them in this doc:
-:utf8dir: ./_assets/utf8/
+:utf8dir: ./alan/utf8/
 // *****************************************************************************
 // *                                                                           *
 // *                            Document Preamble                              *
