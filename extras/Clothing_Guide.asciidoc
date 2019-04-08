@@ -1,6 +1,6 @@
 = The Clothing Guide
 Tristano Ajmone <tajmone@gmail.com>
-v2, 2019-04-06
+v2, 2019-04-08
 :lang: en
 // TOC Settings:
 :toc: left
@@ -34,6 +34,9 @@ help the reader distinguish which code belongs to what:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ////
 
+// The {utf8dir} attribute points to a folder containing UTF8 versions of Alan
+// sources and transcripts, to allow including them in this doc:
+:utf8dir: ./_assets/utf8/
 // *****************************************************************************
 // *                                                                           *
 // *                            Document Preamble                              *
@@ -161,7 +164,128 @@ Coats don't prevent wearing leg-covering clothing either, including trousers and
 As you might have noticed, the library tries to implement a realistic approach to clothing, simulating how common cases are handled in real life.
 
 
-=== Example of Clothing Table
+
+== Practical Examples
+
+
+Now let's dive into some practical examples of how to use clothing, from simple to complex.
+
+
+=== Simple Clothing
+
+:adv-source:  clothing-01-simple.alan
+:adv-transc1: clothing-01-simple__play1.a3log
+:adv-transc2: clothing-01-simple__play2.a3log
+
+* link:{adv-source}[`{adv-source}`]
+
+We'll create a very simple adventure where there's only a single clothing item, and the Hero can be either naked or dressed.
+Here's the adventure outline:
+
+============
+The Hero is a waiter in his one-bedroom flat who must take a shower, get dressed and rush to work.
+He won't be able to take a shower if he's wearing or carrying clothes, and he won't be allowed to leave the flat unless dressed.
+The adventure ends when he leaves the flat.
+============
+
+So, we'll need to implement:
+
+* A bedroom location.
+* A waiter uniform.
+* A shower object with the '`take shower`' verb.
+* An exit leading to the game end.
+
+// ** BEDROOM **
+
+Let's start by implementing the bedroom.
+
+[source,alan,role=tutorial]
+---------------------------------------------
+include::{utf8dir}/{adv-source}[tag=step_one]
+---------------------------------------------
+
+// ** UNIFORM **
+
+Next, we need to implement the Hero's clothing.
+Since in the whole game he only has his waiter uniform to wear, we don't need to worry about clothing layers attributes at all.
+Also, we'll treat the uniform as a single clothing item, for the purpose here is to distinguish between the Hero being naked or dressed, so there is no need to implement it as separate items (i.e. trousers, shirt, shoes, jacket, etc.).
+
+When the game starts, the Hero will be in his bedroom, naked, so we'll just place the uniform lying around in the bedroom.
+
+[source,alan,role=tutorial]
+--------------------------------------------
+include::{utf8dir}/{adv-source}[tag=uniform]
+--------------------------------------------
+
+// ** SHOWER **
+
+Now it's time to implement the shower.
+We'll create it as an object and add to it the `take` verb.
+
+[source,alan,role=tutorial]
+-------------------------------------------
+include::{utf8dir}/{adv-source}[tag=shower]
+-------------------------------------------
+
+Its implementation is quite straightforward, so here we'll only comment on the `Check` that prevents taking a shower while carrying/wearing the uniform:
+
+[source,alan,role=tutorial,indent=0]
+-------------------------------------------------
+include::{utf8dir}/{adv-source}[tag=shower_check]
+-------------------------------------------------
+
+The actual `Check` only needs to verify that the uniform is `not in hero`, for the action is to be prevented regarless of wether the clothing item is being carried or worn -- the whole idea is that it shouldn't get wet.
+If the check condition is violated, we then resort to an `If` statement in order to produce an appropriate response depending on wether the uniform `is worn` or just carried (`else`) by the Hero.
+
+
+Let's compile our draft adventure to test that it's behaving as expected.
+
+..................................
+include::{utf8dir}/{adv-transc1}[]
+..................................
+
+// ** ROOM EXIT **
+
+Everything works fine with the shower, so let's carry on and implement the bedroom exit.
+Edit the `bedroom` code as follows:
+
+[source,alan,role=tutorial]
+-------------------------------------------------
+include::{utf8dir}/{adv-source}[tag=bedroom_exit]
+-------------------------------------------------
+
+Here we used `Check uniform directly in hero and uniform is worn` to make sure the Hero doesn't leave the flat without wearing his uniform:
+
+[source,alan,role=tutorial,indent=0]
+-----------------------------------------------
+include::{utf8dir}/{adv-source}[tag=exit_check]
+-----------------------------------------------
+
+This being the logical succession for checking if an actor is wearing a specific clothing item:
+
+1. We first check that the item is `directly in` the actor, for he can't be possibly wearing:
+** something he doesn't possess (not `IN` him), nor
+** something which is _indirectly_ inside him (e.g. inside a bag he's carrying).
+2. Then we check that the item is actually `worn` (and not just carried).
+
+[NOTE]
+================
+In this context we could have omitted `directly` and use just `Check uniform in hero` instead, since there are no carriable containers in the game.
+
+Acutally, it would have been sufficient to just `Check uniform is worn`, since there are no other actors in this game it's implicit that only the Hero could be wearing it -- but, hey, this is a tutorial!
+================
+
+
+Let's compile the final adventure to test that everything is working as expected.
+
+..................................
+include::{utf8dir}/{adv-transc2}[]
+..................................
+
+Here ends our first tutorial on how to implement very simple clothing.
+
+
+== Clothing Table Example
 
 Here's an example of how common clothing can be mapped to layer values in an adventure.
 

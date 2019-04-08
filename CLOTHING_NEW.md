@@ -76,7 +76,7 @@ THE shoes IsA clothing IN hero.
 
 ## Layered Clothing
 
-The new system only checks that clothing items with coverage values other than zero are worn/removed in the correct order, but it doesn't hard-code special cases handling for skits, coats and teddies — these are still implementable, via some new optional attributes on clothing items, but there are no specially assigned layers for them.
+The new system only checks that clothing items with coverage values other than zero are worn/removed in the correct order, but it no longer hard-codes special cases handling for skirts, coats and teddies — these are still implementable, via some new optional attributes on clothing items, but there are no specially assigned layers for them.
 
 ### Non Exponential Layers Numbering
 

@@ -440,7 +440,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <span id="author" class="author">Tristano Ajmone</span><br>
 <span id="email" class="email"><a href="mailto:tajmone@gmail.com">tajmone@gmail.com</a></span><br>
 <span id="revnumber">version 2,</span>
-<span id="revdate">2019-04-06</span>
+<span id="revdate">2019-04-08</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -449,9 +449,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_the_clothing_class">The Clothing Class</a>
 <ul class="sectlevel2">
 <li><a href="#_body_coverage_attributes">Body Coverage Attributes</a></li>
-<li><a href="#_example_of_clothing_table">Example of Clothing Table</a></li>
 </ul>
 </li>
+<li><a href="#_practical_examples">Practical Examples</a>
+<ul class="sectlevel2">
+<li><a href="#_simple_clothing">Simple Clothing</a></li>
+</ul>
+</li>
+<li><a href="#_clothing_table_example">Clothing Table Example</a></li>
 </ul>
 </div>
 </div>
@@ -585,8 +590,262 @@ In other words, while the library doesn&#8217;t impose wearing clothes on each l
 <p>As you might have noticed, the library tries to implement a realistic approach to clothing, simulating how common cases are handled in real life.</p>
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_practical_examples"><a class="anchor" href="#_practical_examples"></a>Practical Examples</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now let&#8217;s dive into some practical examples of how to use clothing, from simple to complex.</p>
+</div>
 <div class="sect2">
-<h3 id="_example_of_clothing_table"><a class="anchor" href="#_example_of_clothing_table"></a>Example of Clothing Table</h3>
+<h3 id="_simple_clothing"><a class="anchor" href="#_simple_clothing"></a>Simple Clothing</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="clothing-01-simple.alan"><code>clothing-01-simple.alan</code></a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll create a very simple adventure where there&#8217;s only a single clothing item, and the Hero can be either naked or dressed.
+Here&#8217;s the adventure outline:</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>The Hero is a waiter in his one-bedroom flat who must take a shower, get dressed and rush to work.
+He won&#8217;t be able to take a shower if he&#8217;s wearing or carrying clothes, and he won&#8217;t be allowed to leave the flat unless dressed.
+The adventure ends when he leaves the flat.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>So, we&#8217;ll need to implement:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A bedroom location.</p>
+</li>
+<li>
+<p>A waiter uniform.</p>
+</li>
+<li>
+<p>A shower object with the &#8216;take shower&#8217; verb.</p>
+</li>
+<li>
+<p>An exit leading to the game end.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s start by implementing the bedroom.</p>
+</div>
+<div class="listingblock tutorial">
+<div class="content">
+<pre class="highlight" lang="alan"><code class="language-alan" data-lang="alan"><span class="hl kwa">Import</span> &apos;library.i&apos;<span class="hl kwa">.</span>&#x000A;&#x000A;<span class="hl kwa">The</span> my_game <span class="hl kwa">IsA</span> DEFINITION_BLOCK&#x000A;<span class="hl kwa">End the.</span>&#x000A;&#x000A;<span class="hl kwa">The</span> bedroom <span class="hl kwa">IsA</span> room<span class="hl kwa">.</span>&#x000A;  <span class="hl kwa">Description</span>&#x000A;    <span class="hl str">&quot;The exit is west.&quot;</span>&#x000A;<span class="hl kwa">End the</span> bedroom<span class="hl kwa">.</span>&#x000A;&#x000A;<span class="hl kwa">Start at</span> bedroom<span class="hl kwa">.</span>&#x000A;<span class="hl str">&quot;You&apos;re late for work!</span><span class="hl esc">$n</span><span class="hl str">Quickly, take a shower,</span>&#x000A;<span class="hl str"> wear that uniform an leave the flat...&quot;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next, we need to implement the Hero&#8217;s clothing.
+Since in the whole game he only has his waiter uniform to wear, we don&#8217;t need to worry about clothing layers attributes at all.
+Also, we&#8217;ll treat the uniform as a single clothing item, for the purpose here is to distinguish between the Hero being naked or dressed, so there is no need to implement it as separate items (i.e. trousers, shirt, shoes, jacket, etc.).</p>
+</div>
+<div class="paragraph">
+<p>When the game starts, the Hero will be in his bedroom, naked, so we&#8217;ll just place the uniform lying around in the bedroom.</p>
+</div>
+<div class="listingblock tutorial">
+<div class="content">
+<pre class="highlight" lang="alan"><code class="language-alan" data-lang="alan"><span class="hl kwa">The</span> uniform <span class="hl kwa">IsA</span> clothing <span class="hl kwa">at</span> bedroom<span class="hl kwa">.</span>&#x000A;  <span class="hl kwa">Has</span> ex <span class="hl str">&quot;It&apos;s your waiter uniform, spotless as usual.&quot;</span><span class="hl kwa">.</span>&#x000A;  <span class="hl slc">-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>&#x000A;  <span class="hl slc">-- No need to worry about layer coverage attributes here.</span>&#x000A;  <span class="hl slc">-- We&apos;ll stick to the default values (all layers = zero).</span>&#x000A;  <span class="hl slc">-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>&#x000A;<span class="hl kwa">End the</span> uniform<span class="hl kwa">.</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now it&#8217;s time to implement the shower.
+We&#8217;ll create it as an object and add to it the <code>take</code> verb.</p>
+</div>
+<div class="listingblock tutorial">
+<div class="content">
+<pre class="highlight" lang="alan"><code class="language-alan" data-lang="alan"><span class="hl kwa">The</span> shower <span class="hl kwa">IsA</span> <span class="hl kwb">object</span> <span class="hl kwa">at</span> bedroom<span class="hl kwa">.</span>&#x000A;  <span class="hl kwa">Name</span> shower stall<span class="hl kwa">. Name</span> shower<span class="hl kwa">.</span>&#x000A;  <span class="hl kwa">Is not</span> taken<span class="hl kwa">.</span> <span class="hl slc">-- i.e. the Hero hasn&apos;t yet taken his shower.</span>&#x000A;&#x000A;  <span class="hl kwa">Verb</span> take&#x000A;    <span class="hl kwa">Check this is not</span> taken&#x000A;      <span class="hl kwa">else</span> <span class="hl str">&quot;There&apos;s no time left for a second shower.&quot;</span>&#x000A;    <span class="hl kwa">And</span> uniform <span class="hl kwa">not in</span> <span class="hl kwc">hero</span>&#x000A;      <span class="hl kwa">else</span> <span class="hl str">&quot;You should&quot;</span>&#x000A;        <span class="hl kwa">If</span> uniform <span class="hl kwa">is</span> worn <span class="hl kwa">then</span>&#x000A;          <span class="hl str">&quot;remove&quot;</span>&#x000A;        <span class="hl kwa">else</span>&#x000A;          <span class="hl str">&quot;drop&quot;</span>&#x000A;        <span class="hl kwa">end if.</span>&#x000A;        <span class="hl str">&quot;your uniform first!&quot;</span>&#x000A;    <span class="hl kwa">Does only</span>&#x000A;      <span class="hl str">&quot;You take a quick shower.&quot;</span>&#x000A;      <span class="hl kwa">Make this</span> taken<span class="hl kwa">.</span> <span class="hl slc">-- the Hero has showered.</span>&#x000A;  <span class="hl kwa">End verb.</span>&#x000A;<span class="hl kwa">End the</span> shower<span class="hl kwa">.</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Its implementation is quite straightforward, so here we&#8217;ll only comment on the <code>Check</code> that prevents taking a shower while carrying/wearing the uniform:</p>
+</div>
+<div class="listingblock tutorial">
+<div class="content">
+<pre class="highlight" lang="alan"><code class="language-alan" data-lang="alan"><span class="hl kwa">And</span> uniform <span class="hl kwa">not in</span> <span class="hl kwc">hero</span>&#x000A;  <span class="hl kwa">else</span> <span class="hl str">&quot;You should&quot;</span>&#x000A;    <span class="hl kwa">If</span> uniform <span class="hl kwa">is</span> worn <span class="hl kwa">then</span>&#x000A;      <span class="hl str">&quot;remove&quot;</span>&#x000A;    <span class="hl kwa">else</span>&#x000A;      <span class="hl str">&quot;drop&quot;</span>&#x000A;    <span class="hl kwa">end if.</span>&#x000A;    <span class="hl str">&quot;your uniform first!&quot;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The actual <code>Check</code> only needs to verify that the uniform is <code>not in hero</code>, for the action is to be prevented regarless of wether the clothing item is being carried or worn&#8201;&#8212;&#8201;the whole idea is that it shouldn&#8217;t get wet.
+If the check condition is violated, we then resort to an <code>If</code> statement in order to produce an appropriate response depending on wether the uniform <code>is worn</code> or just carried (<code>else</code>) by the Hero.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s compile our draft adventure to test that it&#8217;s behaving as expected.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>You're late for work!
+Quickly, take a shower, wear that uniform an leave the flat...
+
+
+Bedroom
+The exit is west. There is a shower stall and a uniform here.
+
+&gt; examine uniform
+It's your waiter uniform, spotless as usual.
+
+&gt; wear uniform
+You pick up the uniform and put it on.
+
+&gt; take shower
+You should remove your uniform first!
+
+&gt; inventory
+You are empty-handed. You are wearing a uniform.
+
+&gt; remove uniform
+You take off the uniform.
+
+&gt; inventory
+You are carrying a uniform.
+
+&gt; take shower
+You should drop your uniform first!
+
+&gt; drop uniform
+Dropped.
+
+&gt; inventory
+You are empty-handed.
+
+&gt; take shower
+You take a quick shower.
+
+&gt; take shower
+There's no time left for a second shower.
+
+&gt;
+
+Do you want to RESTART, RESTORE, QUIT or UNDO?</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Everything works fine with the shower, so let&#8217;s carry on and implement the bedroom exit.
+Edit the <code>bedroom</code> code as follows:</p>
+</div>
+<div class="listingblock tutorial">
+<div class="content">
+<pre class="highlight" lang="alan"><code class="language-alan" data-lang="alan"><span class="hl kwa">The</span> bedroom <span class="hl kwa">IsA</span> room<span class="hl kwa">.</span>&#x000A;  <span class="hl kwa">Description</span>&#x000A;    <span class="hl str">&quot;The exit is west.&quot;</span>&#x000A;&#x000A;  <span class="hl kwa">Exit</span> west<span class="hl kwa">,</span> leave <span class="hl kwa">to</span> bedroom <span class="hl slc">-- also allow using &apos;leave&apos; to exit!</span>&#x000A;    <span class="hl kwa">Check</span> uniform <span class="hl kwa">directly in</span> <span class="hl kwc">hero</span> <span class="hl kwa">and</span> uniform <span class="hl kwa">is</span> worn&#x000A;      <span class="hl kwa">else</span> <span class="hl str">&quot;You can&apos;t leave the house naked!&quot;</span>&#x000A;    <span class="hl kwa">And</span> shower <span class="hl kwa">is</span> taken&#x000A;      <span class="hl kwa">else</span> <span class="hl str">&quot;Being late is no excuse for not taking a shower!&quot;</span>&#x000A;    <span class="hl kwa">Does</span>&#x000A;      <span class="hl str">&quot;You dart out of your flat and make it to</span>&#x000A;<span class="hl str">       the restaurant just in time.</span>&#x000A;<span class="hl str"></span>       <span class="hl esc">$p</span><span class="hl str">*** You&apos;ve won! ***&quot;</span> <span class="hl kwa">Quit.</span>&#x000A;  <span class="hl kwa">End exit.</span>&#x000A;<span class="hl kwa">End the</span> bedroom<span class="hl kwa">.</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here we used <code>Check uniform directly in hero and uniform is worn</code> to make sure the Hero doesn&#8217;t leave the flat without wearing his uniform:</p>
+</div>
+<div class="listingblock tutorial">
+<div class="content">
+<pre class="highlight" lang="alan"><code class="language-alan" data-lang="alan"><span class="hl kwa">Check</span> uniform <span class="hl kwa">directly in</span> <span class="hl kwc">hero</span> <span class="hl kwa">and</span> uniform <span class="hl kwa">is</span> worn&#x000A;  <span class="hl kwa">else</span> <span class="hl str">&quot;You can&apos;t leave the house naked!&quot;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This being the logical succession for checking if an actor is wearing a specific clothing item:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>We first check that the item is <code>directly in</code> the actor, for he can&#8217;t be possibly wearing:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>something he doesn&#8217;t possess (not <code>IN</code> him), nor</p>
+</li>
+<li>
+<p>something which is <em>indirectly</em> inside him (e.g. inside a bag he&#8217;s carrying).</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Then we check that the item is actually <code>worn</code> (and not just carried).</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In this context we could have omitted <code>directly</code> and use just <code>Check uniform in hero</code> instead, since there are no carriable containers in the game.</p>
+</div>
+<div class="paragraph">
+<p>Acutally, it would have been sufficient to just <code>Check uniform is worn</code>, since there are no other actors in this game it&#8217;s implicit that only the Hero could be wearing it&#8201;&#8212;&#8201;but, hey, this is a tutorial!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s compile the final adventure to test that everything is working as expected.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>You're late for work!
+Quickly, take a shower, wear that uniform an leave the flat...
+
+
+Bedroom
+The exit is west. There is a shower stall and a uniform here.
+
+&gt; west
+You can't leave the house naked!
+
+&gt; leave
+You can't leave the house naked!
+
+&gt; take uniform
+Taken.
+
+&gt; leave
+You can't leave the house naked!
+
+&gt; wear uniform
+You put on the uniform.
+
+&gt; leave
+Being late is no excuse for not taking a shower!
+
+&gt; remove uniform and drop it
+You take off the uniform.
+
+Dropped.
+
+&gt; take shower
+You take a quick shower.
+
+&gt; wear uniform
+You pick up the uniform and put it on.
+
+&gt; leave
+You dart out of your flat and make it to the restaurant just in time.
+
+*** You've won! ***
+
+Do you want to RESTART, RESTORE, QUIT or UNDO?</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here ends our first tutorial on how to implement very simple clothing.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_clothing_table_example"><a class="anchor" href="#_clothing_table_example"></a>Clothing Table Example</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Here&#8217;s an example of how common clothing can be mapped to layer values in an adventure.</p>
 </div>
@@ -739,7 +998,6 @@ Some adventure genres might envolve more clothing items (and therefore, layers) 
 </div>
 <div class="paragraph">
 <p>It&#8217;s strongly reccomended that you do layout a clothing table like the above, so you can use it as a lookup reference when creating new clothing items.</p>
-</div>
 </div>
 </div>
 </div>
