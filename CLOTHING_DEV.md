@@ -139,7 +139,7 @@ Now to update the contents of `extras/` we'll need to run `extras_src/update.sh`
         * [x] Convert all ISO-8859-1 files to UTF8 in a temporary ignored folder: `extras_src/alan/utf8/`.
         * [x] Convert all docs to HTML5.
         * [ ] __Process with SED__:
-            - [ ]  __`*.alan` files__ — strip away tagged region comments in copy of sources inside `extras/` (when sources are moved into`extras_src`).
+            - [x]  __`*.alan` files__ — strip away AsciiDoc region-tag comment lines in copy of sources inside `extras/`.
             - [ ]  __`*.a3log` files__ —  to create a version suitable for `example` blocks (instead of verbatim):
                 + [ ]  Add ` +` at end of non-orphan lines.
                 + [ ]  Subst. occurences of `*` with `{asterisk}`.
@@ -154,7 +154,7 @@ We should also make sure that every HTML document inside `extras/` is fully stan
 - [ ] __SASS/CSS__:
     + [ ] To make all tutorials fullu standalone, inject the CSS ricetly into the `docinfo.html` file.
 - [ ] __Define `export-ignore` rules__ in `.gitattributes` to exclude some files from the downloadable Zip archives of the repository (possibly also affects release):
-    + [ ] Exclude `extras_src`.
+    + [ ] Exclude `extras_sr/c`.
 
 
 

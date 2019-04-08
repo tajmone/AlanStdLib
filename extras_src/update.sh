@@ -1,5 +1,5 @@
 #!/bin/bash
-version="v0.0.7" ; revdate="2019/04/08"       # by Tristano Ajmone, MIT License.
+version="v0.0.8" ; revdate="2019/04/08"       # by Tristano Ajmone, MIT License.
 ################################################################################
 #                                   SETTINGS                                   #
 ################################################################################
@@ -60,12 +60,11 @@ function compile {
 
 function runCommandsScripts {
   scriptsPattern="${1%.*}*.a3sol"
-  echo -e "\e[91m** scriptsPattern: $scriptsPattern\e[0m"
   separator
   echo -e "\e[90mADVENTURE: \e[93m$1"
   for script in $scriptsPattern ; do
     transcript="${script%.*}.a3log"
-    echo -e "\e[90mPLAY WITH: \e[93m$script"
+    echo -e "\e[90mPLAY WITH: \e[94m$script"
     arun.exe -r $1 < $script > $transcript
   done
 }
@@ -78,8 +77,8 @@ function alan2utf8 {
   # ----------------------------------------------------------------------------
   outfile="$utf8Dir/$(basename $1)"
   separator
-  echo -e "\e[90mPROCESSING: \e[93m$1"
-  echo -e "\e[90mCONVERTING: \e[34m$outfile"
+  echo -e "\e[90mSOURCE FILE: \e[93m$1"
+  echo -e "\e[90mDESTINATION: \e[34m$outfile"
   iconv -f ISO-8859-1 -t UTF-8 $1 > $outfile
 }
 
@@ -99,6 +98,27 @@ function adoc2html {
       $1
 }
 
+function deployAlan {
+  # ----------------------------------------------------------------------------
+  # Copy of an Alan source to $htmlDir, stripped of all region-tag comment lines.
+  # ----------------------------------------------------------------------------
+  outfile="$htmlDir/$(basename $1)"
+  separator
+  echo -e "\e[90mSOURCE FILE: \e[93m$1"
+  echo -e "\e[90mDESTINATION: \e[94m$outfile"
+  sed -r '/^ *-- *(tag|end)::\w+\[/ d' $1 > $outfile
+  # ------------------------------------------------------------
+  # if OS is Windows normalize EOL to CRLF (because sed uses LF)
+  # ------------------------------------------------------------
+  if [[ $(uname -s) == MINGW* ]];then
+    unix2dos -q $outfile
+  fi
+}
+  
+for file in $alanDir/*.alan ; do
+  deployAlan $file
+done
+
 function aborting {
   echo -e "\n\e[91m/// Aborting ... ///\e[0m"
 }
@@ -112,7 +132,6 @@ echo -e "*\e[93m                         Build StdLib Extras Folder\e[94m       
 echo -e "*                                                                            *"
 echo -e "******************************************************************************"
 echo -e "\e[97mby Tristano Ajmone, MIT License.                           $version | $revdate"
-separator
 
 # ==============================================================================
 Heading1 "Process Alan Adventures"
@@ -134,6 +153,16 @@ Heading2 "Run Commands Scripts"
 
 for adventure in $alanDir/*.a3c ; do
   runCommandsScripts $adventure
+done
+
+# ------------------------------------------------------------------------------
+Heading2 "Deploy Alan Source Files"
+# ------------------------------------------------------------------------------
+echo -e "Copy to '$htmlDir/' every Alan source from '$alanDir/', but stripped of all the"
+echo -e "lines containing AsciiDoc region-tag comments."
+
+for file in $alanDir/*.alan ; do
+  deployAlan $file
 done
 
 # ==============================================================================
