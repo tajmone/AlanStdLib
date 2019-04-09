@@ -135,22 +135,22 @@ But to reduce clutter in the "`extras/`" folder, we should move source and inter
 
 Now to update the contents of `extras/` we'll need to run `extras_src/update.sh`, which is now adjusted to produce user files into `extras/`. Here are the details of the new toolchain.
 
-- [ ] __AsciiDoc Toolchain__:
-    + [ ] __Bash Script__ — `extras_src/update.sh` to update the contents of `extras/` folder; we need to switch to a shell script (because we need the iconv tool) that will:
+- [x] __AsciiDoc Toolchain__:
+    + [x] __Bash Script__ — `extras_src/update.sh` to update the contents of `extras/` folder; we need to switch to a shell script (because we need the iconv tool) that will:
         * [x] Compile all adventures
         * [x] Run all commands scripts (`*.a3sol`) and save the transcripts (`*.a3log`).
         * [x] Convert all ISO-8859-1 files to UTF8 in a temporary ignored folder: `extras_src/alan/utf8/`.
         * [x] Convert all docs to HTML5.
-        * [ ] __Process with SED__:
+        * [x] __Process with SED__:
             - [x]  __`*.alan` files__ — strip away AsciiDoc region-tag comment lines in copy of sources inside `extras/`.
-            - [ ]  __`*.a3log` files__ —  to create a version suitable for `example` blocks (instead of verbatim):
+            - [x]  __`*.a3log` files__ —  to create a version suitable for `example` blocks (instead of verbatim):
                 + [x]  Add ` +` at end of non-orphan lines.
                 + [x]  Subst. occurences of special chars with their ADoc attribute or HTML entiry equivalent — e.g. `*` with `{asterisk}` or `&ast;`.
                 + [x]  Player input lines:
                     * [x]  change `>` into `&gt;`
                     * [x]  wrap player commands in `_`
                     * [x]  wrap input comments in `#[comment]`..`#`
-                        - [ ]  make it work also when comments follow commands (eg: `inventory ; some comment`).
+                        - [x]  make it work also when comments follow commands (eg: `inventory ; some comment`).
                 + [x]  Preserve region tags in input lines and convert them to ADoc comments (so they are not shown in final doc). 
 
 We should also make sure that every HTML document inside `extras/` is fully standalone, by embedding all images and custom CSS; because users should be free to move a tutorial file around without breaking it.

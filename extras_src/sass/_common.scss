@@ -49,7 +49,7 @@ div.literalblock.shell pre {
     span.comment {
         // Comments in user input are styled via:  #[comment]; some text#
         color: $Transcript-command;
-        font-style: italic;
+        // font-style: italic;
     }
     em {
         color: $Transcript-comment;

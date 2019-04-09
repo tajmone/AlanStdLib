@@ -1,4 +1,4 @@
-# "sanitize_a3log.sed"                  v0.0.1 | 2019/04/09 | by Tristano Ajmone
+# "sanitize_a3log.sed"                  v0.0.2 | 2019/04/09 | by Tristano Ajmone
 # ******************************************************************************
 # *                                                                            *
 # *                         Sanitize Alan Transcripts                          *
@@ -28,22 +28,20 @@
 	/^>/ {
 		# ignore empty input lines:
 		/^>\s*$/ !{
-			# ignore comments input:
+			# ignore input with only comments:
 			/^>\s*;/ !{
 				# ----------------------
 				# Italicize Player Input
 				# ----------------------
 				# Unconstrained Italics
-				s/^(>\s+)([^[:alpha:][:digit:]\s].*?|.*?[^[:alpha:][:digit:]\s])(\s*)$/\1____\2____\3/
+				s/^(>\s+)([^[:alpha:][:digit:]\s][^;]*?|[^;]*?[^[:alpha:][:digit:]\s])(\s*?)( ;.*)?$/\1__\2__\3\4/
 				# Constrained Italics
-				s/^(> *?)(\w.*?\w)( *)$/\1_\2_/
+				s/^(> *?)(\w[^;]*?\w)(\s*)(;.*)?$/\1_\2_\3\4/
 			}
 			# ---------------------
 			# Player Input Comments
 			# ---------------------
-			/^>\s*;/ {
-				s/(>\s+)(;.*)$/\1[comment]#\2#/
-			}
+			s/(>[^;]+)(;.*)$/\1[comment]#\2#/
 		}
 		# -----------------
 		# fix '>' to '&gt;'

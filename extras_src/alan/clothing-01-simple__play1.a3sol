@@ -1,5 +1,4 @@
 examine uniform
-; Let'wear the uniform and test the 'take shower' CHECKs...
 wear uniform
 take shower
 inventory

@@ -24,7 +24,6 @@ div.literalblock.shell pre .conum {
 }
 .exampleblock.gametranscript > .content span.comment {
   color: #bcbcbc;
-  font-style: italic;
 }
 .exampleblock.gametranscript > .content em {
   color: #d90000;
