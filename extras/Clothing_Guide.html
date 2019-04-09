@@ -445,7 +445,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <span id="author" class="author">Tristano Ajmone</span><br>
 <span id="email" class="email"><a href="mailto:tajmone@gmail.com">tajmone@gmail.com</a></span><br>
 <span id="revnumber">version 2,</span>
-<span id="revdate">2019-04-08</span>
+<span id="revdate">2019-04-09</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -689,51 +689,67 @@ If the check condition is violated, we then resort to an <code>If</code> stateme
 <div class="paragraph">
 <p>Let&#8217;s compile our draft adventure to test that it&#8217;s behaving as expected.</p>
 </div>
-<div class="literalblock">
+<div class="exampleblock gametranscript">
 <div class="content">
-<pre>You're late for work!
-Quickly, take a shower, wear that uniform an leave the flat...
-
-
-Bedroom
-The exit is west. There is a shower stall and a uniform here.
-
-&gt; examine uniform
-It's your waiter uniform, spotless as usual.
-
-&gt; wear uniform
-You pick up the uniform and put it on.
-
-&gt; take shower
-You should remove your uniform first!
-
-&gt; inventory
-You are empty-handed. You are wearing a uniform.
-
-&gt; remove uniform
-You take off the uniform.
-
-&gt; inventory
-You are carrying a uniform.
-
-&gt; take shower
-You should drop your uniform first!
-
-&gt; drop uniform
-Dropped.
-
-&gt; inventory
-You are empty-handed.
-
-&gt; take shower
-You take a quick shower.
-
-&gt; take shower
-There's no time left for a second shower.
-
-&gt;
-
-Do you want to RESTART, RESTORE, QUIT or UNDO?</pre>
+<div class="paragraph">
+<p>You&#8217;re late for work!<br>
+Quickly, take a shower, wear that uniform an leave the flat&#8230;&#8203;<br></p>
+</div>
+<div class="paragraph">
+<p>Bedroom<br>
+The exit is west. There is a shower stall and a uniform here.<br></p>
+</div>
+<div class="paragraph">
+<p>&gt; <em>examine uniform</em><br>
+It&#8217;s your waiter uniform, spotless as usual.<br></p>
+</div>
+<div class="paragraph">
+<p>&gt; <span class="comment">; Let&#8217;wear the uniform and test the 'take shower' CHECKs&#8230;&#8203;</span><br>
+&gt; <em>wear uniform</em><br>
+You pick up the uniform and put it on.<br></p>
+</div>
+<div class="paragraph">
+<p>&gt; <em>take shower</em><br>
+You should remove your uniform first!<br></p>
+</div>
+<div class="paragraph">
+<p>&gt; <em>inventory</em><br>
+You are empty-handed. You are wearing a uniform.<br></p>
+</div>
+<div class="paragraph">
+<p>&gt; <em>remove uniform</em><br>
+You take off the uniform.<br></p>
+</div>
+<div class="paragraph">
+<p>&gt; <em>inventory</em><br>
+You are carrying a uniform.<br></p>
+</div>
+<div class="paragraph">
+<p>&gt; <em>take shower</em><br>
+You should drop your uniform first!<br></p>
+</div>
+<div class="paragraph">
+<p>&gt; <em>drop uniform</em><br>
+Dropped.<br></p>
+</div>
+<div class="paragraph">
+<p>&gt; <em>inventory</em><br>
+You are empty-handed.<br></p>
+</div>
+<div class="paragraph">
+<p>&gt; <em>take shower</em><br>
+You take a quick shower.<br></p>
+</div>
+<div class="paragraph">
+<p>&gt; <em>take shower</em><br>
+There&#8217;s no time left for a second shower.<br></p>
+</div>
+<div class="paragraph">
+<p>&gt; <br></p>
+</div>
+<div class="paragraph">
+<p>Do you want to RESTART, RESTORE, QUIT or UNDO? <br></p>
+</div>
 </div>
 </div>
 <div class="paragraph">
@@ -796,50 +812,65 @@ Edit the <code>bedroom</code> code as follows:</p>
 <div class="paragraph">
 <p>Let&#8217;s compile the final adventure to test that everything is working as expected.</p>
 </div>
-<div class="literalblock">
+<div class="exampleblock gametranscript">
 <div class="content">
-<pre>You're late for work!
-Quickly, take a shower, wear that uniform an leave the flat...
-
-
-Bedroom
-The exit is west. There is a shower stall and a uniform here.
-
-&gt; west
-You can't leave the house naked!
-
-&gt; leave
-You can't leave the house naked!
-
-&gt; take uniform
-Taken.
-
-&gt; leave
-You can't leave the house naked!
-
-&gt; wear uniform
-You put on the uniform.
-
-&gt; leave
-Being late is no excuse for not taking a shower!
-
-&gt; remove uniform and drop it
-You take off the uniform.
-
-Dropped.
-
-&gt; take shower
-You take a quick shower.
-
-&gt; wear uniform
-You pick up the uniform and put it on.
-
-&gt; leave
-You dart out of your flat and make it to the restaurant just in time.
-
-*** You've won! ***
-
-Do you want to RESTART, RESTORE, QUIT or UNDO?</pre>
+<div class="paragraph">
+<p>You&#8217;re late for work!<br>
+Quickly, take a shower, wear that uniform an leave the flat&#8230;&#8203;<br></p>
+</div>
+<div class="paragraph">
+<p>Bedroom<br>
+The exit is west. There is a shower stall and a uniform here.<br></p>
+</div>
+<div class="paragraph">
+<p>&gt; <em>west</em><br>
+You can&#8217;t leave the house naked!<br></p>
+</div>
+<div class="paragraph">
+<p>&gt; <em>leave</em><br>
+You can&#8217;t leave the house naked!<br></p>
+</div>
+<div class="paragraph">
+<p>&gt; <em>take uniform</em><br>
+Taken.<br></p>
+</div>
+<div class="paragraph">
+<p>&gt; <em>leave</em><br>
+You can&#8217;t leave the house naked!<br></p>
+</div>
+<div class="paragraph">
+<p>&gt; <em>wear uniform</em><br>
+You put on the uniform.<br></p>
+</div>
+<div class="paragraph">
+<p>&gt; <em>leave</em><br>
+Being late is no excuse for not taking a shower!<br></p>
+</div>
+<div class="paragraph">
+<p>&gt; <em>remove uniform and drop it</em><br>
+You take off the uniform.<br></p>
+</div>
+<div class="paragraph">
+<p>Dropped.<br></p>
+</div>
+<div class="paragraph">
+<p>&gt; <em>take shower</em><br>
+You take a quick shower.<br></p>
+</div>
+<div class="paragraph">
+<p>&gt; <em>wear uniform</em><br>
+You pick up the uniform and put it on.<br></p>
+</div>
+<div class="paragraph">
+<p>&gt; <em>leave</em><br>
+You dart out of your flat and make it to the restaurant just in time.<br></p>
+</div>
+<div class="paragraph">
+<p>*** You&#8217;ve won! ***<br></p>
+</div>
+<div class="paragraph">
+<p>Do you want to RESTART, RESTORE, QUIT or UNDO? <br></p>
+</div>
 </div>
 </div>
 <div class="paragraph">

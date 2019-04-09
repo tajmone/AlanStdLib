@@ -35,15 +35,21 @@ By running the [`update.sh`](update.sh) script inside this folder, all the conte
 
 The `update.sh` script carries out quite a number of tasks:
 
-1. Compile every adventure inside `alan/` folder.
-2. Run every compiled adventure against one or more `.a3sol` command scripts whose name contains the adventure name (i.e. `<adv-name>*.a3sol`) and save the transcript as an `.a3log` file.
-3. Create inside the `alan/utf8/` folder (ignored by Git) an UTF-8 converted copy of every ISO-8859-1 Alan source (`*.alan`) and transcript (`*.a3log`) in `alan/`, so that they might be directly includable in AsciiDoc ([Asciidoctor doesn't support ISO-8859-1 files]).
-4. Convert every `*.asciidoc` document inside this folder into a standalone HTML file inside "`../extras/`".
-5. Create in "`../extras/`" a copy of every Alan source from "`alan/`", but stripped of all [AsciiDoc region-tag comment lines].
+1. __Compile Adventures__ — Compile every adventure inside `alan/` folder.
+2. __Generate Transcripts__ — Run every compiled adventure against one or more `.a3sol` command scripts whose name contains the adventure name (i.e. `<adv-name>*.a3sol`) and save the transcript as an `.a3log` file.
+3. __Sanitize Files Encoding__ — Create inside the `alan/utf8/` folder (ignored by Git) an UTF-8 converted copy of every ISO-8859-1 Alan source (`*.alan`) and transcript (`*.a3log`) in `alan/`, so that they might be directly includable in AsciiDoc ([Asciidoctor doesn't support ISO-8859-1 files]).
+4. __Sanitize & Style Transcipts__ — Convert every `.a3log` file inside `alan/utf8/` to `.a3ADocLog`, converting the verbatim transcript into a well-formatted AsciiDoc example block:
+    - Convert special characters (that could be interpreted as formating) into its [predefined Asciidoctor attribute for replacement] equivalent (or its HTML entity equivalent, if no attribute is available).
+    - Preserve hard line-breaks by adding ` +` at end-of-line, where required.
+    - Style player input in emphasis.
+    - Style comments in player input (`;`) via `#[comment]`..`#`.
+    - Hyde region tags in player input via ADoc comments.
+5. __Build HTML Docs__ — Convert every `*.asciidoc` document inside this folder into a standalone HTML file inside "`../extras/`".
+6. __Sanitize Alan Sources__ — Create in "`../extras/`" a copy of every Alan source from "`alan/`", but stripped of all [AsciiDoc region-tag comment lines].
 
 [Asciidoctor doesn't support ISO-8859-1 files]: https://github.com/asciidoctor/asciidoctor/issues/3248 "Read Issue #3248 for more info on this"
 [AsciiDoc region-tag comment lines]: https://asciidoctor.org/docs/user-manual/#by-tagged-regions "Read about tagged regions in Asciidoctor documentation"
-
+[predefined Asciidoctor attribute for replacement]: https://asciidoctor.org/docs/user-manual/#charref-attributes  "Read Asciidoctor documentation on 'Predefined Attributes for Character Replacements'"
 
 ## Automation Benefits
 

@@ -100,6 +100,9 @@ The Clothing Class commented instructions from `lib_classes.i` will be removed, 
     + [x] Update __HighlightTreprocessor__ v1.3.0.
     + [x] __Sass/CSS stylesheets__
         * [x] Provide different Alan syntax themes for Library and tutorial code, to visually distinguish them.
+        * [x] __Transcript Styles__:
+            - [x] add basic styles for transcripts,
+            - [x] add styles for `#[comment]` elements.
 - [ ] Update the guide to mirror the new system.
     + [ ] Try to reuse contents from the [`CLOTHING_NEW.md`][CLOTHING_NEW] document.
 - [ ] Add example adventures and transcripts to illustrate:
@@ -141,18 +144,21 @@ Now to update the contents of `extras/` we'll need to run `extras_src/update.sh`
         * [ ] __Process with SED__:
             - [x]  __`*.alan` files__ — strip away AsciiDoc region-tag comment lines in copy of sources inside `extras/`.
             - [ ]  __`*.a3log` files__ —  to create a version suitable for `example` blocks (instead of verbatim):
-                + [ ]  Add ` +` at end of non-orphan lines.
-                + [ ]  Subst. occurences of `*` with `{asterisk}`.
-                + [ ]  Player input lines:
-                    * [ ]  change `>` into `&gt;`
-                    * [ ]  wrape player commands in `_`
+                + [x]  Add ` +` at end of non-orphan lines.
+                + [x]  Subst. occurences of special chars with their ADoc attribute or HTML entiry equivalent — e.g. `*` with `{asterisk}` or `&ast;`.
+                + [x]  Player input lines:
+                    * [x]  change `>` into `&gt;`
+                    * [x]  wrap player commands in `_`
+                    * [x]  wrap input comments in `#[comment]`..`#`
+                        - [ ]  make it work also when comments follow commands (eg: `inventory ; some comment`).
+                + [x]  Preserve region tags in input lines and convert them to ADoc comments (so they are not shown in final doc). 
 
 We should also make sure that every HTML document inside `extras/` is fully standalone, by embedding all images and custom CSS; because users should be free to move a tutorial file around without breaking it.
 
 ### Extras Improvements
 
 - [ ] __SASS/CSS__:
-    + [ ] To make all tutorials fullu standalone, inject the CSS ricetly into the `docinfo.html` file.
+    + [ ] To make all tutorials fullu standalone, inject the CSS directly into the `docinfo.html` file.
 - [ ] __Define `export-ignore` rules__ in `.gitattributes` to exclude some files from the downloadable Zip archives of the repository (possibly also affects release):
     + [ ] Exclude `extras_sr/c`.
 

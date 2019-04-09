@@ -1,4 +1,4 @@
-// "styles.scss"                        v2.0.0 | 2019-04-06 | by Tristano Ajmone
+// "styles.scss"                        v2.1.0 | 2019/04/09 | by Tristano Ajmone
 // *****************************************************************************
 // *                                                                           *
 // *               Highlight Stylesheets for Alan StdLib Extras                *
@@ -13,22 +13,11 @@
 // 
 //   ../haml/block_listing.html.haml
 
-// ==================
-// Mixins and Helpers
-// ==================
-@import 'helpers';
-
-// ==============
-// Fonts Settings
-// ==============
-@import 'fonts';
+@import 'helpers';          // Custom mixins and helpers.
+@import 'fonts';            // Fonts Settings
 @import 'fonts-ligatures';
-
-
-// ==========================
-// Color Schemes and Palettes
-// ==========================
-@import 'color-schemes';
+@import 'color-schemes';    // Defines required color schemes and palettes.
+@import 'common';           // Common styles definitions.
 
 // =============================================================================
 //                             Syntax Highlighting                              

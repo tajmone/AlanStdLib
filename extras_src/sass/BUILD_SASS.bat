@@ -1,4 +1,4 @@
-:: "BUILD_SASS.bat"                     v2.0.0 | 2019/03/14 | by Tristano Ajmone
+:: "BUILD_SASS.bat"                     v2.1.0 | 2019/04/09 | by Tristano Ajmone
 :: -----------------------------------------------------------------------------
 :: This script requires Dart Sass to be installed on the system:
 ::      https://github.com/sass/dart-sass
@@ -10,7 +10,7 @@
 ECHO.
 
 SET "SRC=styles.scss"
-SET "OUT=../css/styles.css"
+SET "OUT=../../extras/css/styles.css"
 
 ECHO =================================
 ECHO Building CSS stylesheet from SCSS

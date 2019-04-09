@@ -1,5 +1,5 @@
 #!/bin/bash
-version="v0.0.8" ; revdate="2019/04/08"       # by Tristano Ajmone, MIT License.
+version="v0.0.9" ; revdate="2019/04/09"       # by Tristano Ajmone, MIT License.
 ################################################################################
 #                                   SETTINGS                                   #
 ################################################################################
@@ -43,6 +43,16 @@ function separator {
 # Task functions
 # --------------
 
+function normalizeEOL {
+  # ------------------------------------------------------------
+  # if OS is Windows normalize EOL to CRLF (because sed uses LF)
+  # ------------------------------------------------------------
+  if [[ $(uname -s) == MINGW* ]];then
+    echo -e "\e[90mUNIX2DOS: \e[94m$1"
+    unix2dos -q $1
+  fi
+}
+
 function compile {
   # ----------------------------------------------------------------------------
   # Compile an Alan adventure
@@ -82,6 +92,19 @@ function alan2utf8 {
   iconv -f ISO-8859-1 -t UTF-8 $1 > $outfile
 }
 
+function a3logSanitize {
+  # ----------------------------------------------------------------------------
+  # Takes a game transcript input file $1 "<filename>.a3log" and converts it to
+  # "<filename>.a3ADocLog", a well formatted AsciiDoc example block.
+  # ----------------------------------------------------------------------------
+  outfile="${1%.*}.a3ADocLog"
+  separator
+  echo -e "\e[90mSOURCE FILE: \e[93m$1"
+  echo -e "\e[90mDESTINATION: \e[34m$outfile"
+  sed -E --file=sanitize_a3log.sed $1 > $outfile
+  normalizeEOL $outfile
+}
+
 function adoc2html {
   # ----------------------------------------------------------------------------
   # Convert file $1 from AsciiDoc to HTML via Asciidoctor
@@ -107,21 +130,13 @@ function deployAlan {
   echo -e "\e[90mSOURCE FILE: \e[93m$1"
   echo -e "\e[90mDESTINATION: \e[94m$outfile"
   sed -r '/^ *-- *(tag|end)::\w+\[/ d' $1 > $outfile
-  # ------------------------------------------------------------
-  # if OS is Windows normalize EOL to CRLF (because sed uses LF)
-  # ------------------------------------------------------------
-  if [[ $(uname -s) == MINGW* ]];then
-    unix2dos -q $outfile
-  fi
+  normalizeEOL $outfile
 }
   
-for file in $alanDir/*.alan ; do
-  deployAlan $file
-done
-
 function aborting {
   echo -e "\n\e[91m/// Aborting ... ///\e[0m"
 }
+
 ################################################################################
 #                                  MAIN CODE                                   #
 ################################################################################
@@ -180,6 +195,19 @@ rm -rf $utf8Dir
 mkdir  $utf8Dir
 for sourcefile in $alanDir/*.{alan,i,a3log} ; do
   alan2utf8 $sourcefile
+  if [ $? -ne 0 ] ; then
+    aborting ; exit 1
+  fi
+done
+
+# ------------------------------------------------------------------------------
+Heading2 "Sanitize Game Transcripts"
+# ------------------------------------------------------------------------------
+
+echo -e "Reformat game transcripts from verbatim to AsciiDoc example blocks."
+
+for transcript in $utf8Dir/*.a3log ; do
+  a3logSanitize $transcript
   if [ $? -ne 0 ] ; then
     aborting ; exit 1
   fi

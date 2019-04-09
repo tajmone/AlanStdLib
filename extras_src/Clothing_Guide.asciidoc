@@ -1,6 +1,6 @@
 = The Clothing Guide
 Tristano Ajmone <tajmone@gmail.com>
-v2, 2019-04-08
+v2, 2019-04-09
 :lang: en
 // TOC Settings:
 :toc: left
@@ -36,7 +36,7 @@ help the reader distinguish which code belongs to what:
 
 // The {utf8dir} attribute points to a folder containing UTF8 versions of Alan
 // sources and transcripts, to allow including them in this doc:
-:utf8dir: ./alan/utf8/
+:utf8dir: ./alan/utf8
 // *****************************************************************************
 // *                                                                           *
 // *                            Document Preamble                              *
@@ -174,8 +174,10 @@ Now let's dive into some practical examples of how to use clothing, from simple 
 === Simple Clothing
 
 :adv-source:  clothing-01-simple.alan
-:adv-transc1: clothing-01-simple__play1.a3log
-:adv-transc2: clothing-01-simple__play2.a3log
+:adv-transc1: clothing-01-simple__play1.a3ADocLog
+:adv-transc2: clothing-01-simple__play2.a3ADocLog
+// :adv-transc1: clothing-01-simple__play1.a3log
+// :adv-transc2: clothing-01-simple__play2.a3log
 
 * link:{adv-source}[`{adv-source}`]
 
@@ -240,9 +242,22 @@ If the check condition is violated, we then resort to an `If` statement in order
 
 Let's compile our draft adventure to test that it's behaving as expected.
 
-..................................
+[example,role="gametranscript"]
+================================================================================
 include::{utf8dir}/{adv-transc1}[]
-..................................
+================================================================================
+
+////
+*VERBATIM TRANSCRIPT* -- We could also include the unsanitized version of the game transcript, in case it relied on monospace fonts (eg. debguggin):
+
+....................................................
+include::{utf8dir}/clothing-01-simple__play1.a3log[]
+....................................................
+
+But we'd need to give it some CSS styling though.
+
+////
+
 
 // ** ROOM EXIT **
 
@@ -278,9 +293,10 @@ Acutally, it would have been sufficient to just `Check uniform is worn`, since t
 
 Let's compile the final adventure to test that everything is working as expected.
 
-..................................
+[example,role="gametranscript"]
+================================================================================
 include::{utf8dir}/{adv-transc2}[]
-..................................
+================================================================================
 
 Here ends our first tutorial on how to implement very simple clothing.
 

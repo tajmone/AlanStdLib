@@ -42,6 +42,7 @@
 *.com      text eol=crlf
 *.sh       text eol=lf
 *.ps1      text eol=crlf
+*.sed      text eol=lf
 
 ## ==================
 ## MISC. DATA FORMATS

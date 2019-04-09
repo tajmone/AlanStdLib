@@ -29,6 +29,7 @@ Sass sources:
     + [`_base16-eighties.scss`][b16 80s]
     + [`_base16-google-dark.scss`][b16 Google]
     + [`_color-schemes.scss`][color-schemes]
+    + [`_common.scss`][common]
     + [`_fonts-ligatures.scss`][ligatures]
     + [`_fonts.scss`][fonts]
     + [`_helpers.scss`][helpers]
@@ -160,6 +161,7 @@ The `fontFace` Mixin was adapted from Sass Boilerplate project's "[`fontface.scs
 [b16 80s]: ./_base16-eighties.scss "View SCSS source"
 [b16 Google]: ./_base16-google-dark.scss "View SCSS source"
 [color-schemes]: ./_color-schemes.scss "View SCSS file"
+[common]: ./_common.scss "View SCSS file"
 [fonts]: ./_fonts.scss "View SCSS file"
 [helpers]: ./_helpers.scss "View SCSS file"
 [hl adoc template]: ./_hl-adoc-template.scss "View SCSS source"
