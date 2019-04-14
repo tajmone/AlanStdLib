@@ -171,7 +171,7 @@ We should also make sure that every HTML document inside `extras/` is fully stan
 
 During the clothing development stage the test suite hasn't been run and updated, just a subset of the clothing tests where being run. To bring the test suite en par with the new changes, a multi-step approach is required:
 
-- [ ] 1. Update transcripts
+- [x] 1. Update transcripts
 - [ ] 2. Update sources/solutions
 - [ ] 3. Implement any improvements.
 
@@ -179,8 +179,8 @@ During the clothing development stage the test suite hasn't been run and updated
 
 Some of the changes to the library code will affect the output of various tests (eg. `examine`, `inv`), and the new features might require tweaking the tests sources and/or commands scripts. The goal of this step is to restore all the test suite solutions and transcripts to their original status, by adapting them accordingly.
 
-- [ ] __UPDATE TRANSCRIPTS__ — Rerun all tests and update the transcript logs of all the tests were the output varies but there is no need to change the source or the solution file:
-    + [ ] `/tests/clothing/`
+- [x] __UPDATE TRANSCRIPTS__ — Rerun all tests and update the transcript logs of all the tests were the output varies but there is no need to change the source or the solution file:
+    + [x] `/tests/clothing/`:
     + [x] `/tests/house/`
     + [x] `/tests/misc/`
 
@@ -190,17 +190,26 @@ Some of the new features might require tweaking the tests sources and/or command
 
 - [ ] __UPDATE SOLUTIONS__ — Update the commands scripts and/or adventure sources that need to be adapted to the library changes:
     + [ ] `/tests/clothing/`
+        * [x] Update and adapt old solutions that were affected by code changes.
+        * [x] Delete obsolete tests for bugs that are now fixed.
+        * [ ] Remove `DEV.bat` and rename the `DEV*.*` tests to integrate them in the main test suite:
+            - [ ] Eliminate redundant tests from either the old tests or the newer `DEV*.*` files, keeping whichever one is better, or merging their contents into a new test.
     + [ ] `/tests/house/`
     + [ ] `/tests/misc/`
 
 ### Improve Test Suite
 
++ [ ] `/tests/clothing/`
++ [ ] `/tests/house/`
++ [ ] `/tests/misc/`
+
 Once the original status of the test suite is restored, we can safely implement any new changes and improvements we need.
 
 - [ ] __IMPROVE TESTS__:
-    + [ ] `/tests/clothing/`
-    + [ ] `/tests/house/`
-    + [ ] `/tests/misc/`
+    + [ ] Fix `AlanV` in `DEFINITION_BLOCK` of all sources to mirror latest Alan SDK. Altenratively:
+        * [ ] Remove from all test adventures the line that overrides the Alan version (`AlanV` of `DEFINITION_BLOCK`)?
+        
+        This adds the extra burden of having to change `AlanV` in every test adventure when we bump up Alan SDK version. But on the other hand it provides an accurate reference of the version used. ... Not sure if it should be kept or dropped.
 
 -------------------------------------------------------------------------------
 

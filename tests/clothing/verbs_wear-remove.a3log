@@ -3,7 +3,7 @@
 Emporium Giorgio Alani 
 An adventure to test clothing. 
 (C) 2018 by Tristano Ajmone 
-Programmed with the ALAN Interactive Fiction Language v3.0beta6 build 1866
+Programmed with the ALAN Interactive Fiction Language v3.0beta6 build 1875
 .
 Standard Library v2.1 
 Version 1 
@@ -17,7 +17,7 @@ clothing item.
 Outside Emporium Alani
 You're standing in front of the Giorgio Alani Emporium entrance. Two
 large brass doors await northward your entrance into the sanctuary of
-fashion consumism.
+fashion consumism. 
 
 > ; ******************************************************************************
 > ; *                                                                            *
@@ -33,7 +33,8 @@ As you move toward the doors they automagically slide open before you.
 Emporium Alani Main Hall
 This luxurious hall is the crossroad to the various clothing departments
 of the emporium. Two large brass doors lead the way south, out of the
-fashion temple and back into the world of mortal souls.There is your
+fashion temple and back into the world of mortal souls. There is a 
+trashcan here. Behind a desk stands the emporium manager. There is your
 personal assistant here.
 
 > north
@@ -47,14 +48,12 @@ here.
 > ; TEST 'remove'
 > ; ==============================================================================
 > inventory
-You are empty-handed. You are wearing your undershirt, your sneakers, your 
-khakis, your boxers and your socks.
+You are empty-handed. You are wearing your socks, your boxers, your 
+undershirt, your sneakers and your khakis.
 
-> DBG boxers
+> DBG_CLOTHES boxers
 'boxers' VALUES: | botcover: 2 | 
-DONNED: Yes 
-IN WORN: Yes 
-IN WEARING OF: | hero
+WORN: Yes (by hero)
 
 > remove khakis
 You take off your khakis.
@@ -62,29 +61,23 @@ You take off your khakis.
 > remove boxers
 You take off your boxers.
 
-> DBG boxers
+> DBG_CLOTHES boxers
 'boxers' VALUES: | botcover: 2 | 
-DONNED: No. 
-IN WORN: No. 
-IN WEARING OF:
+WORN: No
 
 > ; ==============================================================================
 > ; TEST 'wear'
 > ; ==============================================================================
-> DBG jeans
+> DBG_CLOTHES jeans
 'jeans' VALUES: | botcover: 16 | 
-DONNED: No. 
-IN WORN: No. 
-IN WEARING OF:
+WORN: No
 
 > wear jeans
 You pick up the jeans and put them on.
 
-> DBG jeans
+> DBG_CLOTHES jeans
 'jeans' VALUES: | botcover: 16 | 
-DONNED: Yes 
-IN WORN: Yes 
-IN WEARING OF: | hero
+WORN: Yes (by hero)
 
 > 
 
