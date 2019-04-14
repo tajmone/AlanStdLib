@@ -22,7 +22,7 @@ table here. On the table you see a bottle, a chips bag, a jar and a basket
 > ; ******************************************************************************
 > ; Liquids inside takable containers can be handled by using either the container
 > ; or the liquid itself as the verb object.
-> x bottle 
+> x bottle
 The bottle contains some wine.
 
 > ; ==============================================================================

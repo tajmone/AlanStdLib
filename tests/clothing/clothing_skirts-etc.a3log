@@ -17,7 +17,7 @@ clothing item.
 Outside Emporium Alani
 You're standing in front of the Giorgio Alani Emporium entrance. Two
 large brass doors await northward your entrance into the sanctuary of
-fashion consumism. 
+fashion consumism.
 
 > ; ******************************************************************************
 > ; *                                                                            *
@@ -39,7 +39,7 @@ fashion consumism.
 > ; in the wearing/removing checks for 'blockslegs' they'll be treated as if it
 > ; only covered the legs. This allows realistically similuating clohtes like a
 > ; bikini, which is handled as a single item, but being conceptually 2-pieces, it
-> ; should be wearable while wearing a skirt or coat. 
+> ; should be wearable while wearing a skirt or coat.
 > ; ------------------------------------------------------------------------------
 > ; Let's gather some clothes for the tests...
 > north
@@ -48,9 +48,9 @@ As you move toward the doors they automagically slide open before you.
 Emporium Alani Main Hall
 This luxurious hall is the crossroad to the various clothing departments
 of the emporium. Two large brass doors lead the way south, out of the
-fashion temple and back into the world of mortal souls. There is a 
-trashcan here. Behind a desk stands the emporium manager. There is your
-personal assistant here.
+fashion temple and back into the world of mortal souls.There is a trashcan 
+here. Behind a desk stands the emporium manager. There is your personal
+assistant here.
 
 > east
 Mensware Department
