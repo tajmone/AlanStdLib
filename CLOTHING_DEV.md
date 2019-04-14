@@ -192,8 +192,8 @@ Some of the new features might require tweaking the tests sources and/or command
     + [ ] `/tests/clothing/`
         * [x] Update and adapt old solutions that were affected by code changes.
         * [x] Delete obsolete tests for bugs that are now fixed.
-        * [ ] Remove `DEV.bat` and rename the `DEV*.*` tests to integrate them in the main test suite:
-            - [ ] Eliminate redundant tests from either the old tests or the newer `DEV*.*` files, keeping whichever one is better, or merging their contents into a new test.
+        * [x] Remove `DEV.bat` and rename the `DEV*.*` tests to integrate them in the main test suite:
+            - [x] Eliminate redundant tests from either the old tests or the newer `DEV*.*` files, keeping whichever one is better, or merging their contents into a new test.
     + [ ] `/tests/house/`
     + [ ] `/tests/misc/`
 
