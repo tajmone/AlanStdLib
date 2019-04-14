@@ -23,7 +23,7 @@ END ADD.
 
 
 --------------------------------------------------------------------------------
---                                .: CONTENTS :.                                
+--                                .: CONTENTS :.
 --------------------------------------------------------------------------------
 
 -- 1. OBJECT CLASSES
@@ -193,9 +193,9 @@ END ADD TO definition_block.
 
 -- NOTE: The 'worn' attribute is defined on the 'thing' class, in module
 --       'lib_definitions.i'. This was done for two reasons:
--- 
+--
 -- 1. It allows more flexible syntax and verb checks.
--- 
+--
 -- 2. Authors might want to implement non-clothing wearables (e.g. devices like
 --    headphones, VR headsets, etc.), therefore the 'worn' state should not be
 --    exclusive to the clothing class.
@@ -260,7 +260,7 @@ EVERY clothing ISA OBJECT
 
   -- The following verbs are extended on the 'clothing' class with additional
   -- CHECKs to prevent displacing worn clothing items from their wearer:
-  -- 
+  --
   --   * give
   --   * put_in
   --   * put_on

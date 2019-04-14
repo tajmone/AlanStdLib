@@ -47,7 +47,7 @@
 --* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 --------------------------------------------------------------------------------
 --
--- DEBUGGING VERBS 
+-- DEBUGGING VERBS
 --
 --------------------------------------------------------------------------------
 --* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -61,7 +61,7 @@
 --------------------------------------------------------------------------------
 --==============================================================================
 -- DEBUGS CLOTHING VALUES
--- 
+--
 -- A helper verb to check the coverage values of individual clothing items.
 
 SYNTAX dbg_clothes = dbg_clothes (obj)*!
@@ -146,7 +146,7 @@ ADD TO EVERY actor
         THEN "Yes"
         ELSE "No"
       END IF. "|"
-  END VERB dbg_comp.  
+  END VERB dbg_comp.
 END ADD TO actor.
 
 
@@ -157,7 +157,7 @@ END ADD TO actor.
 --==============================================================================
 -- The verb 'DBG_INV <ACTOR>' will print out the inventory of an actor by using
 -- the LIST instruction. Useful to check how worn items are handled by LIST,
--- since authors might use LIST in their own adventures. 
+-- since authors might use LIST in their own adventures.
 
 SYNTAX dbg_inv = dbg_inv (act)*!
   WHERE act IsA actor
@@ -166,7 +166,7 @@ SYNTAX dbg_inv = dbg_inv (act)*!
 ADD TO EVERY actor
   VERB dbg_inv
     DOES LIST THIS.
-  END VERB dbg_inv.  
+  END VERB dbg_inv.
 END ADD TO actor.
 
 
@@ -175,7 +175,7 @@ END ADD TO actor.
 --* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 --------------------------------------------------------------------------------
 --
--- HELPER VERBS 
+-- HELPER VERBS
 --
 --------------------------------------------------------------------------------
 --* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -206,7 +206,7 @@ ADD TO EVERY actor
           "force $+1 to become compliant."
           MAKE THIS compliant.
       END IF.
-  END VERB subjugate.  
+  END VERB subjugate.
 END ADD TO actor.
 
 --/// EOF ///--

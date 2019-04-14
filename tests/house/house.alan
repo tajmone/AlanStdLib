@@ -195,7 +195,7 @@ THE bottle IsA beverage_vessel IN kitchen_table.
 END THE.
 
 THE wine IsA liquid IN bottle.
-  HAS vessel bottle. 
+  HAS vessel bottle.
   INDEFINITE ARTICLE "some"
 END THE.
 --==============================================================================

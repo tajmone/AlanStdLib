@@ -1489,7 +1489,7 @@ SYNTAX consult_error = consult (source)
 ADD TO EVERY THING
   VERB consult_error
     DOES
-      "To consult something, please use the formulation CONSULT THING ABOUT 
+      "To consult something, please use the formulation CONSULT THING ABOUT
        PERSON/THING."
   END VERB consult_error.
 END ADD TO.

@@ -107,7 +107,7 @@ END ADD TO.
 
 -- NOTE: If you need to use "an" instead, you should declare it directly on the
 --       instance, e.g.:
--- 
+--
 --       ~~~~~~~~~~~~~~~~~~~~~~~~~~
 --       THE owl ISA ACTOR AT woods
 --         INDEFINITE ARTICLE "an"
@@ -471,7 +471,7 @@ EVERY definition_block ISA LOCATION
   -- containment checks for actors other than the hero (checks for the hero are listed separately below):
   -------------------------------------------------------------------------------------------------------
 
-  HAS check_act_near_hero "You don't quite know where $+1 went.           
+  HAS check_act_near_hero "You don't quite know where $+1 went.
                            You should state a direction where you want to go.". -- follow
 
   HAS check_obj_in_act_sg "$+2 doesn't have $+1.".              -- take_from
@@ -1073,7 +1073,7 @@ EVENT check_restriction
       ----------------------
       -- This level restricts communication verbs.
 
-      IF restricted_level OF my_game >= 1  
+      IF restricted_level OF my_game >= 1
         THEN
           MAKE my_game NOT 'say'.
           MAKE my_game NOT answer.
@@ -1095,7 +1095,7 @@ EVENT check_restriction
       -- It doesn't affect out-of-game verbs (extradiegetic actions).
 
       IF restricted_level OF my_game >= 2
-        THEN  
+        THEN
           MAKE my_game NOT attack.      -- (+ beat, fight, hit, punch)
           MAKE my_game NOT attack_with.
           MAKE my_game NOT bite.        -- (+ chew)

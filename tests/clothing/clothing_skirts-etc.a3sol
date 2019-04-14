@@ -18,7 +18,7 @@
 ; in the wearing/removing checks for 'blockslegs' they'll be treated as if it
 ; only covered the legs. This allows realistically similuating clohtes like a
 ; bikini, which is handled as a single item, but being conceptually 2-pieces, it
-; should be wearable while wearing a skirt or coat. 
+; should be wearable while wearing a skirt or coat.
 ; ------------------------------------------------------------------------------
 ; Let's gather some clothes for the tests...
 north
