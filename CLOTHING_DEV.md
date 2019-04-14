@@ -19,6 +19,10 @@ This temporary document annotates all the tasks of the development stages to fix
         - [Move Assets from Extras to Extras_src](#move-assets-from-extras-to-extras_src)
         - [Automation Toolchain](#automation-toolchain)
         - [Extras Improvements](#extras-improvements)
+    - [Cleanup Test Suite](#cleanup-test-suite)
+        - [Transcripts Update](#transcripts-update)
+        - [Update Commands Scripts](#update-commands-scripts)
+        - [Improve Test Suite](#improve-test-suite)
 - [Developement Notes](#developement-notes)
     - [Sources Annotations](#sources-annotations)
     - [Keep Original Code](#keep-original-code)
@@ -58,7 +62,7 @@ The dev branch needs now to be polished and cleaned up before merging back into 
 After the new system is in place, the old code, tests and documents need to be adapated accordingly.
 
 - [ ] __TESTS__ — Command scripts of the original tests will need to be tweaked to mirror the new changes, some tests might no longer be needed and can be deleted.
-- [ ] __COMMENTED DOCUMENTATION__ — Comments in the library sources documenting its usage need to be revised so they mirror the new system:
+- [x] __COMMENTED DOCUMENTATION__ — Comments in the library sources documenting its usage need to be revised so they mirror the new system:
     + [x] __REMOVE CLOTHING INSTRUCTIONS__ — The whole commented section on Clothing Instructions is now obsolete and will be removed from `lib_classes.i` and replaced by the _Clothing Guide_ document ([See comments in #65]).
 - [ ] __DOCUMENTS__ — READMEs and documentation files must also be revised to reflect library changes.
     + [ ] __WHAT'S NEW DOC__ — Adapt and rename [`CLOTHING_NEW.md`][CLOTHING_NEW] so it becomes a document introducing library users to the changes in the new clothing system, simplifying migration to new system.
@@ -75,21 +79,21 @@ Before merging into `master` branch, all commented dev annotations in the source
 - [x] Remove old dev-annotation comments:
     + [x] all `-- >>> dev-clothing` notes.
     + [x] all `-- >>> original code >>>` commented out code.
-- [ ] Annotate pre-merge TODO/FIXME tasks that must be addressed before merging.
-- [ ] Then resolve them and delete the comments:
-    + [ ] all `-- >>> dev-clothing: FIXME >>>`
-    + [ ] all `-- >>> dev-clothing: TODO >>>`
+- [x] Annotate pre-merge TODO/FIXME tasks that must be addressed before merging.
+- [x] Then resolve them and delete the comments:
+    + [x] all `-- >>> dev-clothing: FIXME >>>`
+    + [x] all `-- >>> dev-clothing: TODO >>>`
 
 
 During the cleanup stage, I'll also take the chance to cleanup formatting/indentation of both code and documentation comments.
 
 Library modules status:
 
-- [ ] `lib_classes.i`
-- [ ] `lib_definitions.i`
-- [ ] `lib_locations.i`
-- [ ] `lib_messages.i`
-- [ ] `lib_verbs.i`
+- [x] `lib_classes.i`
+- [x] `lib_definitions.i`
+- [x] `lib_locations.i`
+- [x] `lib_messages.i`
+- [x] `lib_verbs.i`
 
 
 ## Clothing Guide Tutorial
@@ -160,10 +164,43 @@ We should also make sure that every HTML document inside `extras/` is fully stan
 - [ ] __SASS/CSS__:
     + [ ] To make all tutorials fullu standalone, inject the CSS directly into the `docinfo.html` file.
 - [ ] __Define `export-ignore` rules__ in `.gitattributes` to exclude some files from the downloadable Zip archives of the repository (possibly also affects release):
-    + [ ] Exclude `extras_sr/c`.
+    + [ ] Exclude `extras_src/`.
 
 
+## Cleanup Test Suite
 
+During the clothing development stage the test suite hasn't been run and updated, just a subset of the clothing tests where being run. To bring the test suite en par with the new changes, a multi-step approach is required:
+
+- [ ] 1. Update transcripts
+- [ ] 2. Update sources/solutions
+- [ ] 3. Implement any improvements.
+
+### Transcripts Update
+
+Some of the changes to the library code will affect the output of various tests (eg. `examine`, `inv`), and the new features might require tweaking the tests sources and/or commands scripts. The goal of this step is to restore all the test suite solutions and transcripts to their original status, by adapting them accordingly.
+
+- [ ] __UPDATE TRANSCRIPTS__ — Rerun all tests and update the transcript logs of all the tests were the output varies but there is no need to change the source or the solution file:
+    + [ ] `/tests/clothing/`
+    + [x] `/tests/house/`
+    + [x] `/tests/misc/`
+
+### Update Commands Scripts
+
+Some of the new features might require tweaking the tests sources and/or commands scripts in order to restore the test suite to its original status.
+
+- [ ] __UPDATE SOLUTIONS__ — Update the commands scripts and/or adventure sources that need to be adapted to the library changes:
+    + [ ] `/tests/clothing/`
+    + [ ] `/tests/house/`
+    + [ ] `/tests/misc/`
+
+### Improve Test Suite
+
+Once the original status of the test suite is restored, we can safely implement any new changes and improvements we need.
+
+- [ ] __IMPROVE TESTS__:
+    + [ ] `/tests/clothing/`
+    + [ ] `/tests/house/`
+    + [ ] `/tests/misc/`
 
 -------------------------------------------------------------------------------
 
