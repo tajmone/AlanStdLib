@@ -11,25 +11,20 @@ This temporary document annotates all the tasks of the development stages to fix
 
 <!-- MarkdownTOC autolink="true" bracket="round" autoanchor="false" lowercase="only_ascii" uri_encoding="true" levels="1,2,3" -->
 
+- [About This Document](#about-this-document)
 - [Pre-Merge Chores](#pre-merge-chores)
-    - [Post-Implementation Fixes](#post-implementation-fixes)
+    - [Before Merging into Master](#before-merging-into-master)
+    - [Before Squashing into Dev 2.2.0](#before-squashing-into-dev-220)
+        - [Move Post-Merge Deferable Tasks to Other TODOs](#move-post-merge-deferable-tasks-to-other-todos)
     - [Library Sources Cleanup](#library-sources-cleanup)
     - [Clothing Guide Tutorial](#clothing-guide-tutorial)
     - [`extras_src` Folder](#extras_src-folder)
         - [Move Assets from Extras to Extras_src](#move-assets-from-extras-to-extras_src)
         - [Automation Toolchain](#automation-toolchain)
-        - [Extras Improvements](#extras-improvements)
     - [Cleanup Test Suite](#cleanup-test-suite)
         - [Transcripts Update](#transcripts-update)
         - [Update Commands Scripts](#update-commands-scripts)
-        - [Improve Test Suite](#improve-test-suite)
-- [Developement Notes](#developement-notes)
-    - [Sources Annotations](#sources-annotations)
-    - [Keep Original Code](#keep-original-code)
-    - [Dedicated Tests](#dedicated-tests)
-- [Development Steps Overwiew](#development-steps-overwiew)
-    - [New System Implementation](#new-system-implementation)
-- [Tasks List](#tasks-list)
+- [Implementation Steps](#implementation-steps)
     - [Tests](#tests)
         - [Debug Module](#debug-module)
     - [Clothing Attributes](#clothing-attributes)
@@ -51,30 +46,69 @@ This temporary document annotates all the tasks of the development stages to fix
 
 -----
 
+# About This Document
+
+This is the temporary document for the new clothing system. Until the changes of this branch are fully merged into `master`, this document will be preserved to keep track of all the major changes to the Library sources and test suite.
+
+There are two main sections:
+
+1. __Pre-Merge Chores__ — Pending tasks before the new system is merged into `dev-2.2.0` (first) and into `master` (after).
+2. __Implementation Steps__ — Record of the implementation steps.
+
+The former is still being actively worked on, the latter is merely a reference to help tracking of what should be mentioned in the "What's New/Changes" documents.
+
 # Pre-Merge Chores
 
-The dev branch needs now to be polished and cleaned up before merging back into `master` branch. The new system needs to be documented for this merge introduces significant changes in the StdLib. Also, there are still some minor development tasks pending which should be addressed.
+Pre-merge chores relate to two different squash/merges:
 
-- [ ] Switch to Alan 3.0beta6 build 1880
+1. Merging into `master` — i.e. the final merge for release of StdLib 2.2.
+2. Squashing into `dev-2.2.0` — i.e. the new dev baseline for release 2.2.
 
-## Post-Implementation Fixes
+The latter needs to be addressed immediately, for it's blocking the development of release 2.2; the former can be dealt with during the dev work for the upcoming release, where the various tasks can be addressed in dedicated dev branches.
+
+## Before Merging into Master
+
+The following tasks relating to the new clothing system must be dealt with before commiting changes to `master` branch for the 2.2 release.
 
 After the new system is in place, the old code, tests and documents need to be adapated accordingly.
 
-- [ ] __TESTS__ — Command scripts of the original tests will need to be tweaked to mirror the new changes, some tests might no longer be needed and can be deleted.
-- [x] __COMMENTED DOCUMENTATION__ — Comments in the library sources documenting its usage need to be revised so they mirror the new system:
-    + [x] __REMOVE CLOTHING INSTRUCTIONS__ — The whole commented section on Clothing Instructions is now obsolete and will be removed from `lib_classes.i` and replaced by the _Clothing Guide_ document ([See comments in #65]).
 - [ ] __DOCUMENTS__ — READMEs and documentation files must also be revised to reflect library changes.
     + [ ] __WHAT'S NEW DOC__ — Adapt and rename [`CLOTHING_NEW.md`][CLOTHING_NEW] so it becomes a document introducing library users to the changes in the new clothing system, simplifying migration to new system.
-- [ ] [__CLOTHING GUIDE__](#clothing-guide-tutorial)
+- [ ] __CLOTHING GUIDE__ (see [`extras/TODO.md`](extras/TODO.md))
     - [ ] Update the guide to mirror the new system.
     + [ ] Add example adventures and transcripts.
+- [ ] __CLOTHING RULES & AUTHORS' GUIDELINES__
+    + [ ]  Establish some rules on how the library should handle verbs that might interact with a worn clothing item (including implicit taking), then enforce them in the library verbs.
+    + [ ]  Provide clear guidelines for authors so that they might create custom verbs that comply to these guidelines and won't interfere with worn clothing.
 
-[See comments in #65]: https://github.com/AnssiR66/AlanStdLib/issues/65#issuecomment-478430401
+
+
+## Before Squashing into Dev 2.2.0
+
+The `dev-clothing` branch needs now to be polished and cleaned up before it's ready for squash-merging into the [`dev-2.2.0` branch][branch220], which will be the baseline development branch until the StdLib 2.2 release is ready to go in `master`.
+
+- [ ] Switch to Alan 3.0beta6 __build 1880__:
+    + [ ] Fix `AlanV` in `DEFINITION_BLOCK` of all sources to mirror latest Alan SDK.
+    + [ ] Update references to __SDK 1875__ in all documents:
+
+The new system needs to be documented for this merge introduces significant changes in the StdLib. Also, there are still some minor development tasks pending which should be addressed.
+
+- [x] __TESTS__ — Command scripts of the original tests will need to be tweaked to mirror the new changes, some tests might no longer be needed and can be deleted.
+- [x] __COMMENTED DOCUMENTATION__ — Comments in the library sources documenting its usage need to be revised so they mirror the new system:
+    + [x] __REMOVE CLOTHING INSTRUCTIONS__ — The whole commented section on Clothing Instructions is now obsolete and will be removed from `lib_classes.i` and replaced by the _Clothing Guide_ document ([See comments in #65]).
+
+### Move Post-Merge Deferable Tasks to Other TODOs
+
+Some of these pending tasks can be addressed after merging into the [`dev-2.2.0` branch][branch220], for they are not directly related to the Library sources (eg. the _Clothing Tutorial_, test suite improvements, documentation, etc.). These tasks should be removed from this document and placed in a dedicated TODO document for the specific topic/area.
+
+- [x] Move deferable pending tasks to a dedicated TODO document:
+    + [x] __Test Suite__ — move to `tests/TODO.md`.
+    + [x] __Extras Sources__ — move to `extras_src/TODO.md`.
+    + [x] _**Clothing Guide**_ — move to `extras/TODO.md`.
 
 ## Library Sources Cleanup
 
-Before merging into `master` branch, all commented dev annotations in the sources should be removed, and temporary documents and files too.
+Before squashing into `dev-2.2.0` branch, all commented dev annotations in the sources should be removed, and temporary documents and files too.
 
 - [x] Remove old dev-annotation comments:
     + [x] all `-- >>> dev-clothing` notes.
@@ -100,19 +134,6 @@ Library modules status:
 
 The Clothing Class commented instructions from `lib_classes.i` will be removed, and the _Clothing Guide_ tutorial document will become the new reference for using the `clothing` class.
 
-- [x] Assets update:
-    + [x] Update __HighlightTreprocessor__ v1.3.0.
-    + [x] __Sass/CSS stylesheets__
-        * [x] Provide different Alan syntax themes for Library and tutorial code, to visually distinguish them.
-        * [x] __Transcript Styles__:
-            - [x] add basic styles for transcripts,
-            - [x] add styles for `#[comment]` elements.
-- [ ] Update the guide to mirror the new system.
-    + [ ] Try to reuse contents from the [`CLOTHING_NEW.md`][CLOTHING_NEW] document.
-- [ ] Add example adventures and transcripts to illustrate:
-    * [x] __Basic clothing__ — a single clothing item is available, no coverage attributes, i.e. the Hero is either naked or dressed.
-    * [ ] __Intermediate clothing__ — clothing items implemented in layered order, with underware being implemented too.
-    * [ ] __Advanced clothing__ — demonstrate how to implement skirts, coats and bikinis special clothes.
 
 ## `extras_src` Folder
 
@@ -159,21 +180,13 @@ Now to update the contents of `extras/` we'll need to run `extras_src/update.sh`
 
 We should also make sure that every HTML document inside `extras/` is fully standalone, by embedding all images and custom CSS; because users should be free to move a tutorial file around without breaking it.
 
-### Extras Improvements
-
-- [ ] __SASS/CSS__:
-    + [ ] To make all tutorials fullu standalone, inject the CSS directly into the `docinfo.html` file.
-- [ ] __Define `export-ignore` rules__ in `.gitattributes` to exclude some files from the downloadable Zip archives of the repository (possibly also affects release):
-    + [ ] Exclude `extras_src/`.
-
 
 ## Cleanup Test Suite
 
 During the clothing development stage the test suite hasn't been run and updated, just a subset of the clothing tests where being run. To bring the test suite en par with the new changes, a multi-step approach is required:
 
 - [x] 1. Update transcripts
-- [ ] 2. Update sources/solutions
-- [ ] 3. Implement any improvements.
+- [x] 2. Update sources/solutions
 
 ### Transcripts Update
 
@@ -188,84 +201,21 @@ Some of the changes to the library code will affect the output of various tests 
 
 Some of the new features might require tweaking the tests sources and/or commands scripts in order to restore the test suite to its original status.
 
-- [ ] __UPDATE SOLUTIONS__ — Update the commands scripts and/or adventure sources that need to be adapted to the library changes:
-    + [ ] `/tests/clothing/`
+- [x] __UPDATE SOLUTIONS__ — Update the commands scripts and/or adventure sources that need to be adapted to the library changes:
+    + [x] `/tests/clothing/`
         * [x] Update and adapt old solutions that were affected by code changes.
         * [x] Delete obsolete tests for bugs that are now fixed.
         * [x] Remove `DEV.bat` and rename the `DEV*.*` tests to integrate them in the main test suite:
             - [x] Eliminate redundant tests from either the old tests or the newer `DEV*.*` files, keeping whichever one is better, or merging their contents into a new test.
-    + [ ] `/tests/house/`
-    + [ ] `/tests/misc/`
-
-### Improve Test Suite
-
-+ [ ] `/tests/clothing/`
-+ [ ] `/tests/house/`
-+ [ ] `/tests/misc/`
 
 Once the original status of the test suite is restored, we can safely implement any new changes and improvements we need.
 
-- [ ] __IMPROVE TESTS__:
-    + [ ] Fix `AlanV` in `DEFINITION_BLOCK` of all sources to mirror latest Alan SDK. Altenratively:
-        * [ ] Remove from all test adventures the line that overrides the Alan version (`AlanV` of `DEFINITION_BLOCK`)?
-        
-        This adds the extra burden of having to change `AlanV` in every test adventure when we bump up Alan SDK version. But on the other hand it provides an accurate reference of the version used. ... Not sure if it should be kept or dropped.
 
 -------------------------------------------------------------------------------
 
-# Developement Notes
+# Implementation Steps
 
-Some general guidelines on the development approach employed.
-
-## Sources Annotations
-
-To keep track of pending and done tasks, I'll add pattern-specific comments in all the places in the library sources (and tests files) that will be affected by the development of the new clothing system (but not small optimizations and other tweaks unrelated the clothing changes and fixes):
-
-```
--- >>> dev-clothing: ADDED >>>
--- >>> dev-clothing: DELETED >>>
--- >>> dev-clothing: FIXME >>>
--- >>> dev-clothing: TODO >>>
--- >>> dev-clothing: TWEAKED >>>
-```
-
-These will allow to quickly find any (or all) code areas that related to the current changes, so that the whole development process is easy to track and review. Before merging into `master` branch, all these comments will be removed.
-
-## Keep Original Code
-
-Also, I'll be keeping a commented-out copy of the original code next to any tweaked/deleted code, in order to make it easier to track changes and potential problems/oversights. The following comments patterns will be used to mark original code blocks:
-
-```
--- >>> original code >>>
--- <<< original code <<<
-```
-
-Again, these will be deleted before merging into `master` branch.
-
-
-## Dedicated Tests
-
-All testing will be done against the (already existing) `tests/clothing/ega.alan` adventure file. Some tweaks to the EGA source will be required in order to allow testing the new clothing system, but that's fine for EGA will still be the reference test adventure for clothing after the new system will be in place. 
-
-I'll add a separate subset of tests in the `tests/clothing/` folder, using the `DEV_*.*` pattern for all tests files. This will allow to run independent tests without altering the original tests, which are a useful reference for comparing the behavior of the tweaked code to that of the original codebase during development.
-
-- [`tests/clothing/`][testsclothing]:
-    + [`ega.alan`][ega.alan] — "Emporium Alani" adventure for clothing tests.
-    + [`DEV.bat`][DEV.bat] — execute a subset of tests dedicated to development:
-        * [`DEV_init.a3log`][DEV_init.a3log]/[`.a3sol`][DEV_init.a3sol] — test clothing initialization.
-        * [`DEV_inventory.a3log`][DEV_inventory.a3log]/[`.a3sol`][DEV_inventory.a3sol] — test how `inventory` and `examine actor` are handling separate lists of carried and worn.
-        * [`DEV_manipulation.a3log`][DEV_manipulation.a3log]/[`.a3sol`][DEV_manipulation.a3sol] — test verbs that could move worn items around.
-        * [`DEV_skirts.a3log`][DEV_skirts.a3log]/[`.a3sol`][DEV_skirts.a3sol] — test special clothes: skirts, coats, bikinis, etc.
-        * [`DEV_wear_remove.a3log`][DEV_wear_remove.a3log]/[`.a3sol`][DEV_wear_remove.a3sol] — general purpose tests for `wear`/`remove`.
-
-At a later stage, when the clothing code revision work is complete, I'll start to run the original tests too, to confirm that the original problems are solved. In some cases, this will require adpating the original commands scripts to the new system or the tweaks done to the EGA adventure in the meantime. Before merging into `master` branch, the separate tests can either be stripped of the `DEV_` prefix and preserved, or just deleted if redundant.
-
-
-# Development Steps Overwiew
-
-The following list resumes the overall steps required to implement the new system. The details of each step are covered in the Tasks Lists sections below.
-
-## New System Implementation
+The following list resumes the overall steps for the implementation of the new system. The details of each step are covered in the Tasks Lists sections below.
 
 - [x] Dispose of the `worn` entity and the `wearing` set, and use instead just the `donned` boolean attribute.
 - [x] Renamed the `donned` attribute to `worn`.
@@ -275,27 +225,14 @@ The following list resumes the overall steps required to implement the new syste
 - [x] Remove hard-coded handling of special clothes like coats and skirts, and allow authors to implement those via some new (optional) clothing attributes: `blockslegs` and `twopiecess`.
 - [x] Allow authors to free number clothing layers, instead of imposing exponential layering (2, 4, 8, 16, 32, 64).
 - [x] Add new clothing attribute `facecover` to allow handling goggles, beards, masks, etc., independently from `headcover`.
-- [ ] Establish some rules on how the library should handle verbs that might interact with a worn clothing item (including implicit taking), then enforce them in the library vers, and provide clear guidelines for authors so that they might create custom verbs that comply to these guidelines and won't interfere with worn clothing.
-
-
--------------------------------------------------------------------------------
-
-# Tasks List
 
 Here are the various tasks list for shifting to the new clothing system, largely based on the same work done for the Italian version of the StdLib.
-
-- [x] __SOURCE ANNOTATIONS__ — Mark all places in the library sources that need to be tweaked.
-- [x] __ADOPT BUILD 1875__ — A bug was recently found that prevented using `DIRECTLY IN` inside nested loops. It was fixed in [developer snapshot 1870], so the StdLib _must_ adopt the lastest build currently available in this work.
-    + [x] Use [Alan 3.0 beta6 build 1875][developer snapshot 1875] to carry out tests.
-    + [x] Update Alan version in READMEs.
-    + [x] Update Alan version references in all adventures sources.
-
 
 ## Tests
 
 - [x] Create `tests/clothing/DEV.bat` script to run tests only with solution files with name pattern `DEV_*.a3sol`.
 - [x] Add tests to track tweaked clothing features.
-- [ ] __EGA__ — Tweak `ega.alan` test adventure to reflect changes in the library code and/or provide better testing material:
+- [x] __EGA__ — Tweak `ega.alan` test adventure to reflect changes in the library code and/or provide better testing material:
     + [x] __DBG VERB__ — Tweak it to work with the new clothing system and attributes (verb now moved to `tests/inc_debug.i`):
         * [x] `facecover`
         * [x] `blockslegs`
@@ -315,7 +252,6 @@ Here are the various tasks list for shifting to the new clothing system, largely
         * [x] bikini
         * [x] shirts: black and red
         * [x] ski helmet
-    + [ ] __REDEFINE LAYERS__ — redesign the clothing layers numbering, dropping the old exponential system based on the Clothing Table, and adopt a new arbitrary system based on the needs of EGA.
 - [x] Add a new `TEST_FOLDER.bat` script in every test folder to allow quickly running all tests of that folder independently from the others:
     + [x] `tests/clothing/` (single source, multiple tests)
     + [x] `tests/house/` (single source, multiple tests)
@@ -333,10 +269,7 @@ Create a separate debugging module `tests/inc_debug.i` that can be used by all t
         * [x] `DBG_INV <ACTOR>` to list all objects carried/worn by an actor (via `LIST` command).
         * [x] `DBG_COMP <ACTOR>` — to show compliance status of actors.
         * [x] Verb `subjugate` to toggle actors compliance.
-- [ ] Include the new debug module in all other test adventures:
-    + [x] `tests/clothing/ega.alan`
-    + [ ] `tests/house/house.alan`
-    + [ ] ... more ...
+
 
 ## Clothing Attributes
 
@@ -357,11 +290,8 @@ Before actually removing the `worn` entity and the `wearing` set from the librar
 - [x] __CLOTHING INITIALIZATION__ — Tweak initialization of `clothing`:
     + [x] Comment out the code that iterates every ACTOR to see if the clothing instance is in its `wearing` set in order to make it `donned` and, in case of the Hero, move it to `worn`. None of this is any longer necessary, for a clothing items only needs to be DIRECTLY IN an ACTOR and `IS worn` for it to be worn by the actor.
     + [x] Suppress scheduling the `worn_clothing_check` EVENT. That's no longer required.
-- [ ] __EVENT `worn_clothing_check`__:
+- [x] __EVENT `worn_clothing_check`__:
     + [x] Commented out the whole event for it's no longer strictly required.
-    + [ ] Now that the loop bug was fixed in Alan, we could use the event to check that any clothing item `INDIRECTLY IN HERO` is set to `NOT worn`. Although this should never happen due to Library verbs (which will now handle carefully the `worn` attribute in _any_ transferred thing), chances are that authors-created verbs in an adventure might not be handling these subtle cases correctly, and this event might help them.
-    
-        > __NOTE__ — I haven't implement such checks in the Italian library, partly due to the bug, partly because I didn't see it as strictly necessary; still, all clothing tests passed without problems.
 
 ### Rename `donned` to `worn`
 
@@ -572,9 +502,11 @@ In these verbs the action either is always carried out or it's carried out in so
                                REFERENCE LINKS                                
 ------------------------------------------------------------------------------>
 
+[branch220]: https://github.com/AnssiR66/AlanStdLib/tree/dev-2.2.0 "View branch on GitHub"
 
 [CLOTHING_NEW]: ./CLOTHING_NEW.md
 
+[See comments in #65]: https://github.com/AnssiR66/AlanStdLib/issues/65#issuecomment-478430401
 
 <!-- tests files -->
 

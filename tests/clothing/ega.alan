@@ -353,9 +353,13 @@ END THE ega_free2.
 --   (1) Prototypes -- 'proto_' prefix.
 --   (2) General purpose classes -- 'cl_' prefix.
 
--- >>> dev-clothing: FIXME >>> Clothing Table
+-- >>> FIXME >>> EGA Clothing Table
+--     +-----------------------------------------------------------------------+
+--     | Since the new clothing system doesn't enforce any more exponential    |
+--     | layer values, I shuould customize these values according to needs.    |
+--     +-----------------------------------------------------------------------+
 
--- The Clothing Table
+-- Custom Clothing Table
 --+--------------------------+----------+----------+-----------+------------+
 --| Clothing     | Headcover | Topcover | Botcover | Feetcover | Handscover |
 --+--------------------------+----------+----------+-----------+------------+
