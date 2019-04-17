@@ -1,8 +1,8 @@
 # Alan StdLib Test Suite
 
-> Required **Alan SDK**: [Alan v3.0 beta6 build 1875][SDK]
+> Required **Alan SDK**: [Alan v3.0 beta6 build 1880][SDK]
 
-[SDK]: https://www.alanif.se/download-alan-v3/development-snapshots/development-snapshots/build1875 "Go to the download page of this specific Alan SDK release"
+[SDK]: https://www.alanif.se/download-alan-v3/development-snapshots/development-snapshots/build1880 "Go to the download page of this specific Alan SDK release"
 
 This directory tree contains test adventures and automated game commands scripts for testing the Library verbs, messages and features. The purpose of these tests is to check that all library messages are displayed correctly, to detect unexpected edge cases and to track the global impact of code changes on library messages.
 
