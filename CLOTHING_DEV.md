@@ -1,6 +1,10 @@
 # Clothing Development Notes
 
-This temporary document annotates all the tasks of the development stages to fix the current problems with library clothing. For a detailed description of the new clothing system, ans its differences from the original, see:
+This temporary document annotates the development stages to fix the current problems with library clothing.
+
+***DELETE BEFORE MERGING INTO `master`!!!***
+
+For a detailed description of the new clothing system and its differences from the original, see:
 
 - [`CLOTHING_NEW.md`][CLOTHING_NEW]
 
@@ -11,19 +15,17 @@ This temporary document annotates all the tasks of the development stages to fix
 
 <!-- MarkdownTOC autolink="true" bracket="round" autoanchor="false" lowercase="only_ascii" uri_encoding="true" levels="1,2,3,4,5" -->
 
-- [About This Document](#about-this-document)
-- [Pre-Merge Chores](#pre-merge-chores)
-    - [Before Merging into Master](#before-merging-into-master)
-    - [Before Squashing into Dev 2.2.0](#before-squashing-into-dev-220)
-        - [Move Post-Merge Deferable Tasks to Other TODOs](#move-post-merge-deferable-tasks-to-other-todos)
-        - [Library Sources Cleanup](#library-sources-cleanup)
-        - [Clothing Guide Tutorial](#clothing-guide-tutorial)
-        - [`extras_src` Folder](#extras_src-folder)
-            - [Move Assets from Extras to Extras_src](#move-assets-from-extras-to-extras_src)
-            - [Automation Toolchain](#automation-toolchain)
-        - [Cleanup Test Suite](#cleanup-test-suite)
-            - [Transcripts Update](#transcripts-update)
-            - [Update Commands Scripts](#update-commands-scripts)
+- [Before Merging into Master](#before-merging-into-master)
+- [Pre-Squash Dev Chores and Clean-Up](#pre-squash-dev-chores-and-clean-up)
+    - [Move Post-Merge Deferable Tasks to Other TODOs](#move-post-merge-deferable-tasks-to-other-todos)
+    - [Library Sources Cleanup](#library-sources-cleanup)
+    - [Clothing Guide Tutorial](#clothing-guide-tutorial)
+    - [`extras_src` Folder](#extras_src-folder)
+        - [Move Assets from Extras to Extras_src](#move-assets-from-extras-to-extras_src)
+        - [Automation Toolchain](#automation-toolchain)
+    - [Cleanup Test Suite](#cleanup-test-suite)
+        - [Transcripts Update](#transcripts-update)
+        - [Update Commands Scripts](#update-commands-scripts)
 - [Implementation Steps](#implementation-steps)
     - [Tests](#tests)
         - [Debug Module](#debug-module)
@@ -46,27 +48,12 @@ This temporary document annotates all the tasks of the development stages to fix
 
 -----
 
-# About This Document
+This document must be deleted before merging [`dev-2.2.0` branch][branch220] into `master` for the upcoming release 2.0. It will be preserved during development as a memo of all the changes during the implementation of the new clothing system.
 
-This is the temporary document for the new clothing system. Until the changes of this branch are fully merged into `master`, this document will be preserved to keep track of all the major changes to the Library sources and test suite.
+Also, the following section contains a list of clothing related pending tasks that must taken care of before merging into `master`.
 
-There are two main sections:
 
-1. __Pre-Merge Chores__ — Pending tasks before the new system is merged into `dev-2.2.0` (first) and into `master` (after).
-2. __Implementation Steps__ — Record of the implementation steps.
-
-The former is still being actively worked on, the latter is merely a reference to help tracking of what should be mentioned in the "What's New/Changes" documents.
-
-# Pre-Merge Chores
-
-Pre-merge chores relate to two different squash/merges:
-
-1. Merging into `master` — i.e. the final merge for release of StdLib 2.2.
-2. Squashing into `dev-2.2.0` — i.e. the new dev baseline for release 2.2.
-
-The latter needs to be addressed immediately, for it's blocking the development of release 2.2; the former can be dealt with during the dev work for the upcoming release, where the various tasks can be addressed in dedicated dev branches.
-
-## Before Merging into Master
+# Before Merging into Master
 
 The following tasks relating to the new clothing system must be dealt with before commiting changes to `master` branch for the 2.2 release.
 
@@ -82,10 +69,11 @@ After the new system is in place, the old code, tests and documents need to be a
     + [ ]  Provide clear guidelines for authors so that they might create custom verbs that comply to these guidelines and won't interfere with worn clothing.
 
 
+-------------------------------------------------------------------------------
 
-## Before Squashing into Dev 2.2.0
+# Pre-Squash Dev Chores and Clean-Up
 
-The `dev-clothing` branch needs now to be polished and cleaned up before it's ready for squash-merging into the [`dev-2.2.0` branch][branch220], which will be the baseline development branch until the StdLib 2.2 release is ready to go in `master`.
+These were the final polishing tasks before squashing `dev-clothing` into [`dev-2.2.0` branch][branch220] — the baseline development branch until the StdLib 2.2 release is ready to go in `master`.
 
 - [x] Switch to __[developer snapshot 1880]__:
     + [x] Fix `AlanV` in `DEFINITION_BLOCK` of all sources to mirror latest Alan SDK.
@@ -99,7 +87,7 @@ The new system needs to be documented for this merge introduces significant chan
 - [x] __COMMENTED DOCUMENTATION__ — Comments in the library sources documenting its usage need to be revised so they mirror the new system:
     + [x] __REMOVE CLOTHING INSTRUCTIONS__ — The whole commented section on Clothing Instructions is now obsolete and will be removed from `lib_classes.i` and replaced by the _Clothing Guide_ document ([See comments in #65]).
 
-### Move Post-Merge Deferable Tasks to Other TODOs
+## Move Post-Merge Deferable Tasks to Other TODOs
 
 Some of these pending tasks can be addressed after merging into the [`dev-2.2.0` branch][branch220], for they are not directly related to the Library sources (eg. the _Clothing Tutorial_, test suite improvements, documentation, etc.). These tasks should be removed from this document and placed in a dedicated TODO document for the specific topic/area.
 
@@ -108,7 +96,7 @@ Some of these pending tasks can be addressed after merging into the [`dev-2.2.0`
     + [x] __Extras Sources__ — move to `extras_src/TODO.md`.
     + [x] _**Clothing Guide**_ — move to `extras/TODO.md`.
 
-### Library Sources Cleanup
+## Library Sources Cleanup
 
 Before squashing into `dev-2.2.0` branch, all commented dev annotations in the sources should be removed, and temporary documents and files too.
 
@@ -132,18 +120,18 @@ Library modules status:
 - [x] `lib_verbs.i`
 
 
-### Clothing Guide Tutorial
+## Clothing Guide Tutorial
 
 The Clothing Class commented instructions from `lib_classes.i` will be removed, and the _Clothing Guide_ tutorial document will become the new reference for using the `clothing` class.
 
 
-### `extras_src` Folder
+## `extras_src` Folder
 
 With the introduction of examples adventures for the _Clothing Guide_, we need to improve the automation system of the "`extras/`" folder to allow integration into the tutorials of snippets from the examples code, as well as game transcripts.
 
 We can use Asciidoctor `include::` directive to do so, from both Alan sources as well as autogenerated transcripts, but all files must first be converted to UTF-8 because Asciidoctor doesn't support ISO-8859-1 (see [#3248 on asciidoctor](https://github.com/asciidoctor/asciidoctor/issues/3248)).
 
-#### Move Assets from Extras to Extras_src
+### Move Assets from Extras to Extras_src
 
 But to reduce clutter in the "`extras/`" folder, we should move source and intermediate files not required by end users to another folder ("`extras_src/`"), and only keep the HTML docs (+ CSS) and example adventures inside "`extras/`":
 
@@ -158,7 +146,7 @@ But to reduce clutter in the "`extras/`" folder, we should move source and inter
 - [x] Create `extras_src/alan/utf8/` folder (ignored) to host all converted files.
 - [x] Adapt build scripts to work accordingly.
 
-#### Automation Toolchain
+### Automation Toolchain
 
 Now to update the contents of `extras/` we'll need to run `extras_src/update.sh`, which is now adjusted to produce user files into `extras/`. Here are the details of the new toolchain.
 
@@ -183,14 +171,14 @@ Now to update the contents of `extras/` we'll need to run `extras_src/update.sh`
 We should also make sure that every HTML document inside `extras/` is fully standalone, by embedding all images and custom CSS; because users should be free to move a tutorial file around without breaking it.
 
 
-### Cleanup Test Suite
+## Cleanup Test Suite
 
 During the clothing development stage the test suite hasn't been run and updated, just a subset of the clothing tests where being run. To bring the test suite en par with the new changes, a multi-step approach is required:
 
 - [x] 1. Update transcripts
 - [x] 2. Update sources/solutions
 
-#### Transcripts Update
+### Transcripts Update
 
 Some of the changes to the library code will affect the output of various tests (eg. `examine`, `inv`), and the new features might require tweaking the tests sources and/or commands scripts. The goal of this step is to restore all the test suite solutions and transcripts to their original status, by adapting them accordingly.
 
@@ -199,7 +187,7 @@ Some of the changes to the library code will affect the output of various tests 
     + [x] `/tests/house/`
     + [x] `/tests/misc/`
 
-#### Update Commands Scripts
+### Update Commands Scripts
 
 Some of the new features might require tweaking the tests sources and/or commands scripts in order to restore the test suite to its original status.
 
