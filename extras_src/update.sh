@@ -1,233 +1,152 @@
 #!/bin/bash
-version="v0.1.0" ; revdate="2019/04/18"       # by Tristano Ajmone, MIT License.
+
+# _update.sh              v1.2.0 | 2019/05/05 | by Tristano Ajmone, MIT License.
+################################################################################
+#                                                                              #
+#                          BUILD STDLIB EXTRAS FOLDER                          #
+#                                                                              #
+################################################################################
+# Build and deploy the contents of the following "/extras/" subfolders:
+
+foldersList="tutorials"
+
+# The script will build, compile, convert and/or process the following type of
+# contents in the source folders "extras_src/<foldername>/":
+#
+#  -- Alan example adventures
+#  -- Adventures command scripts
+#  -- Adventures transcripts
+#  -- AsciiDoc documents
+
+# Then it will deploy to the output folders "extras/<foldername>/":
+#
+#  -- HTML converted documents
+#  -- Alan example adventures (stripped of Asciidoctor region tags)
+
 ################################################################################
 #                                   SETTINGS                                   #
 ################################################################################
-AlanOpts="-import ../StdLib/"  # Alan compiler options (relative to here)
+source _print-funcs.sh   # Ornamental print functions
+source _build-funcs.sh   # Build and deploy functions
 
-htmlDir="../extras"     # destination folder of Asciidoctor HTML docs
-alanDir="./alan"        # path of Alan files
-utf8Dir="./alan/utf8"   # path of UTF-8 converted Alan files
-
-shopt -s nullglob # Set nullglob to avoid patterns matching null files
 ################################################################################
-#                            FUNCTIONS DEFINITIONS                             #
+#                                BANNER & INTRO                                #
 ################################################################################
+printBanner "Build StdLib Extras Folders"
 
-# Ornamental print functions
-# --------------------------
+# Calculate how many folders will be processed in total, and check that all the
+# source folders in $foldersList actually exist.
 
-function Heading1 {
-  # ----------------------------------------------------------------------------
-  # Print a yellow frame around text of $1, and center it.
-  # ----------------------------------------------------------------------------
-  echo -e "\e[93m******************************************************************************"
-  printf  "\e[94m%*s\n" $(((${#1}+78)/2)) "$1"
-  echo -e "\e[93m******************************************************************************\e[97m"
-}
-
-function Heading2 {
-  # ----------------------------------------------------------------------------
-  # Print a blue frame around text of $1.
-  # ----------------------------------------------------------------------------
-  echo -e "\e[94m=============================================================================="
-  echo -e "\e[95m$1"
-  echo -e "\e[94m==============================================================================\e[97m" 
-}
-
-function separator {
-  # Print a dark grey horizontal ruler.
-  echo -e "\e[90m------------------------------------------------------------------------------\e[97m"
-}
-
-# Task functions
-# --------------
-
-function normalizeEOL {
-  # ------------------------------------------------------------
-  # if OS is Windows normalize EOL to CRLF (because sed uses LF)
-  # ------------------------------------------------------------
-  if [[ $(uname -s) == MINGW* ]];then
-    echo -e "\e[90mUNIX2DOS: \e[94m$1"
-    unix2dos -q $1
+counter=0
+echo -e "The following folders will be processed:\n\e[93m"
+for dirName in $foldersList; do
+  (( counter = counter + 1 ))
+  echo -e "  \e[90m$counter. \e[93m$dirName"
+  if [ ! -d "$dirName" ]; then
+    printErrMsg "Subfolder \"$dirName\" doesn't exist!"
+    printAborting
+    exit 1
   fi
-}
+done
+foldersTot=$counter
 
-function compile {
-  # ----------------------------------------------------------------------------
-  # Compile an Alan adventure
-  # ----------------------------------------------------------------------------
-  separator
-  echo -e "\e[90mCOMPILING: \e[93m$1"
-  alan $AlanOpts $1 > /dev/null 2>&1 || (
-    echo -e "\n\e[91m*** COMPILER ERROR!!! ********************************************************"
-    alan $AlanOpts $1
-    echo -e "******************************************************************************\e[97m"
-    cmd_failed="true"
-    return 1
-  )
-}
+################################################################################
+#                           FOLDERS-PROCESSING LOOP                            #
+################################################################################
 
-function runCommandsScripts {
-  scriptsPattern="${1%.*}*.a3sol"
-  separator
-  echo -e "\e[90mADVENTURE: \e[93m$1"
-  for script in $scriptsPattern ; do
-    transcript="${script%.*}.a3log"
-    echo -e "\e[90mPLAY WITH: \e[94m$script"
-    arun.exe -r $1 < $script > $transcript
+counter=0
+for dirName in $foldersList; do
+  (( counter = counter + 1 ))
+
+  # Define Source & Destination folders:
+  outDir="$outBasePath/$dirName" # destination folder for HTML docs and examples
+  srcDir="$srcBasePath/$dirName" # path of AsciiDoc sources and Alan examples
+  utfDir="$utfBasePath/$dirName" # path of UTF-8 converted Alan files
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  printHeading1 "Processing Folder $counter/$foldersTot: \"$dirName\""
+
+  # ============================================================================
+  printHeading2 "Process Alan Adventures"
+  # ============================================================================
+
+  # ----------------------------------------------------------------------------
+  printHeading3 "Compile Adventures"
+  # ----------------------------------------------------------------------------
+  for sourcefile in $srcDir/*.alan ; do
+    compile $sourcefile
+    if [ $? -ne 0 ] ; then
+      printAborting ; exit 1
+    fi
   done
-}
-  
-function alan2utf8 {
-  # ----------------------------------------------------------------------------
-  # Create UTF-8 versions of Alan source files to allow inclusion in AsciiDoc
-  # documents, because Asciidoctor won't handle ISO-8859-1 files. See:
-  #   https://github.com/asciidoctor/asciidoctor/issues/3248
-  # ----------------------------------------------------------------------------
-  outfile="$utf8Dir/$(basename $1)"
-  separator
-  echo -e "\e[90mSOURCE FILE: \e[93m$1"
-  echo -e "\e[90mDESTINATION: \e[34m$outfile"
-  iconv -f ISO-8859-1 -t UTF-8 $1 > $outfile
-}
 
-function a3logSanitize {
   # ----------------------------------------------------------------------------
-  # Takes a game transcript input file $1 "<filename>.a3log" and converts it to
-  # "<filename>.a3ADocLog", a well formatted AsciiDoc example block.
+  printHeading3 "Run Commands Scripts"
   # ----------------------------------------------------------------------------
-  outfile="${1%.*}.a3ADocLog"
-  separator
-  echo -e "\e[90mSOURCE FILE: \e[93m$1"
-  echo -e "\e[90mDESTINATION: \e[34m$outfile"
-  sed -E --file=sanitize_a3log.sed $1 > $outfile
-  normalizeEOL $outfile
-}
 
-function adoc2html {
+  for adventure in $srcDir/*.a3c ; do
+    runCommandsScripts $adventure
+  done
+
   # ----------------------------------------------------------------------------
-  # Convert file $1 from AsciiDoc to HTML via Asciidoctor
+  printHeading3 "Deploy Alan Source Files"
   # ----------------------------------------------------------------------------
-  separator
-  echo -e "\e[90mCONVERTING: \e[93m$1"
-  asciidoctor \
-    --verbose \
-    --safe-mode unsafe \
-    --destination-dir $htmlDir \
-    --template-dir ./haml \
-    --require ./highlight-treeprocessor_mod.rb \
-     -a docinfo=shared-head \
-      $1
-}
+  echo -e "Copy to target folder every Alan source, but stripped of all lines containing"
+  echo -e "AsciiDoc region-tag comments."
 
-function deployAlan {
+  for file in $srcDir/*.alan ; do
+    deployAlan $file
+  done
+
+  # ============================================================================
+  printHeading2 "Build AsciiDoc Documentation"
+  # ============================================================================
+
   # ----------------------------------------------------------------------------
-  # Copy of an Alan source to $htmlDir, stripped of all region-tag comment lines.
+  printHeading3 "Create UTF-8 Version of Alan Sources and Transcripts"
   # ----------------------------------------------------------------------------
-  outfile="$htmlDir/$(basename $1)"
-  separator
-  echo -e "\e[90mSOURCE FILE: \e[93m$1"
-  echo -e "\e[90mDESTINATION: \e[94m$outfile"
-  sed -r '/^ *-- *(tag|end)::\w+\[/ d' $1 > $outfile
-  normalizeEOL $outfile
-}
-  
-function aborting {
-  echo -e "\n\e[91m/// Aborting ... ///\e[0m"
-}
 
-################################################################################
-#                                  MAIN CODE                                   #
-################################################################################
+  echo -e "Because Asciidoctor can't handle inclusion of external files in ISO-8859-1"
+  echo -e "econding, we need to create UTF-8 versions of them."
 
-echo -e "\e[94m******************************************************************************"
-echo -e "*                                                                            *"
-echo -e "*\e[93m                         Build StdLib Extras Folder\e[94m                         *"
-echo -e "*                                                                            *"
-echo -e "******************************************************************************"
-echo -e "\e[97mby Tristano Ajmone, MIT License.                           $version | $revdate"
+  # rm -r $utfDir/*.{alan,a3log,a3ADocLog}
+  rm -rf $utfDir
+  mkdir  $utfDir
+  touch  $utfDir/.gitkeep
 
-# ==============================================================================
-Heading1 "Process Alan Adventures"
-# ==============================================================================
+  for sourcefile in $srcDir/*.{alan,i,a3log} ; do
+    alan2utf8 $sourcefile
+    if [ $? -ne 0 ] ; then
+      printAborting ; exit 1
+    fi
+  done
 
-# ------------------------------------------------------------------------------
-Heading2 "Compile Adventures"
-# ------------------------------------------------------------------------------
-for sourcefile in $alanDir/*.alan ; do
-  compile $sourcefile
-  if [ $? -ne 0 ] ; then
-    aborting ; exit 1
-  fi
+  # ----------------------------------------------------------------------------
+  printHeading3 "Sanitize Game Transcripts"
+  # ----------------------------------------------------------------------------
+
+  echo -e "Reformat game transcripts from verbatim to AsciiDoc example blocks."
+
+  for transcript in $utfDir/*.a3log ; do
+    a3logSanitize $transcript
+    if [ $? -ne 0 ] ; then
+      printAborting ; exit 1
+    fi
+  done
+
+  # ----------------------------------------------------------------------------
+  printHeading3 "Convert Docs to HTML"
+  # ----------------------------------------------------------------------------
+  for sourcefile in $srcDir/*.asciidoc ; do
+    adoc2html $sourcefile
+    if [ $? -ne 0 ] ; then
+      printAborting ; exit 1
+    fi
+  done
 done
 
 # ------------------------------------------------------------------------------
-Heading2 "Run Commands Scripts"
-# ------------------------------------------------------------------------------
 
-for adventure in $alanDir/*.a3c ; do
-  runCommandsScripts $adventure
-done
-
-# ------------------------------------------------------------------------------
-Heading2 "Deploy Alan Source Files"
-# ------------------------------------------------------------------------------
-echo -e "Copy to '$htmlDir/' every Alan source from '$alanDir/', but stripped of all the"
-echo -e "lines containing AsciiDoc region-tag comments."
-
-for file in $alanDir/*.alan ; do
-  deployAlan $file
-done
-
-# ==============================================================================
-Heading1 "Build AsciiDoc Documentation"
-# ==============================================================================
-
-# ------------------------------------------------------------------------------
-Heading2 "Create UTF-8 Version of Alan Sources and Transcripts"
-# ------------------------------------------------------------------------------
-
-echo -e "Because Asciidoctor can't handle inclusion of external files in ISO-8859-1"
-echo -e "econding, we need to create UTF-8 versions of them."
-
-rm -rf $utf8Dir
-mkdir  $utf8Dir
-for sourcefile in $alanDir/*.{alan,i,a3log} ; do
-  alan2utf8 $sourcefile
-  if [ $? -ne 0 ] ; then
-    aborting ; exit 1
-  fi
-done
-
-# ------------------------------------------------------------------------------
-Heading2 "Sanitize Game Transcripts"
-# ------------------------------------------------------------------------------
-
-echo -e "Reformat game transcripts from verbatim to AsciiDoc example blocks."
-
-for transcript in $utf8Dir/*.a3log ; do
-  a3logSanitize $transcript
-  if [ $? -ne 0 ] ; then
-    aborting ; exit 1
-  fi
-done
-
-# ------------------------------------------------------------------------------
-Heading2 "Convert Docs to HTML"
-# ------------------------------------------------------------------------------
-for sourcefile in *.asciidoc ; do
-  adoc2html $sourcefile
-  if [ $? -ne 0 ] ; then
-    aborting ; exit 1
-  fi
-done
-
-
-# ------------------------------------------------------------------------------
-
-echo -e "\e[90m------------------------------------------------------------------------------"
-echo -e "\e[92m/// Finished ///\e[0m"
+printFinished
 exit
 
 # ------------------------------------------------------------------------------
