@@ -456,6 +456,22 @@ EVENT check_darkness
 END EVENT.
 
 
+-- Catch when the Hero's Location becomes lit again:
+
+WHEN location OF hero IS NOT lit THEN
+  IF location OF hero ISA dark_location
+    THEN MAKE HERO COMPLIANT. -- (DO NOTHING!)
+    ELSE SCHEDULE track_unlit_location AT location OF hero AFTER 1.
+  END IF.
+
+EVENT track_unlit_location
+  IF HERO AT CURRENT LOCATION THEN
+    IF CURRENT LOCATION IS lit
+      THEN "LIGHTS ON!!!"
+      ELSE SCHEDULE track_unlit_location AT CURRENT LOCATION AFTER 1.
+    END IF.
+  END IF.
+END EVENT.
 
 
 -- To define a dark location, use a formulation like the following:
